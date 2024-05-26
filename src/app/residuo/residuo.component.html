@@ -1,0 +1,23 @@
+
+
+<h2 id="titulo">Residuos Retirados</h2>
+
+<div class="contenedor-lista-residuo">
+  <ul class="list-group">
+    <li class="list-group-item" *ngFor="let residuo of residuos">
+      <input class="form-check-input me-1" type="radio" name="listGroupRadio" [value]="residuo.id" [id]="'radio' + residuo.id">
+      <label class="form-check-label" [for]="'radio' + residuo.id">{{ residuo.tipo_residuo.nombre }}</label>
+      <button class="boton-editar"><img src="../../assets/edit.png" alt="edit"></button>
+    </li>
+    <button type="submit" class="boton-agregar"><img src="../../assets/icons/add.png" alt="boton-agregar" >Agregar</button>
+  </ul>
+  
+  <div class="contenedor-formulario">
+  <app-residuo-formulario></app-residuo-formulario>
+  </div>
+
+</div>
+
+<div>
+  
+</div>

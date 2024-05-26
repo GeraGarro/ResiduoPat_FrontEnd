@@ -1,0 +1,22 @@
+# Dependencias de Node
+node_modules/
+
+# Archivos de entorno de Angular
+.angular/
+
+# Configuración de VS Code
+.vscode/
+
+# Archivos de configuración de Angular
+angular.json
+
+# Archivos de configuración de TypeScript
+tsconfig*.json
+
+# Archivos de bloqueo de paquetes
+package-lock.json
+
+# Otros archivos que no deseas rastrear
+.DS_Store
+.idea/
+*.log

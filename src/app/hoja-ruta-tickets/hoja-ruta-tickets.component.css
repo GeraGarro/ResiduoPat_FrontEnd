@@ -1,0 +1,127 @@
+
+.fechaHoja{
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: rgb(17, 17, 17);
+  border: 2px solid rgba(36, 33, 33, 0.521);
+  font-style: oblique;
+  padding: 4px;
+margin-left: 15px;
+}
+.titulo{
+    display: inline-block;
+ background-color: rgb(238, 242, 245);
+ padding: 10px 6px;
+ border-radius: 0 15px 15px 5px;
+ margin-bottom: 10px;
+ font-stretch: expanded;
+}
+.tabla-contenedor {
+    /* Estilos existentes */
+    min-height: 250px;
+    max-height: 750px; /* Ajusta según sea necesario */
+    overflow-y: scroll;
+    grid-area: "tabla";
+  }
+table {
+    width: 100%; /* Ancho de la tabla */
+    background-color: rgb(238, 242, 245);
+    
+/*     border-collapse: collapse; /* Elimina espacio entre bordes */
+   }
+  
+  th, td{
+    /* Borde de las celdas */
+    height: 90px;
+  
+    text-align: center;
+   
+   /*  border: 1px solid rgba(0, 0, 0, 0.212);
+     */
+  
+  }
+  th{
+        font-size: 23px;
+  }
+td{
+    font-size: 19px;
+
+}
+  th {
+   
+   color: rgb(7, 4, 4);
+   
+    text-align: center; /* Alineación del texto del encabezado */
+  }
+  
+  .mat-table-header {
+    background-color: #be0f0f; /* Color de fondo del encabezado */
+  }
+  
+  .mat-row:hover {
+    background-color: #b6a9a9; /* Efecto al pasar el mouse sobre una fila */
+  }
+
+  .inactivos{
+  
+    background-color: rgba(222, 231, 90, 0.959);
+   
+    
+   } 
+   .activos{
+    background-color: rgba(8, 196, 33, 0.726);
+  
+   }
+   span{
+    width: 80%;
+   font-weight: 700;
+    border-radius: 25px;
+    padding: 10px 20px;
+    color: rgb(19, 21, 22);
+    text-wrap: nowrap;
+   }
+
+img{
+    width: 40px;
+}
+.icons-estado{
+    width: 22px;
+    margin-right: 5px;
+}
+#columna-estado{
+    font-size: 95%;
+}
+.filaAcciones{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+@media screen and (max-width:700px) {
+ 
+td{ text-wrap: nowrap;
+    font-size: 12px;
+
+}
+table{
+    overflow-x:visible ;
+}
+.tabla-contenedor {
+    /* Estilos existentes */
+    max-height: 470px; /* Ajusta según sea necesario */
+   
+  }
+  img{
+    width: 35px;
+  }
+  .titulo{
+    display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  }
+ .fechaHoja{
+  margin-left: 0;
+  font-size: 13px;
+  
+ }
+}

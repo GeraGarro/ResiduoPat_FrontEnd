@@ -1,0 +1,28 @@
+<div class="contenedor-residuo-formulario">
+  <h2 id="titulo-formulario">{{ modoEdicion ? 'Edición de Residuo' : 'Ingrese Nuevo Residuo A ticket' }}</h2>
+  
+  <div class="container">
+    <form [formGroup]="formularioResiduo" (ngSubmit)="enviar()">
+      
+      <div class="container-input">
+        <label for="tipo_residuo" class="form-label ">Tipo de Residuo</label>
+        <select id="tipo_residuo" name="tipo_residuo" class="form-control ms">
+          <option *ngFor="let tipo of tipo_residuo" [value]="tipo.id">{{tipo.nombre }}</option>
+        </select>
+      </div>
+  
+      <div class="mb-3">
+        <label for="peso" class="form-label">Peso(g)</label>
+        <input [ngClass]="{'is-invalid': hasErrors('peso','required')}" type="number" class="form-control" id="peso" formControlName="peso">
+        <div class="text-danger mensajeError" *ngIf="hasErrors('peso','required')">
+          Ingrese Peso
+        </div>
+        <div class="text-warning mensajeError" *ngIf="hasErrors('peso','min')">
+         Valor de Peso siempre Positivo
+        </div>
+      </div>
+   
+      <button type="submit" class="btn btn-primary btn-Submit">{{ modoEdicion ? 'Aceptar Cambios' : 'Aceptar' }}</button>
+    </form>
+  </div>
+</div>

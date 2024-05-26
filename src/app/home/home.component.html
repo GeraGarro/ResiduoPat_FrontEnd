@@ -1,0 +1,34 @@
+<div class=" dashboard">
+  <app-dashboard [url]="urlReport" [estiloContenedorPrincipal]="estiloDashboardGenerador" [titulo]="'Tickets Hoja Ruta'" [contador]="_contadorTicket"/>
+  <app-dashboard [url]="urlReportWarning" [estiloContenedorPrincipal]="estiloDashboardTipo"  [titulo]="' Tickets de Lote Sin Procesar'" [contador]="_contadorTicketWarning"/>
+  <app-dashboard [url]="urlGenerador" [titulo]="'Generadores Existentes'" [contador]="_contador"/>
+</div>
+<div class="contenedor-principal">
+ 
+
+  <div class="contenedor hoja-ruta">
+    <img id="button-add" src="../../assets/icons/add-create.png" alt="">
+    
+   <app-hoja-ruta-tickets (contadorTicket)="receptorContadorTicket($event.contador)" (contadorTicketWarning)="receptorContadorTicketWarning($event.contador)"/> 
+    <button class="btn btn-primary">Generar Reporte Hoja de Ruta</button>
+  </div>
+
+  <div class="contenedor generador" >
+    <img id="button-add" src="../../assets/icons/add-create.png" alt="">
+
+    <h4 class="titulo">Generadores Existentes </h4>
+
+    <app-generador (contadorEmitido)="recepcionDato($event.contado)"/> 
+    
+   
+  </div>
+
+  <div class="contenedor tipo-Residuos">
+    <img id="button-add" src="../../assets/icons/add-create.png" alt="">
+
+    <h4 class="titulo">Residuos Patologicós Registrados</h4>
+    <app-tipo-residuo /> 
+   
+  </div>
+
+</div>

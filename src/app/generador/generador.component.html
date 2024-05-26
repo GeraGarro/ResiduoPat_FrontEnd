@@ -1,0 +1,48 @@
+
+
+ <div class="tabla-contenedor">
+
+      <table ngClass="tabla"  mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+ 
+      
+       
+        <ng-container matColumnDef="nombre">
+          <th mat-header-cell *matHeaderCellDef> Nombre </th>
+          <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+        </ng-container>
+      
+   
+        <ng-container matColumnDef="estado" >
+          <th mat-header-cell *matHeaderCellDef> Condición </th>
+          <td mat-cell *matCellDef="let element"> <span [ngClass]="{'activos':element.estado,'inactivos':!element.estado}">{{element.estado? "Activo": "Sin Actividad"}} </span></td>
+        </ng-container>
+     
+        
+    
+          
+        <ng-container matColumnDef="acciones">
+          <th mat-header-cell *matHeaderCellDef> Acciones </th>
+          <td class="filaAcciones" mat-cell *matCellDef="let element">
+            <a mat-button (click)="editarGenerador(element.id,element.nombre,element.cuit,element.direccion,element.estado)"> <img id="edit" src="../../assets/icons/edit.png" alt=""></a>
+         <a mat-button (click)="eliminarGenerador(element.id)"><img src="../../assets/icons/delete.png" alt=""></a>
+            
+          </td>
+
+        </ng-container>
+
+        
+        <tr mat-row  *matRowDef="let row  ; columns: columnas ; "></tr>
+
+      
+      </table>
+     
+    
+      <mat-paginator [length]="100"
+      [pageSize]="10"
+      [pageSizeOptions]="[5, 10, 25, 100]"
+      aria-label="Select page">
+</mat-paginator>
+
+    
+  </div>  

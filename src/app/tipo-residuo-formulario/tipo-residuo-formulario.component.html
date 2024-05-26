@@ -1,0 +1,43 @@
+<div class="container-2"></div>
+<div class="container-3"></div>
+<div class="contenedor-principal" >
+
+      <form [formGroup]="formularioTipoResiduo" (ngSubmit)="enviar()">
+        <div class="contenedor-formulario">
+        <h3 class="titulo-formulario">Editar Tipo</h3>
+        <div class="mb-3">
+          <label for="id_tipoResiduo" class="form-label">ID</label>
+          <input [value]="tipoSeleccionado?.id"  class="formulario"  type="number" class="form-control" id="id_tipoResiduo" formControlName="id_tipoResiduo" >
+          
+        </div>
+
+        <div class="mb-3">
+          <label for="nombre_tipoResiduo" class="form-label">Nombre Tipo Residuo</label>
+          <input class="formulario" [ngClass]="{'is-invalid': hasErrors('nombre_tipoResiduo','required')}" type="text" class="form-control" id="nombre_tipoResiduo" formControlName="nombre_tipoResiduo" [value]="tipoSeleccionado?.nombre">
+          <div class="text-danger mensajeError" *ngIf="hasErrors('nombre_tipoResiduo','required')">
+            Por favor Ingresa Nombre a Registrar
+          </div>
+        </div>
+
+        <div class="checkEstado">
+        
+    
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" [checked]="tipoSeleccionado ? tipoSeleccionado.estado : false">
+            <label class="form-check-label" for="flexRadioDefault1">
+             Uso
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" [checked]="tipoSeleccionado ? !tipoSeleccionado.estado: false">
+            <label class="form-check-label" for="flexRadioDefault2">
+              Deshuso
+            </label>
+          </div>
+        </div>
+      <button type="submit" class="boton btn btn-primary btn-Submit">Enviar</button>
+        </div>
+        
+      </form>
+    
+  </div>

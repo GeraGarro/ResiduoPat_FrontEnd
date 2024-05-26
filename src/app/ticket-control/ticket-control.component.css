@@ -1,0 +1,119 @@
+
+.pendiente{
+  background: rgb(224, 224, 36);
+  color: black;
+  font-weight: 800;
+  
+}
+
+.contenedor-principal{
+  display: block;
+}
+#titulo{
+  background-color: rgba(50, 104, 28, 0.692);
+} 
+
+#columna-peso{
+ 
+  text-align:center ;
+  text-wrap: nowrap;
+}
+
+.icons-acciones{
+ 
+  margin: 1vh ;
+  width: 5vh;
+  height: 4vh;
+  border: none;
+object-fit: cover;
+object-position: center;
+border-radius: 30% ;
+}
+.vacio{
+  color: brown;
+  font-size: 50px;
+  
+}
+
+.icons-acciones>img{
+  width: 4vh;
+ 
+}
+
+.mat-mdc-table .mat-mdc-header-cell{
+  background-color: rgb(54, 54, 54);
+  color: rgb(255, 250, 250);
+  border: 1px solid rgb(189, 186, 186);
+  text-align: center;
+ padding: none;
+
+}
+
+.tabla-contenedor{
+  padding: 1rem;
+}
+
+.contenedor-dashboars{
+  width: 80%;
+  display: flex; 
+  justify-content: space-around;
+}
+
+.estilo-general{
+  font-size: 15px;
+}
+.columna-estado {
+  text-align: right;
+  width: 50px;
+}
+
+.columna-estado img {
+  width: 20px;
+  height: 20px;
+}
+.procesado{
+  padding: 7px;
+  background-color: rgba(24, 112, 30, 0.973);
+  color: rgb(214, 212, 207);
+  border-radius: 80%;
+}
+
+.pendiente{
+  padding: 7px;
+  background-color: rgba(250, 246, 15, 0.973);
+  color: rgb(88, 85, 75);
+  border-radius: 80%;
+}
+                                         
+@media screen and (max-width: 800px) {
+ 
+  /* .columna_invi {
+    
+    background-color: red;
+  } */
+  .estilo-general{
+    font-size: 16px;
+  }
+
+  .icons-acciones{
+ 
+    margin: 0 ;
+    width: 5vh;
+    height: 4vh;
+    border: none;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 30% ;
+  }
+  
+  .icons-acciones>img{
+    width: 3vh;
+   
+  }
+  .tabla-contenedor{
+    overflow: scroll;
+    margin: 2vh 0px;
+    padding: 0;
+  }
+
+}

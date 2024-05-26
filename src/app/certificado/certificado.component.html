@@ -1,0 +1,89 @@
+
+<!-- Componente en el cual se selecciona Transportista y Periodo para luego desplegar el Componente Tabla de los Ticket Correspondiente a los items Seleccionados -->
+<div class="pantalla-tabla-titulo">
+
+  <h2 id="titulo">Certificado</h2>
+
+ 
+  <div class="contenedor-principal">
+
+     <!--  Menu Desplegable para seleccionar Transportistas-->
+    <div #selectBox class="select-box select-transportista" desplegableCustom>
+      <label class="labelMenuDesplegable">Transportista</label>
+      <div class="select-option">
+        <input
+          #inputValor
+          type="text"
+          placeholder="Seleccionar Transportista"
+          id="input_valor"
+          [(ngModel)]="selectTransportistaId"
+          [value]="selectTransportistaId !== 0 ? selectTransportistaId : ''"
+          readonly
+        />
+      </div>
+
+      <div class="content">
+        <div class="buscador">
+          <input type="text" id="OpcionBuscar" placeholder="Buscar" name="" />
+        </div>
+
+        <ul class="opciones">
+          <li
+            *ngFor="let transportista of listaTransportistas"
+            (click)="onSelectTransportista(transportista.id_transportista)"
+          >
+            {{ transportista.apellido + " " + transportista.nombre }}
+          </li>
+        </ul>
+      </div>
+    </div>
+
+
+<!-- Una vez seleccionado el Transporista, Vamos a Seleccionar Los certificados Generados de todos los periodos existente relacionado al transportista -->
+    <div #selectBox class="select-box select-certificado" desplegableCusto *ngIf="isSelectTransportista">
+
+      <label class="labelMenuDesplegable">Certificado Periodo</label>
+      <div class="select-option">
+        <input
+          #inputValor type="text"
+          placeholder="Seleccionar Periodo"
+          id="input_valor"
+          [(ngModel)]="selectedCertificadoId"
+          [value]="selectedCertificadoId !== 0 ? selectedCertificadoId : ''"
+          readonly
+        />
+      </div>
+
+      <div class="content">
+
+          <div class="buscador">
+
+              <input type="text" 
+                id="OpcionBuscar" 
+                placeholder="Buscar" 
+                name="" 
+              />
+          </div>
+
+            <ul class="opciones">
+
+            <li
+            *ngFor="let certificado of listaCertificados"
+            (click)="certificado.id !== undefined && onSelectCertificado(certificado.id)"
+          >
+              {{ certificado.mes + " " + certificado.anio }}
+            </li>
+
+          </ul>
+        </div>
+
+    </div>
+    
+  </div>
+
+  <app-ticket-control
+    
+    *ngIf="selectedCertificadoId !== undefined"
+    [idCertificado]="selectedCertificadoId"
+  />
+</div>

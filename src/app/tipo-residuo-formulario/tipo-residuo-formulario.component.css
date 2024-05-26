@@ -1,0 +1,90 @@
+
+
+.contenedor-principal{
+    position: relative;
+    border-radius: 10%;
+    z-index: 999;
+    width: 100%;
+    height: 100%;
+   /* display: flex;
+   align-items: center;
+   justify-content: center; */
+ 
+}
+
+.contenedor-formulario{
+    position: relative;
+
+    flex: 1;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    
+    padding: 3vh 5vh;
+   
+    
+}
+.titulo-formulario{
+    
+    display: inline;
+    color: rgb(231, 222, 222);
+    font-size: 5.5vh;
+    align-self: stretch;
+    text-align: center;
+    border-radius: 20px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    padding: 1vh 2vh;
+}
+label{
+    padding: .5vh;
+    
+    font-weight: 500;
+    color: rgb(39, 37, 37);
+ 
+}
+.boton{
+   
+}
+
+
+.container-2,.container-3{
+    position: absolute;
+   
+    background-color: rgb(153, 97, 14);
+    z-index: 99;
+  
+    
+  
+}
+
+.container-3{
+    background-color: red;
+    transform: scale(1.07);
+    z-index: 98;
+    
+}
+@media screen and (width<1300px) {
+    .contenedor-formulario{
+        font-size: 90%;
+        flex-direction: column;
+    }
+}
+
+ .container-2,.container-3{
+    position: absolute;
+   
+    background-color: rgb(153, 97, 14);
+    z-index: 99;
+  
+    transform: scale(1.05)
+  
+}
+
+.container-3{
+    background-color: red;
+    transform: scale(1.07);
+    z-index: 98;
+}
+ 
