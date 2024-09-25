@@ -1,0 +1,134 @@
+
+.contenedor-lista{
+  
+    
+    flex: 1;
+    max-width: 90%;
+    flex-wrap: nowrap;
+    
+    display: flex;
+  /*   flex-direction: column; */
+    align-items: center;
+   height: 80%;
+}
+
+.contenedor-ul{
+    width: auto;
+  height: 100%;
+   
+    display: flex;
+   
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    overflow-x: auto;
+    padding: 0px 10px;
+}
+
+.list-group-item{
+  
+    min-width: 200px;
+    text-align: center;
+    font-weight: 500;
+    font-style: oblique;
+    border:  1px solid gainsboro;
+    box-shadow: 8px -2px 4px 5px rgba(0, 0, 0, 0.4);
+    margin: 0;
+   
+}
+
+.list-group-item>label{
+    cursor: pointer;
+    
+}
+.inactivos{
+  
+    background-color: rgba(245, 7, 7, 0.801);
+   color: rgba(2, 7, 19, 0.911);
+    
+   } 
+   .activos{
+    background-color: rgba(8, 196, 33, 0.726);
+  
+   }
+
+
+img{
+    width: 20px;
+    border-radius: 40%;
+    margin:5px ;
+}
+
+#span-tipo{
+    background-color: aliceblue;
+    padding: 3px;
+    border-radius: 20%;
+}
+
+.item{
+    font-size: 11px;
+    min-width: 120px;
+    text-align: center;
+    font-weight: 500;
+    font-style: oblique;
+    border:  1px solid gainsboro;
+    box-shadow: 4px -1px 2px 2px rgba(0, 0, 0, 0.473);
+    padding: 3px 5px;
+    list-style: none;
+    margin-left: 1.3vw;
+    margin-bottom: 1vh;
+   transition: transform .4s ease-in;
+}
+.item:hover{
+    transform: scale(1.1);
+}
+.item>label{
+    cursor: pointer;
+}
+
+
+@media screen and (max-width:700px) {
+
+    .contenedor-ul{
+      flex-direction: row;
+     justify-content: center;
+     flex-wrap: nowrap;
+    ;
+    }
+    .item{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+       min-height: 75px;
+        margin-bottom: 10px;
+        box-shadow: none;
+        flex-wrap: nowrap;
+    }
+}
+
+
+@media screen and (max-width:1000px) {
+    .list-group-item{
+       
+        height: max-content;
+        margin-bottom: 10px;
+        box-shadow: none;
+      
+    }
+    .item{
+        font-size: 13px;
+        height: max-content;
+        margin-bottom: 10px;
+        box-shadow: none;
+        margin-left: 2.5vw;
+    }
+    
+}
+
+
+
+
+
+

@@ -9,7 +9,7 @@ export class ApiTicketService {
 
   private baseURL = 'http://localhost:8080/api/TicketControl';  
 
-  constructor(private _httpClient: HttpClient) {}
+  constructor(private _httpClient: HttpClient) { }
 
   public getTickets(): Observable<ITicket[]> {
     const getTodosTicket=`${this.baseURL}/verTodos`;

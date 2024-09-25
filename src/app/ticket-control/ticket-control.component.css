@@ -6,9 +6,7 @@
   
 }
 
-.contenedor-principal{
-  display: block;
-}
+
 #titulo{
   background-color: rgba(50, 104, 28, 0.692);
 } 
@@ -49,10 +47,13 @@ border-radius: 30% ;
 
 }
 
-.tabla-contenedor{
-  padding: 1rem;
-}
+.tabla-contenedor {
 
+  min-height: 250px;
+  max-height: 50vh; /* Ajusta según sea necesario */
+  overflow-y: auto;
+ 
+}
 .contenedor-dashboars{
   width: 80%;
   display: flex; 
@@ -60,11 +61,17 @@ border-radius: 30% ;
 }
 
 .estilo-general{
-  font-size: 15px;
+  font-size: 10px;
 }
 .columna-estado {
   text-align: right;
   width: 50px;
+}
+.cabecera-fija {
+  position: sticky;
+  top: 0;
+  background-color: white; /* Color de fondo para evitar que se superponga con el contenido al hacer scroll */
+  z-index: 1000; /* Asegura que la cabecera quede encima de las filas */
 }
 
 .columna-estado img {
@@ -92,9 +99,19 @@ border-radius: 30% ;
     background-color: red;
   } */
   .estilo-general{
-    font-size: 16px;
+    font-size: 10px;
   }
-
+  th, td{
+    /* Borde de las celdas */
+    height: 30px;
+  
+    text-align: center;
+   
+ 
+   /*  border: 1px solid rgba(0, 0, 0, 0.212);
+     */
+  
+  }
   .icons-acciones{
  
     margin: 0 ;
@@ -111,9 +128,10 @@ border-radius: 30% ;
    
   }
   .tabla-contenedor{
-    overflow: scroll;
+   overflow: auto;
     margin: 2vh 0px;
     padding: 0;
+ 
   }
 
 }

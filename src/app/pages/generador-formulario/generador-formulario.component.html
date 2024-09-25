@@ -1,0 +1,119 @@
+<div class="contenedor-fondo" ></div>
+<div class="contenedor-principal">
+  
+<div class="container" *ngIf="!this.modal && !this.accionAceptada">
+  <form [formGroup]="formularioGenerador" (ngSubmit)="onSubmit()">
+    <h2 id="titulo"><span>{{titulo}}</span></h2>
+
+
+    <!-- Contenedor Input Nombre Generador -->
+    <div class="mb-3 contenedor-input" >
+      <label for="nombre" class="form-label">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye-check" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#009988" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+          <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+          <path d="M11.102 17.957c-3.204 -.307 -5.904 -2.294 -8.102 -5.957c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6a19.5 19.5 0 0 1 -.663 1.032" />
+          <path d="M15 19l2 2l4 -4" />
+        </svg>
+        Nombre Titular</label>
+      <input class="formulario" [ngClass]="{'is-invalid': hasErrors('nombre','required'),'input-disabled':estadoEdicion}" type="text" class="form-control input-formulario" id="nombre" formControlName="nombre">
+      <div class="text-danger mensajeError" *ngIf="hasErrors('nombre','required')">
+        Por favor Ingresa Nombre a Registrar
+      </div>
+    </div>
+
+
+    <!-- Contenedor Input Cuit -->
+    <div class="mb-3 contenedor-input" >
+      <label for="cuit" class="form-label">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye-check" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#009988" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+          <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+          <path d="M11.102 17.957c-3.204 -.307 -5.904 -2.294 -8.102 -5.957c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6a19.5 19.5 0 0 1 -.663 1.032" />
+          <path d="M15 19l2 2l4 -4" />
+        </svg>
+        CUIL/CUIT</label>
+      <input  class="form-control input-formulario" [ngClass]="{'is-invalid': hasErrors('cuit','required'),'input-disabled':estadoEdicion}" type="number" id="cuit" formControlName="cuit">
+      <div class="text-danger mensajeError" *ngIf="hasErrors('cuit','required')">
+        Ingrese Numero CUIT o CUIL
+      </div>
+      <div class="text-warning mensajeError" *ngIf="hasErrors('cuit','min')">
+        Error!! Ingrese CUIT/CUIL con un valor a 11 digitos
+      </div>
+      <div class="text-warning mensajeError" *ngIf="hasErrors('cuit','max')">
+        Error!! Ingrese CUIT/CUIL con un valor a 11 digitos
+      </div>
+    </div>
+
+
+    <!-- Contenedor Input Dirección -->
+    <div class="mb-3 contenedor-input">
+      <label for="direccion" class="form-label">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye-check" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#009988" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+          <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+          <path d="M11.102 17.957c-3.204 -.307 -5.904 -2.294 -8.102 -5.957c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6a19.5 19.5 0 0 1 -.663 1.032" />
+          <path d="M15 19l2 2l4 -4" />
+        </svg>
+        Direccion</label>
+      <input class="input" [ngClass]="{'is-invalid': hasErrors('direccion','required'),'input-disabled':estadoEdicion}" type="text" class="form-control input-formulario" id="direccion" formControlName="direccion">
+      <div class="text-danger mensajeError" *ngIf="hasErrors('direccion','required')">
+        Ingresar Direccion del Generador
+      </div>
+    </div> 
+
+    <!-- Contenedor Input Telefono -->
+    <div class="mb-3 contenedor-input">
+      <label for="cuit" class="form-label">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye-check" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#009988" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+        <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+        <path d="M11.102 17.957c-3.204 -.307 -5.904 -2.294 -8.102 -5.957c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6a19.5 19.5 0 0 1 -.663 1.032" />
+        <path d="M15 19l2 2l4 -4" />
+      </svg>Telefono</label>
+      <input  [ngClass]="{'is-invalid': hasErrors('cuit','required'),'input-disabled':estadoEdicion}" type="number" class="form-control input-formulario" id="cuit" formControlName="telefono">
+      <div class="text-danger mensajeError" *ngIf="hasErrors('cuit','required')">
+        Ingrese Un Telefono Valido
+      </div>
+    </div>
+
+    <!-- Contenedor input Radio Opciones Status Generador -->
+    <div class="mb-3">                                   
+      <div id="checkEstado" [ngClass]="{'input-disabled':estadoEdicion}" >
+      <span class="estado">Estado de Actividad</span>
+
+      <div class="form-check">
+        <input class="form-check-input" type="radio"  value="Activo" formControlName="estadoActividad">
+        <label class="form-check-label" for="flexRadioDefault1">
+         Activo
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input"  type="radio" value="Sin actividad" formControlName="estadoActividad">
+        <label class="form-check-label" for="flexRadioDefault2">
+          Sin Actividad
+        </label>
+      </div>
+    </div>
+    </div>
+<div class= "container-btn">
+  <button type="submit" class="btn btn-primary btn-Submit"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check-filled" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M17 3.34a10 10 0 1 1 -14.995 8.984l-.005 -.324l.005 -.324a10 10 0 0 1 14.995 -8.336zm-1.293 5.953a1 1 0 0 0 -1.32 -.083l-.094 .083l-3.293 3.292l-1.293 -1.292l-.094 -.083a1 1 0 0 0 -1.403 1.403l.083 .094l2 2l.094 .083a1 1 0 0 0 1.226 0l.094 -.083l4 -4l.083 -.094a1 1 0 0 0 -.083 -1.32z" stroke-width="0" fill="currentColor" />
+</svg>Aceptar</button>
+
+<button type="button" class=" btn btn-edit" (click)="hablitarEdicion()"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pencil" width="36" height="36" viewBox="0 0 24 24" stroke-width="1.5" stroke="#597e8d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+  <path d="M13.5 6.5l4 4" />
+</svg> Activar Edición</button></div>
+    
+  </form>
+</div>
+
+<div class="contenedor-modal" *ngIf="modal"  >
+ 
+
+  <app-modal  (accionModal)="toggleModal($event)"  [_mensaje]="mensajeModal" [isSuccessful]="accionAceptada"/> 
+ </div>
+</div>

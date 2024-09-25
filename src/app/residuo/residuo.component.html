@@ -1,23 +1,74 @@
+<!-- 
 
 
-<h2 id="titulo">Residuos Retirados</h2>
 
 <div class="contenedor-lista-residuo">
-  <ul class="list-group">
-    <li class="list-group-item" *ngFor="let residuo of residuos">
-      <input class="form-check-input me-1" type="radio" name="listGroupRadio" [value]="residuo.id" [id]="'radio' + residuo.id">
-      <label class="form-check-label" [for]="'radio' + residuo.id">{{ residuo.tipo_residuo.nombre }}</label>
-      <button class="boton-editar"><img src="../../assets/edit.png" alt="edit"></button>
-    </li>
-    <button type="submit" class="boton-agregar"><img src="../../assets/icons/add.png" alt="boton-agregar" >Agregar</button>
-  </ul>
-  
-  <div class="contenedor-formulario">
-  <app-residuo-formulario></app-residuo-formulario>
-  </div>
-
-</div>
+<table class="tabla-residuos">
+    <thead>
+        <tr>
+          <th>Codigo</th>
+          <th class="cabecera-nombre">Nombreclatura Residuo</th>
+          <th>Peso</th>
+        
+          </tr>
+      </thead>
+      <tbody>
+       <tr *ngFor="let item of residuosLista">
+          <td >{{item.tipoResiduo.id}} </td>
+          <td>{{item.tipoResiduo.nombre}}</td>
+          <td class="col-peso">{{item.peso}}</td>
+          <td><img class="img-delete" src="../../assets/icons/delete.png" alt=""> </td>
+                            </tr> 
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="2">Total:</td>
+          <td class="peso-total">{{totalPeso()}}</td>
+        </tr>
+      </tfoot>
+</table>
 
 <div>
-  
+
 </div>
+</div> -->
+
+
+
+
+
+<div class="contenedor-lista-residuo">
+  <table class="tabla-residuos">
+     <caption>
+      Residuos Retirados
+      <button class="btn-agregar">Agregar</button>
+     </caption>
+     
+        <tbody>
+         <tr *ngFor="let item of residuosLista">
+
+            <td class="columna-tipo">
+              
+          <select class="form-select" (change)="onTipoChange($event, item)">
+              <option *ngFor="let tipo of getFilteredTipos(item)" [value]="tipo.id" [selected]="tipo.id === item.tipoResiduo.id">
+                {{ tipo.codigo }}
+              </option>
+            </select> </td>
+
+            <td id="columna-nombre">{{item.tipoResiduo.nombre}}</td>
+            <td class="col-peso">{{item.peso}}</td>
+            <td><img class="img-delete" src="../../assets/icons/delete.png" alt=""> </td>
+                              </tr> 
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="2">Total:</td>
+            <td class="peso-total">{{totalPeso()}}</td>
+          </tr>
+        </tfoot>
+  </table>
+  
+  <div>
+  
+  </div>
+  </div>

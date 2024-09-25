@@ -1,0 +1,148 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Andika:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+ label{
+    font-weight: 600;
+    color: rgb(253, 253, 253);
+    font-size: 25px;
+  /*   border-bottom: 2px solid white; */
+  background-color: black;
+    border-radius: 5px;
+    padding: 0 20px;
+} 
+
+
+.contenedor-principal{
+    position: relative;
+ width: 100%;
+  height: 100%;
+background-color: rgba(0, 0, 0, 0.39);
+  z-index: 999;
+  
+}
+.contenedor-fondo{
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+
+background-image: url("../../../assets/background/residuoHospitalarios.jpeg");
+background-repeat: no-repeat;
+background-size: cover;
+/* filter: blur(1px); */
+/* filter: sepia(.3); */
+z-index: 99;
+}
+
+form{
+    margin-top: 10px;
+    background-color: #f3dfdf59;
+    border: 3px solid rgba(0, 0, 0, 0.548);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  justify-content: space-evenly;
+    border-radius: 3%;
+    padding: 10px;
+    backdrop-filter: blur(3px) sepia(.5) contrast(80%) saturate(2); 
+   
+}
+i{
+    font-size: 50px;
+}
+#titulo span{
+
+    
+    color: azure;
+    padding: 10px;
+    border-radius: 50px 50px 5px 5px ;
+    font-weight: 800;
+    text-shadow: -7px 2px 5px  rgba(12, 12, 12, 0.712);
+    display: inline-block;
+    transform: rotateX(15deg) ;
+  line-height: 5vh;
+   font-size: 25px;
+   padding-bottom: 3px;
+   border-bottom: 2px solid rgba(240, 255, 255, 0.514);
+}
+
+.estado{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    
+    color: #aff145;
+    font-size: 25px;
+    background-color: #020202c4;
+    padding: 5px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+  
+#checkEstado{
+    margin-top: .5vh;
+}
+
+.btn{
+    align-self: center;
+    font-size: 18px;
+   width: 150px;
+}
+
+.btn-edit{
+    color: #eee7e7;
+    background-color: rgba(65, 17, 87, 0.897);
+}
+.container-btn{
+    display: flex;
+    justify-content: space-evenly;
+}
+.input-disabled{
+    width:  max-content;
+    padding: 10px;
+
+    display: block;
+    border-radius: 10px;
+}
+
+.input-formulario{
+    color: #49adf0;
+    
+}
+
+.contenedor-modal{
+    position: absolute;
+    top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+    background: rgba(11, 2, 20, 0.445);
+    z-index: 999;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+}
+@media screen and (min-width:1000px) {
+    #direccion,#nombre,#cuit{
+        width: 60%;
+    }
+
+    
+    #titulo span{
+ 
+        transform: rotateX(15deg )  scale3d(1.5, 1, 1.5);
+    }
+    label{
+        font-size: 20px;
+    }
+    input{
+        height: 30px;
+    }
+    .btn{
+        font-size: 22px;
+        width: 220px;
+    }
+}

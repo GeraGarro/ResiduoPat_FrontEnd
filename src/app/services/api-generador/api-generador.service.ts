@@ -17,25 +17,29 @@ private baseURL='http://localhost:8080/api/Generador';
     return this._httpClient.get<Generador[]>(urlPeticion)
   }
 
+  public getInfoGenerador(id:number):Observable<Generador>
+  {const urlPeticion=`${this.baseURL}/infogenerador/${id}`
+    return this._httpClient.get<Generador>(urlPeticion)}
+
     public crearGenerador(gen: Generador): Observable<any>{
       const urlPeticion=` ${this.baseURL}/crear`;
       return this._httpClient.post<any>(urlPeticion,gen);
     }
 
-    public eliminarGenerador(id: number):Observable<any>{
+    public eliminarGenerador(id: number):Observable<Generador>{
       const urlPeticion=`${this.baseURL}/eliminar/${id}`;
       return this._httpClient.delete<any>(urlPeticion);
     }
 
-    public updateGenerador(id_Generador:number,nuevoNombre?:string,nuevoCuit?:string,nuevaDireccion?:string,nuevoEstado?:boolean):Observable<Generador>{
-      let generadorEdito=new HttpParams();
-
-      if(nuevoNombre){generadorEdito=generadorEdito.set('nuevoNombreGen',nuevoNombre)}
-      if(nuevoCuit){generadorEdito=generadorEdito.set('nuevoCuitGen',nuevoCuit)}
-      if(nuevaDireccion){generadorEdito=generadorEdito.set('nuevaDireccionGen',nuevaDireccion)}
-      if(nuevoEstado){generadorEdito=generadorEdito.set('nuevoEstadoGen',nuevoEstado)}
-
-      return this._httpClient.put<Generador>(`${this.baseURL}/editar/${id_Generador}`, null, {params:generadorEdito})
+    public updateGenerador(id_Generador?:number,nuevoNombre?:string,nuevoCuit?:string,nuevaTelefono?:string,nuevaDireccion?:string,nuevoEstado?:boolean):Observable<Generador>{
+      const generadorEdito = {
+        nombre: nuevoNombre,
+        cuit: nuevoCuit,
+        telefono: nuevaTelefono,
+        direccion: nuevaDireccion,
+        estado: nuevoEstado
+    };
+      return this._httpClient.put<Generador>(`${this.baseURL}/update/${id_Generador}`, generadorEdito)
     }
 
     public cambioEstadoGenerador(id_Generador:number,nuevoEstado:boolean):Observable<Generador>{

@@ -1,0 +1,147 @@
+
+ 
+ /*desplegable*/
+
+ #titulo{
+  position: relative;
+     background-color: rgba(32, 69, 233, 0.692);
+     margin-bottom: 5vh;
+     
+    
+   }
+   h1{
+     font-size: 100px;
+   }
+   .select-box span{
+    color: rgb(212, 205, 205);
+    font-size: 20px;
+   font-family: Arial, Helvetica, sans-serif;
+   background-color: rgb(31, 20, 131);
+   padding: 10px;
+    border-radius: 10px 10px 0 0;
+    
+   }
+   .select-box {
+    margin-bottom: 10px;
+   width: 100%;
+    animation: animacionDesdeAbajo 1s linear  1 normal ;
+
+   }
+
+   mat-form-field{
+    width: 90%;
+    height: 60px;
+    display: flex;
+   }
+   mat-label{
+    font-size: 12px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+
+   }
+   mat-option{
+    font-size: 12px;
+   }
+   mat-select{
+    font-size: 15px;
+  
+   }
+   
+.contenedor-principal{
+  padding: 10vh 0;
+ height: 100vh;
+  position: relative;
+
+   display: flex;
+  flex-direction: column; 
+  
+ 
+  border-bottom: 2px groove rgb(161, 161, 157) ;
+  z-index: 999;
+  background-color: rgba(0, 0, 0, 0.39);
+  
+}
+  
+.contenedor-fondo{
+  position: absolute;
+
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+
+background-image: url("../../../assets/background/entregaAPlanta.jpeg");
+background-repeat: no-repeat;
+background-size: cover;
+z-index: 99;
+}
+
+.tabla-tickets{
+  
+  width: 90%;
+  height: 70vh;
+  border-radius: 10px;
+  flex: 1;
+}
+
+.contenedor-menu{
+  padding: 0 20%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-self: center;
+  width: 100%;
+
+ height: 20vh;
+ margin-bottom: 7vh;
+}
+
+
+   @keyframes animacionDesdeAbajo {
+    0%{
+      transform: translateY(200%);
+      opacity: 0;
+    }
+      50%{
+        transform: translateY(25%);
+        
+      }
+
+      75%{
+        opacity: .5;
+      }
+   100%{
+    transform:  translateY(0);
+    opacity: 1;
+   }
+    } 
+
+    @media screen and (max-width:800px) {
+      .contenedor-principal{
+        justify-content: center;
+        padding: 10vh 0;
+       
+      }
+      .mdc-data-table__cell{
+        padding: 0 5px 0 5px;
+      }
+
+      .contenedor-menu{
+        padding: 0 5%;
+        height: 15vh;
+        flex-direction: column;
+       }
+       mat-form-field{
+        width: 90%;
+        height: 60px;
+        
+       }
+     #titulo{
+      margin-bottom: 7.5vh;
+     }
+
+    }
+
+   
+    

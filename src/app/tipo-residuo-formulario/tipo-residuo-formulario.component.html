@@ -1,19 +1,32 @@
-<div class="container-2"></div>
-<div class="container-3"></div>
+<div class="contenedor-fondo"></div>
 <div class="contenedor-principal" >
 
       <form [formGroup]="formularioTipoResiduo" (ngSubmit)="enviar()">
         <div class="contenedor-formulario">
         <h3 class="titulo-formulario">Editar Tipo</h3>
         <div class="mb-3">
-          <label for="id_tipoResiduo" class="form-label">ID</label>
-          <input [value]="tipoSeleccionado?.id"  class="formulario"  type="number" class="form-control" id="id_tipoResiduo" formControlName="id_tipoResiduo" >
+          <label for="id_tipoResiduo" class="form-label label-formulario">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye-check" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#009988" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+              <path d="M11.102 17.957c-3.204 -.307 -5.904 -2.294 -8.102 -5.957c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6a19.5 19.5 0 0 1 -.663 1.032" />
+              <path d="M15 19l2 2l4 -4" />
+            </svg>
+            ID</label>
+          <input  [value]="tipoSeleccionado?.id"  class="formulario input-formulario"  type="number" class="form-control" id="id_tipoResiduo" formControlName="id_tipoResiduo" >
           
         </div>
 
         <div class="mb-3">
-          <label for="nombre_tipoResiduo" class="form-label">Nombre Tipo Residuo</label>
-          <input class="formulario" [ngClass]="{'is-invalid': hasErrors('nombre_tipoResiduo','required')}" type="text" class="form-control" id="nombre_tipoResiduo" formControlName="nombre_tipoResiduo" [value]="tipoSeleccionado?.nombre">
+          <label for="nombre_tipoResiduo" class="form-label label-formulario">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye-check" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#009988" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+              <path d="M11.102 17.957c-3.204 -.307 -5.904 -2.294 -8.102 -5.957c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6a19.5 19.5 0 0 1 -.663 1.032" />
+              <path d="M15 19l2 2l4 -4" />
+            </svg>
+            Nombre Tipo Residuo</label>
+          <input class="formulario input-formulario" [ngClass]="{'is-invalid': hasErrors('nombre_tipoResiduo','required')}" type="text" class="form-control" id="nombre_tipoResiduo" formControlName="nombre_tipoResiduo" [value]="tipoSeleccionado?.nombre">
           <div class="text-danger mensajeError" *ngIf="hasErrors('nombre_tipoResiduo','required')">
             Por favor Ingresa Nombre a Registrar
           </div>
@@ -23,13 +36,13 @@
         
     
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" [checked]="tipoSeleccionado ? tipoSeleccionado.estado : false">
+            <input class="form-check-input " type="radio" name="flexRadioDefault" id="flexRadioDefault1" [checked]="tipoSeleccionado ? tipoSeleccionado.estado : false">
             <label class="form-check-label" for="flexRadioDefault1">
              Uso
             </label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" [checked]="tipoSeleccionado ? !tipoSeleccionado.estado: false">
+            <input class="form-check-input " type="radio" name="flexRadioDefault" id="flexRadioDefault2" [checked]="tipoSeleccionado ? !tipoSeleccionado.estado: false">
             <label class="form-check-label" for="flexRadioDefault2">
               Deshuso
             </label>

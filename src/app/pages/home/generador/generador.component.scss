@@ -1,0 +1,73 @@
+table {
+    width: 100%; /* Ancho de la tabla */
+    background-color: rgb(238, 242, 245);
+/*     border-collapse: collapse; /* Elimina espacio entre bordes */
+   }
+   
+   .tabla-contenedor{
+    min-height: 150px;
+    max-height: 75%; /* Ajusta según sea necesario */
+    overflow-y: scroll;
+    
+   }
+  
+  th, td{
+    /* Borde de las celdas */
+    height: 50px;
+  
+    text-align: center;
+   
+ 
+   /*  border: 1px solid rgba(0, 0, 0, 0.212);
+     */
+  
+  }
+ 
+td{
+    font-size: 12px;
+
+}
+
+  .inactivos{
+  
+    background-color: rgba(245, 7, 7, 0.801);
+   
+    
+   } 
+   .activos{
+    background-color: rgba(8, 196, 33, 0.726);
+  
+   }
+   span{
+    width: 80%;
+   font-weight: 700;
+    border-radius: 25px;
+    padding: 10px 20px;
+    color: rgb(19, 21, 22);
+    text-wrap: nowrap;
+   }
+
+img{
+    width: 10px;
+}
+
+.filaAcciones{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+@media screen and (max-width:700px) {
+ 
+td{ text-wrap: nowrap;
+    font-size: 12px;
+
+}
+table{
+    overflow-x:visible ;
+}
+img{
+  width: 35px;
+}
+
+}

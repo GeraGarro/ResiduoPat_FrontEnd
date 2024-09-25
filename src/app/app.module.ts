@@ -4,20 +4,20 @@ import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TransportistaComponent } from './transportista/transportista.component';
-import { GeneradorFormularioComponent } from './generador-formulario/generador-formulario.component';
+
 import { TransportistaFormularioComponent } from './transportista-formulario/transportista-formulario.component';
 import{HttpClientModule} from '@angular/common/http';
 import {MatCardModule} from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 
-import { residuoModule } from './residuo/residuo.module';
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import localeEs from '@angular/common/locales/es-AR'
 import { registerLocaleData } from '@angular/common';
 import { MatDialogModule } from '@angular/material/dialog';
 import{residuoModalModule} from './residuo-modal/residuo-modal.module';
-import { TicketControlFormularioModule } from './ticket-control-formulario/ticket-control-formulario.module';
+
 import { DateFnsAdapter,DateFnsModule } from '@angular/material-date-fns-adapter';
 import{es} from 'date-fns/locale';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatDateFormats } from '@angular/material/core';
@@ -26,7 +26,12 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatDateFormats } from '
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-import { ModalComponent } from './modal/modal.component';
+
+
+
+
+
+
 
 
 
@@ -49,8 +54,11 @@ registerLocaleData(localeEs,'es');
   declarations: [
     AppComponent,
     TransportistaComponent,
-    GeneradorFormularioComponent,
     TransportistaFormularioComponent,
+  
+ 
+   
+   
  
    
    
@@ -64,13 +72,13 @@ registerLocaleData(localeEs,'es');
     FormsModule,
     HttpClientModule,
 MatCardModule,
-    TicketControlFormularioModule,
+   
     BrowserAnimationsModule,
     NoopAnimationsModule,
     MatDialogModule,
     residuoModalModule,
   
-    residuoModule,
+   
     MatTableModule,
     MatPaginatorModule,
     MatFormFieldModule,
@@ -80,4 +88,6 @@ MatCardModule,
   providers: [{provide:localeEs,useValue:'es'},{provide:DateAdapter, useClass:DateFnsAdapter},{provide:MAT_DATE_FORMATS,useValue:Date_Formats},{provide:MAT_DATE_LOCALE,useValue:es}],
   bootstrap: [AppComponent]
 })
+
+
 export class AppModule { }

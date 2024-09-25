@@ -7,7 +7,8 @@ import { TipoResiduo } from '../models/tipo_Residuos';
 @Component({
   selector: 'app-residuo-formulario',
   templateUrl: './residuo-formulario.component.html',
-  styleUrls: ['./residuo-formulario.component.css']
+  styleUrls: ['./residuo-formulario.component.css'],
+  standalone:true
 })
 export class ResiduoFormularioComponent implements OnInit{
   modoEdicion: boolean = false;

@@ -1,0 +1,40 @@
+<div class="contenedor-fondo"></div>
+<div class=" dashboard">
+
+  <app-dashboard [url]="urlReport" [estiloContenedorPrincipal]="estiloDashboardGenerador" [titulo]="'Tickets Hoja Ruta'" [contador]="_contadorTicket"/>
+
+  <app-dashboard [url]="urlReportWarning" [estiloContenedorPrincipal]="estiloDashboardTipo"  [titulo]="' Tickets de Lote Sin Procesar'" [contador]="_contadorTicketWarning"/>
+  
+  <app-dashboard [url]="urlGenerador" [titulo]="'Generadores Existentes'" [contador]="_contador"/>
+</div>
+<div class="contenedor-principal">
+ 
+<!-- contenedor hoja de ruta -->
+  <div class="contenedor hoja-ruta">
+  
+    <h4 class="titulo" appToggleVisibility>Hoja Ruta <span class="fechaHoja">4/8/2024</span><span class="fechaHoja">10/8/2024</span></h4>
+   
+    
+   <app-hoja-ruta-tickets (contadorTicket)="receptorContadorTicket($event.contador)" (contadorTicketWarning)="receptorContadorTicketWarning($event.contador)"/> 
+
+  </div>
+
+  <!-- contenedor Generador -->
+  <div class="contenedor generador" >
+
+    <h4 class="titulo" appToggleVisibility>Generadores Existentes </h4>
+
+    <app-generador (contadorEmitido)="recepcionDato($event.contado)"/> 
+    
+   
+  </div>
+<!-- contenedor tipo-residuos -->
+  <div class="contenedor tipo-Residuos">
+   
+
+    <h4 class="titulo" appToggleVisibility>Residuos Patologicós Registrados</h4>
+    <app-tipo-residuo /> 
+   
+  </div>
+
+</div>

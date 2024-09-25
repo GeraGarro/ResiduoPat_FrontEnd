@@ -6,11 +6,11 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ResiduoService } from '../services/api-residuo/api.serviceresiduos';
+
 import { ResiduoModalComponent } from '../residuo-modal/residuo-modal.component';
 import { Router, RouterModule } from '@angular/router';
 
-import { TicketControlFormularioComponent } from '../ticket-control-formulario/ticket-control-formulario.component';
+import { TicketControlFormularioComponent } from '../pages/ticket-control-formulario/ticket-control-formulario.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PesoPipe } from 'src/assets/pipe/peso';
 import { Certificado } from '../models/certificado.model';
@@ -20,12 +20,12 @@ import { Subscription, forkJoin } from 'rxjs';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
-import { TicketControlFormularioModule } from '../ticket-control-formulario/ticket-control-formulario.module';
+
 import { DATE_FORMATS } from '../../assets/DATE_FORMATS'; // Assuming your file is named date-formats.ts
 import { MatCardModule } from '@angular/material/card';
 import { SharedModule } from '../module/sharedModule';
 import * as FileSaver from 'file-saver';
-import { DashboardComponent } from '../dashboard/dashboard.component';
+import { DashboardComponent } from '../pages/home/dashboard/dashboard.component';
 
 /* import { Color, ScaleType } from '@swimlane/ngx-charts';
  */@Component({
@@ -33,7 +33,7 @@ import { DashboardComponent } from '../dashboard/dashboard.component';
   standalone:true,
   templateUrl: './ticket-control.component.html',
   styleUrls: ['./ticket-control.component.css'],
-  imports: [   MatTableModule,  MatPaginatorModule,  MatFormFieldModule,  MatSelectModule,  CommonModule , TicketControlFormularioModule,RouterModule ,MatCardModule,SharedModule,DashboardComponent ],
+  imports: [   MatTableModule,  MatPaginatorModule,  MatFormFieldModule,  MatSelectModule,  CommonModule , TicketControlComponent,RouterModule ,MatCardModule,SharedModule,DashboardComponent ],
  
 })
 
@@ -43,7 +43,7 @@ export class TicketControlComponent implements OnInit {
   
   TicketLista: ITicket[] =[];
 
-  displayedColumns: string[] = ['id_Ticket', 'generador', 'fechaEmisionTk','acciones'];
+  displayedColumns: string[] = ['id_Ticket', 'generador', 'fechaEmisionTk'];
 
   mostrarFormulario: boolean = false;
 isDashboard: boolean=false;
@@ -60,7 +60,7 @@ dataSource: MatTableDataSource<ITicket>;
     this.dataSource.paginator = this.paginator;
   }
 
-  constructor( public _dialog: MatDialog, private _apiService: ApiTicketService ,private _residuoService:ResiduoService,private router: Router,private apicertificado: ApiCertificadoService ) {
+  constructor( public _dialog: MatDialog, private _apiService: ApiTicketService ,private router: Router,private apicertificado: ApiCertificadoService ) {
     this.dataSource = new MatTableDataSource<ITicket>([]);
  
   }
@@ -75,51 +75,14 @@ dataSource: MatTableDataSource<ITicket>;
 
 
   ngOnInit(): void {
-   this._apiService.getTickets().subscribe(
-    data=>{
-      this.TicketLista=data
-      this.dataSource=new MatTableDataSource(this.TicketLista)
-    }
-   )
+
   }
   changePageSize(event: any) {
     this.paginator.pageSize = event.value;
-    // Puedes realizar otras acciones relacionadas con el cambio del tamaño de la página si es necesario.
+   
   }
 
-
-
-/*   obtenerTicketsCertificado(id:number): void {
-    this.apicertificado.getfindCertificado(id).subscribe(
-      (certificado: Certificado) => {
-  
-        const observables = certificado.listaTicketsDTO.map(element => {
-          return this._apiService.getTicketById(element);
-        });
-  
-        console.log(observables.length)
-        // Combinar todas las llamadas en una sola y suscribirse
-        if(observables.length!=0){
-          forkJoin(observables).subscribe(
-          (tickets: ITicket[]) => {
-            console.log(tickets); // Imprime el arreglo de tickets
-            this.dataSource.data = tickets.length === 0 ? [] : tickets;
-          },
-          error => {
-            console.error('Error obteniendo tickets:', error);
-          }
-        )}else{
-          this.dataSource.data=[];
-          console.log(this.dataSource.data)
-        }
-        ;
-      },
-      error => {
-        console.error('Error obteniendo certificado:', error);
-      }
-    );
-  } */
-
+/* 
   obtenerTicketsCertificado(id: number): void {
     this.apicertificado.getfindCertificado(id).subscribe(
         (certificado: Certificado) => {
@@ -150,8 +113,34 @@ dataSource: MatTableDataSource<ITicket>;
             console.error('Error obteniendo certificado:', error);
         }
     );
-}
+} */
 
+
+obtenerTicketsCertificado(id: number): void {
+  this.apicertificado.getfindCertificado(id).subscribe(
+    (certificado: Certificado) => {
+      if (certificado.listaTicketsDTO && certificado.listaTicketsDTO.length > 0) {
+        const observables = certificado.listaTicketsDTO.map(element =>
+          this._apiService.getTicketById(element)
+        );
+
+        forkJoin(observables).subscribe(
+          (tickets: ITicket[]) => {
+            this.dataSource.data = tickets.length === 0 ? [] : tickets;
+          },
+          error => {
+            console.error('Error obteniendo tickets:', error);
+          }
+        );
+      } else {
+        this.dataSource.data = [];
+      }
+    },
+    error => {
+      console.error('Error obteniendo certificado:', error);
+    }
+  );
+}
 
   async eliminarRegistro(id_Ticket:number) {
     const confirmacion = confirm('¿Desea Eliminar El Ticket con el ID ' + id_Ticket + '?');

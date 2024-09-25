@@ -7,15 +7,6 @@ node_modules/
 # Configuración de VS Code
 .vscode/
 
-# Archivos de configuración de Angular
-angular.json
-
-# Archivos de configuración de TypeScript
-tsconfig*.json
-
-# Archivos de bloqueo de paquetes
-package-lock.json
-
 # Otros archivos que no deseas rastrear
 .DS_Store
 .idea/

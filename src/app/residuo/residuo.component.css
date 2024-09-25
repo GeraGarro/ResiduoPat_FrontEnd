@@ -1,101 +1,112 @@
-h3{
-    color: rgb(44, 42, 39);
-    text-align: center;
-    display: inline-block;
-   padding: 1vh;
-   box-shadow: 5px 5px 3px 1px rgb(31, 109, 54);
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+.titulo-residuo{
+font-size: 30px;
 
-   
+padding: 5px;
+display: block;
+font-weight: 600;
 }
-
 .contenedor-lista-residuo{
- 
-    padding: 2vh 1vw;
-    box-shadow: 0px 0px 5px 2px black;
-    border-radius: .5vh;
-    display: flex;
-   
-    justify-content: space-between;
-    align-items: center;
+    background: rgb(255, 255, 255);
+    height: 100%;
 }
-.boton-agregar{
-
-    background: none;
-    border: none;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    font-size: 1.5rem;
-   border-radius: 3%;
-   transition: transform .3s ease-in-out,background .3s ease-in-out;
-}
-.boton-agregar>img{
-    margin-right: 1.5vw;
-   
-}
-.boton-editar{
-    background: none;
-    border: none;
-   
-}
-.boton-editar>img{
-    width: 35px;
-}
-.boton-agregar:hover{
-    color: white;
-    background: rgb(12, 88, 59);
-    transform: scale(1.05);
-}
-.list-group{
-    width: 50%;
-    color: rgba(0, 0, 0, 0);
-    background: none;
-   padding-right: 2vh;
-    z-index: 999;
-    display: flex;
-   
-}
-.list-group-item{
-    width: 90%;
-    
-    margin: 1vh auto;
-    background: none;
-    
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-weight: 500;
-    font-size: 20px;
-    border: none;
-}
-
-.contenedor-lista-residuo{
+.tabla-residuos{
     position: relative;
+
+  
+
+    width: 80%;
+    min-height: 10vh; 
+    text-align: center;
+    margin: auto;
+   
+}
+.tabla-residuos caption {
+    caption-side: top;
+    font-weight: bold;
+}
+.tabla-residuos>thead > tr{
+    background-color: rebeccapurple;
+    color: aliceblue;
+   font-size: 20px;
+ font-family: Arial, Helvetica, sans-serif;
+}
+.tabla-residuos>thead > tr > th{
+  
+    font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-style: normal;
  
 }
-.contenedor-formulario{
-    flex: 1;
-    padding: 2vh;
-    width: 40%;
-    border-left: 5px solid black;
+.tabla-residuos>tbody{
+background: white;
+color: black;
+overflow-y: auto;
+max-height: 500px;
+}
+.cabecera-nombre{
+    width: 10%;
+}
+.tabla-residuos>tbody > tr{
+    font-size: 12px;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.521);
+   height: 40px;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
 }
 
-@media screen and (max-width:750px) {
- .contenedor-lista-residuo{
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
- }
- .contenedor-formulario{
-    width: 100%;
-    border-top: 5px solid rgb(46, 45, 45);
-    border-left: none;
- }
- .list-group{
-    width: 100%;
-   margin: 0 1vw 1vh 2vh;
- }
- 
- h3{
-   margin-bottom: 1.5vh;
- }
+
+.tabla-residuos>tbody > tr:nth-child(even):hover {
+    background-color: #020202;
 }
+.tabla-residuos>tbody > tr:last-child{
+    border-bottom:3px solid #020202;
+}
+ .peso-total::after{
+    content: "Kg"
+ }
+.tabla-residuos> tfoot> tr{
+   
+  /*   background-color: rgb(23, 141, 23);
+    color: aliceblue; */
+    height: 45px;
+   
+}
+
+.img-delete{
+    
+    width: 25px;
+}
+.tabla-residuos thead >  tr{
+    
+    border-radius: 50%;
+}
+
+.col-peso::after{
+    content: "Kg";
+}
+
+.btn-agregar{
+    background: rgb(12, 116, 236);
+    color: azure;
+    border: none;
+    box-shadow: 1px 1px 1px 1px gray;
+    border-radius: 5px;
+}
+
+.btn-agregar:active{
+    background: rgb(24, 24, 24);
+}
+.columna-tipo{
+    width: 150px;
+}
+.form-select{
+    width: 100%;
+    font-size: 13px;
+}
+
+ @media screen and (max-width:600px) {
+    .tabla-residuos{
+        width: 95%;
+    }
+ }

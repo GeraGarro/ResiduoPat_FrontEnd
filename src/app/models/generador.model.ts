@@ -3,6 +3,8 @@ export interface Generador {
     nombre:           string;
     cuit:             string;
     direccion:        string;
+    legajo?:           string;
+    telefono:         string;
     estado: boolean;
 }
 
