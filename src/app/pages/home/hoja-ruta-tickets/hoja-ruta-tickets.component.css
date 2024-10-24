@@ -24,7 +24,7 @@
     min-height: 150px;
     max-height: 75%; /* Ajusta según sea necesario */
     overflow-y: scroll;
-   
+   width: 100%;
     
   }
 table {

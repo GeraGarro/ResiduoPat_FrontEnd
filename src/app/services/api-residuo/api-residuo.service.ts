@@ -1,7 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Residuo } from 'src/app/models/residuo.model';
+import { ListaResiduo } from 'src/app/models/ticket.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ private baseURL='http://localhost:8080/api/Residuo'
   return this._httpClient.get<Residuo>(urlPeticion)
   }
 
-  public crearResiduo(res: Residuo):Observable <any>{
+  public crearResiduo(res: ListaResiduo):Observable <any>{
     const urlPeticion=`${this.baseURL}/crear`
     return this._httpClient.post<any>(urlPeticion,res)
   }
@@ -29,7 +30,10 @@ private baseURL='http://localhost:8080/api/Residuo'
 
   }
 
-  public updateResiduo(){
-    
+  public updateResiduo(id: number, residuo: any): Observable<any>{
+    const headers= new HttpHeaders({ 'Content-Type': 'application/json'})
+    const url=`${this.baseURL}/update/${id}`;
+    return this._httpClient.put(url,residuo, {headers})
+
   }
 }

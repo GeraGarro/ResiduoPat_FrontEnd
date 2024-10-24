@@ -27,14 +27,6 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 
-
-
-
-
-
-
-
-
 export const Date_Formats: MatDateFormats={
   parse:{ dateInput:'dd-MM-yyyy'},
   display:{
@@ -45,25 +37,13 @@ export const Date_Formats: MatDateFormats={
   }
 }
 
-
 registerLocaleData(localeEs,'es');
-
-
 
 @NgModule({
   declarations: [
     AppComponent,
     TransportistaComponent,
     TransportistaFormularioComponent,
-  
- 
-   
-   
- 
-   
-   
-
- 
   ],
   imports: [
     BrowserModule,
@@ -71,23 +51,19 @@ registerLocaleData(localeEs,'es');
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-MatCardModule,
-   
+    MatCardModule,
     BrowserAnimationsModule,
     NoopAnimationsModule,
     MatDialogModule,
     residuoModalModule,
-  
-   
     MatTableModule,
     MatPaginatorModule,
     MatFormFieldModule,
     MatSelectModule,
-    
+  
   ],
   providers: [{provide:localeEs,useValue:'es'},{provide:DateAdapter, useClass:DateFnsAdapter},{provide:MAT_DATE_FORMATS,useValue:Date_Formats},{provide:MAT_DATE_LOCALE,useValue:es}],
   bootstrap: [AppComponent]
 })
-
 
 export class AppModule { }

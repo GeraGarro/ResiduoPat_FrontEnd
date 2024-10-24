@@ -10,6 +10,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { ITicket } from '../../../models/ticket.model';
 import { ApiTicketService } from '../../../services/api-ticket/api-ticket.service';
+import { TicketControlFormularioComponent } from '../../ticket-control-formulario/ticket-control-formulario.component';
 
 
 @Component({
@@ -23,7 +24,7 @@ import { ApiTicketService } from '../../../services/api-ticket/api-ticket.servic
     MatSelectModule,
 MatSlideToggleModule,
 FormsModule, RouterModule,
-RouterLink,
+RouterLink,TicketControlFormularioComponent
 ],
   templateUrl: './hoja-ruta-tickets.component.html',
   styleUrls: ['./hoja-ruta-tickets.component.css']

@@ -2,29 +2,30 @@
 
 .contenedor-principal {
     position: relative;
-    padding: 20px;
+   
     box-sizing: content-box;
     display: grid;
     grid-template-areas: "ruta ruta generador"
                         "ruta ruta generador"
                         "ruta ruta tipo";
-    grid-gap: 20px;
+    grid-gap: 10px;
     grid-template-rows: repeat(auto-fill, 1fr);
     grid-template-columns: repeat(auto-fill, 1fr);
     z-index: 999;
+
     }
 
 .contenedor-principal-flex {
     position: relative;
-    padding: 10px;
+
     box-sizing: content-box;
     display: grid;
     grid-template-areas: "ruta ruta generador"
                         "ruta ruta generador"
                         "ruta ruta tipo";
-    grid-gap: 40px;
-    grid-template-rows: repeat(auto-fill, 1fr);
-    grid-template-columns: repeat(auto-fill, 1fr);
+    grid-gap: 10px;
+    grid-template-rows: 2fr 2fr 1fr; /* Dos filas grandes para la hoja-ruta */
+    grid-template-columns: 2fr 1fr;
     z-index: 999;
     filter: opacity(0.90);
 }
@@ -36,7 +37,7 @@
     right: 0;
     bottom: 0;
    background: url(../../../assets/background/stacked-peaks-haikei.svg) ;
-    width: 102%; 
+    width: 100%; 
    
 }
 
@@ -59,7 +60,7 @@
     grid-area: ruta;
     height: 85vh;
     align-self: start;
-    width: 400px;
+   width: 100%;
 }
 
 .hoja-ruta > .btn {
@@ -111,7 +112,7 @@ span {
 }
 
 .contenedor {
-    width: 450px;
+   
     min-height: 70px;
     padding: 20px 5px 20px 5px;
     background-color: #f0f3f4;
@@ -290,6 +291,6 @@ span {
 
     .contenedor-principal,
     .contenedor-principal-flex {
-        grid-column-gap: 50px;
+        grid-column-gap: 10px;
     }
 }
