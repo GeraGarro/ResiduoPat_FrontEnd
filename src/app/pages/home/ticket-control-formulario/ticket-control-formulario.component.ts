@@ -1,12 +1,12 @@
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ApiGeneradorService } from '../../services/api-generador/api-generador.service';
+import { ApiGeneradorService } from 'src/app/services/api-generador/api-generador.service';
 
-import { ApiTicketService } from '../../services/api-ticket/api-ticket.service';
+import { ApiTicketService } from 'src/app/services/api-ticket/api-ticket.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { Transportista, ITicket,Generador } from '../../models/ticket.model';
-import { ApiTransportistaService } from '../../services/api-transportista/api-transportista.service';
-import { MatDatepicker } from '@angular/material/datepicker';
+import { Transportista, ITicket,Generador, Hoja } from 'src/app//models/ticket.model';
+import { ApiTransportistaService } from 'src/app//services/api-transportista/api-transportista.service';
+
 import { CommonModule, DatePipe } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -19,6 +19,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { ModalComponent } from 'src/app/modal/modal.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ServicioCompartidoService } from 'src/app/services/servicio-compartido/servicio-compartido.service';
+
 
 @Component({
   selector: 'app-ticket-control-formulario',
@@ -59,18 +61,25 @@ export class TicketControlFormularioComponent implements OnInit {
   selectGeneradorId: number | null=null;
  
   selectedTransportista = '';
-  
+
+  idHoja: number | null = null;
+
   mensajeModal:string='';
 
   modal:boolean=false;
+
+  private servicioCompartido= inject(ServicioCompartidoService)
 
   accionAceptada:boolean=false;
   toggleModal(state: boolean) {
     this.modal = state;
   }
 
+  @Output() ticketCreado = new EventEmitter<void>();
+  
   private readonly router=inject(Router);
   private previousModalState: boolean = this.modal;
+
 
   constructor(
     private datePipe: DatePipe,
@@ -117,21 +126,24 @@ export class TicketControlFormularioComponent implements OnInit {
 
 this.cargarGeneradores()
 
-  
+this.servicioCompartido.idHoja$.subscribe((idHoja) => {
+  this.idHoja = idHoja;
+  console.log('idHoja recibido:', this.idHoja);
+});
   }
 
-  ngDoCheck(): void {
+ /*  ngDoCheck(): void {
     if (this.previousModalState !== this.modal) {
       this.previousModalState = this.modal;
       if (!this.modal && this.accionAceptada) {
        setTimeout(()=>{
-        this.router.navigate(['/residuo']);
+        this.router.navigate(['/home']);
        },2000)
        
        
       }
     }
-  }
+  } */
 
 
   cargarGeneradores(): void {
@@ -182,6 +194,11 @@ this.cargarGeneradores()
   }
   onSubmit(){
    
+    if (!this.idHoja) {
+      console.error('No se recibió idHoja');
+      return;
+    }
+
      const id_transp=this.selectTransportistaId;
      const id_generador=this.selectGeneradorId;
      
@@ -200,7 +217,9 @@ this.cargarGeneradores()
         id_transportista: id_transp ?? 0
       };
      
-      
+      let hoja: Hoja={
+        id: this.idHoja ?? 0
+      };
 
       let generador: Generador={
         id: id_generador ?? 0
@@ -217,6 +236,7 @@ this.cargarGeneradores()
       {
         transportista: transportista,
         generador: generador,
+        hojaRuta:hoja,
         fechaEmisionTk: fechaRetiro ? new Date(fechaRetiro) : null,
         estado: false,
 
@@ -225,9 +245,11 @@ this.cargarGeneradores()
       this.apiTicketService.addTicket(nuevoTicket).subscribe(
         response =>{
           console.log(response)
+         
           this.modal=true;
           this.mensajeModal=response['message'];
           this.accionAceptada=true;
+          this.ticketCreado.emit();
         },
         error =>{
           console.error("Error al generar Ticket", error);

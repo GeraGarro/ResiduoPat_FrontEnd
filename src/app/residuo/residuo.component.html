@@ -18,20 +18,25 @@
 
             <td id="columna-nombre">{{item.tipoResiduo.nombre}}</td>
             <td class="col-peso">    <input 
-              type="number" 
+              type="text" 
               [(ngModel)]="item.peso" 
               (input)="recalcularTotal()" 
-              step="any"
+              step="any" 
+              appValidadorPeso
             /></td>
+            
             <td><img class="img-delete" src="../../assets/icons/delete.png" alt=""  (click)="deleteResiduo(i, item.id)"> </td>
                               </tr> 
         </tbody>
+        <caption class="container-no-data" *ngIf="residuosLista.length==0"><span class="span-no-data">Aún no Hay carga de datos En La Hoja</span></caption>
         <tfoot>
           <tr>
             <td colspan="2">Total:</td>
             <td class="peso-total">{{totalPeso}}</td>
           </tr>
         </tfoot>
+
+        
   </table>
   <button class="btn-finalizar" (click)="enviarListaResiduos()">Finalizar Carga</button>
   <app-modal-info>

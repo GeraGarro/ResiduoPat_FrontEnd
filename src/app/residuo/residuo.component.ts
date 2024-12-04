@@ -8,13 +8,15 @@ import { ApiServicesTipoResiduosService } from '../services/api-tipoResiduos/api
 import { FormsModule } from '@angular/forms';
 import { ApiResiduoService } from '../services/api-residuo/api-residuo.service';
 import { ModalInfoComponent } from '../modal-info/modal-info.component';
+import { ValidadorPesoDirective } from '../directivas/validador-peso.directive';
+import { ApiTicketService } from '../services/api-ticket/api-ticket.service';
 
 @Component({
   selector: 'app-residuo',
   templateUrl: './residuo.component.html',
   styleUrls: ['./residuo.component.css'],
  standalone:true,
- imports: [ResiduoFormularioComponent,CommonModule,FormsModule,ModalInfoComponent]
+ imports: [CommonModule,FormsModule,ModalInfoComponent,ValidadorPesoDirective]
 
 })
 
@@ -24,13 +26,15 @@ export class ResiduoComponent  implements OnInit {
  
   @Input() id_TicketControl?: number;
 
+
+
   listaTipoResiduos: TipoResiduo[]=[];
   originalResiduos: ListaResiduo[] = [];
   listaResAEliminar: number[] =[];
 
 apiTipoResiduo=inject(ApiServicesTipoResiduosService)
 apiResiduo= inject(ApiResiduoService)
-
+apiTicket= inject(ApiTicketService)
 
 totalPeso: number = 0; // Peso total
 
@@ -95,7 +99,13 @@ deleteResiduo(index: number ,id:number): void {
 }
 
 recalcularTotal() {
-  this.totalPeso =parseFloat( (this.residuosLista.reduce((total, item) => total + Number(item.peso || 0), 0)).toFixed(2));
+  this.totalPeso = this.residuosLista
+  .map(item => Number(item.peso)) // Convertir a número, si es posible
+  .filter(peso => !isNaN(peso)) // Filtrar valores no numéricos
+  .reduce((total, peso) => total + peso, 0);
+
+
+
 }
     //controla cuando cambias un  tipo de residuo
 onTipoChange(event: any, item: ListaResiduo) {
@@ -193,6 +203,16 @@ nuevosResiduos.forEach(residuo =>{
  
   })
   
+
+ 
+   const nuevoEstado = this.residuosLista.length > 0; 
+   if (this.id_TicketControl != null) {
+     this.apiTicket.actualizarEstado(this.id_TicketControl, nuevoEstado).subscribe({
+       next: () => console.log(`Estado del ticket actualizado a ${nuevoEstado}`),
+       error: err => console.error('Error al actualizar el estado del ticket:', err)
+     }); 
+   }
+
   this.modalInfo.nuevosResiduos = nuevosResiduos;
   this.modalInfo.residuosModificados = residuosModificados;
   this.modalInfo.residuosEliminados = residuosEliminados;

@@ -1,0 +1,18 @@
+ <div class="contenedor-lista">
+    
+    <h3 class="titulo">Tipos de Residuos Registrados</h3>
+
+   <!--  <button class="btn-desp" (click)="scrollLeft()">←</button> -->
+
+   <ul  class="contenedor-ul list-group ul-activos" >
+      <li class="item" *ngFor="let tipo of ListaTipoResiduos" (click)="seleccionarTipoResiduo(tipo)">
+        <span class="contenedor-estado span-codigo" [ngClass]="{'activos':tipo.estado,'inactivos':!tipo.estado}">
+          {{ tipo.codigo }}
+        </span>
+        <span class="span-nombre">{{ tipo.nombre }}</span>
+      </li>
+    </ul>
+      <!--  <button class="btn-desp" (click)="scrollRight()">→</button> -->
+
+       <button class="btn-add"><span class="span-btn">Agregar Tipo de Residuo</span></button>
+   </div>

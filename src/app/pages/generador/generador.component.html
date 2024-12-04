@@ -1,0 +1,45 @@
+<div class="contenedor-principal">
+
+<div class="contenedor-formulario" ><app-generador-formulario></app-generador-formulario></div> 
+
+  
+  <div class="tabla-scroll">
+  
+
+    <table class="tabla-tickets">
+      
+      <tbody *ngIf="ListaGeneradores.length>0" >
+         <tr class="fila-flex"*ngFor="let item of ListaGeneradores; let i = index " (click)="!item.estado &&onRowClicked(item)" style="cursor: pointer;" [ngClass]="{filaDesactivada: item.estado}">
+          
+          <td class="col-generador">
+            <div class="icons-condicion">      
+            
+              <img class="icons-estado" src="../../assets/icons/success.png" alt="success" *ngIf="item.estado">
+              <img class="icons-estado" src="../../assets/icons/warning.png" alt="warning" *ngIf="!item.estado">
+              
+            </div>
+            <span>{{ item.nombre }}</span>
+         
+      
+          
+          </td>
+          <td class="col-direccion"><span>{{ item.direccion }}</span></td>
+          <td class="col-direccion"><span>{{ item.cuit }}</span></td>
+        
+          
+          <td class="col-eliminar">
+            <img class="delete" src="../../../../assets/icons/delete.png" alt="delete" (click)="eliminarGenerador(1); $event.stopPropagation()" *ngIf="!item.estado">
+
+        <!--     <img class="delete" src="../../../../assets/icons/edit.png" alt="edit" (click)="cambiarestado(item.id_Ticket,false)" *ngIf="item.estado"> -->
+          </td>
+        </tr> 
+
+    
+      </tbody>
+
+      <caption class="container-no-data" *ngIf="ListaGeneradores.length==0"><span class="span-no-data">Aún no Hay carga de datos En La Hoja</span></caption>
+    </table>
+
+  </div>
+
+

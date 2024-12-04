@@ -3,6 +3,7 @@ export interface ITicket {
     codigo?: string;
     transportista:  Transportista;
     fechaEmisionTk: Date | null;
+    hojaRuta: Hoja;
     estado:   boolean;
     generador:      Generador;
     listaResiduos?:  ListaResiduo[];
@@ -20,12 +21,19 @@ export interface Transportista {
     estado?:    boolean;
 }
 
+export interface Hoja {
+    id?:          number;
+    fechaInicio?: Date;
+    fechaFin?:    Date;
+}
+
 export interface Generador {
     id?:               number;
     nombre?:           string;
     cuit?:             string;
     direccion?:        string;
     telefono?:         string;
+    legajo?:      string;
     estado?: boolean;
 }
 

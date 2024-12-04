@@ -1,17 +1,22 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, NgZone, Output, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterLink, RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import {  MatTableModule } from '@angular/material/table';
 import { ITicket } from '../../../models/ticket.model';
 import { ApiTicketService } from '../../../services/api-ticket/api-ticket.service';
-import { TicketControlFormularioComponent } from '../../ticket-control-formulario/ticket-control-formulario.component';
-
+import { ApiHojaService } from 'src/app/services/api-hoja_ruta/api-hoja.service';
+import { ServicioCompartidoService } from 'src/app/services/servicio-compartido/servicio-compartido.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmacionDialogoComponent } from 'src/app/confirmacion-dialogo/confirmacion-dialogo.component';
+import { format, parseISO } from 'date-fns';
+import { es } from 'date-fns/locale';
+import { FixedSizeVirtualScrollStrategy } from '@angular/cdk/scrolling';
 
 @Component({
   selector: 'app-hoja-ruta-tickets',
@@ -22,50 +27,83 @@ import { TicketControlFormularioComponent } from '../../ticket-control-formulari
     MatCardModule,
     MatFormFieldModule,
     MatSelectModule,
-MatSlideToggleModule,
-FormsModule, RouterModule,
-RouterLink,TicketControlFormularioComponent
+    MatSlideToggleModule,
+    FormsModule,
+    RouterModule,
 ],
   templateUrl: './hoja-ruta-tickets.component.html',
   styleUrls: ['./hoja-ruta-tickets.component.css']
 })
 export class HojaRutaTicketsComponent {
-listaTickets:ITicket []=[];
-columnas: string[]=['id','fecha','estado'];
-dataSource:MatTableDataSource<ITicket>;
+listaTickets:ITicket []=[
+ ];
 
 private readonly apiTicket= inject(ApiTicketService);
+private readonly apiHoja = inject(ApiHojaService);
+private servicioCompartido= inject(ServicioCompartidoService)
+ idHoja:number=0;
+ primerDiaSemana:String="";
 
- primerDia:Date;
-
- ultimoDia:Date;
+ ultimoDiaSemana:String="";
 
  @Output() contadorTicket=new EventEmitter<{contador: number}>();
  @Output() contadorTicketWarning=new EventEmitter<{contador: number}>();
-constructor(private router: Router){
+constructor(private router: Router,private cdr: ChangeDetectorRef,private dialog: MatDialog,private zone: NgZone){
   const hoy = new Date(); // Obtener la fecha actual
-  const [firstDayOfWeek, lastDayOfWeek] = this.getPrimerYUltimoDiaDeLaSemana(hoy); 
-  console.log("Primer día de la semana:", firstDayOfWeek);
-  this.primerDia=firstDayOfWeek;
-  console.log("Último día de la semana:", lastDayOfWeek.toLocaleDateString());
-  this.ultimoDia=lastDayOfWeek;
-  this.dataSource = new MatTableDataSource<ITicket>([]);
-  
+
+
+
 }
 
 ngOnInit(): void {
-this.apiTicket.getTickets().subscribe(
-  (data)=>{
-    console.log(data)
-  this.listaTickets=data
-  this.dataSource=new MatTableDataSource(this.listaTickets);
-  this.contadorTicket.emit({contador: this.listaTickets.length})
   
-  this.contadorTicketWarning.emit({contador: this.ticketsWarning(this.listaTickets).length})
-   } )
+  this.servicioCompartido.reload$.subscribe(() => {
+    this.cargaTickets();
+  });
+
+   this.apiHoja.getHojaActual().subscribe(
+    (response)=>{
+      console.log(response)
+      this.idHoja = response.data.id;
+     
+      this.servicioCompartido.setIdHoja(this.idHoja);
+
+     // Convertir las cadenas ISO a objetos Date
+     const fechaInicio = parseISO(response.data.fechaInicio as unknown as string);
+     const fechaFin = parseISO(response.data.fechaFin as unknown as string);
+
+       // Formatear las fechas correctamente
+    this.primerDiaSemana = format(fechaInicio, "dd/MM/yyyy", { locale: es });
+    this.ultimoDiaSemana = format(fechaFin, "dd/MM/yyyy", { locale: es });
+  
+      console.log("id fecha Inicio: "+ this.primerDiaSemana)
+      console.log("id fecha Fin: "+ this.ultimoDiaSemana)
+
+      this.servicioCompartido.reload$.subscribe(() => {
+        this.cargaTickets();
+      });
+          // Cargar los tickets inicialmente
+    this.cargaTickets();
+    }
+  )
+
+}
+
+cargaTickets(){
+  this.apiTicket.getTicketsByHoja(this.idHoja).subscribe(
+    (data)=>{
+      console.log(data)
+   this.listaTickets=data
+  
+    this.contadorTicket.emit({contador: this.listaTickets.length})
+    
+    this.contadorTicketWarning.emit({contador: this.ticketsWarning(this.listaTickets).length})
+     } )
+}
 
 
-
+recargarTickets(): void {
+  this.cargaTickets(); // Reutilizamos la función para recargar datos.
 }
 
 ticketsWarning(lista:ITicket[]){
@@ -83,24 +121,64 @@ return nuevaLista;
 onRowClicked(row: any): void {
   this.router.navigate(['/ticket-info'], { queryParams: { id: row.id_Ticket } });
 }
-//calcular el primer y Ultimo Dia de la Semana
 
-
- getPrimerYUltimoDiaDeLaSemana(date: Date): [Date, Date] {
-  const firstDayOfWeek = new Date(date);
-  const lastDayOfWeek = new Date(date);
-  
-  // Establecer el primer día de la semana como domingo (0)
-  firstDayOfWeek.setDate(date.getDate() - date.getDay());
-
-  // Establecer el último día de la semana como sábado (6)
-  lastDayOfWeek.setDate(date.getDate() + (6 - date.getDay()));
-
-  return [firstDayOfWeek, lastDayOfWeek];
+irFormularioNuevoTicket():void{
+  this.router.navigate
 }
 
+async deleteTicket(id:number | undefined){
 
+  if (!id) {
+    alert('El ID del Ticket no está definido.');
+    return;
+  }
 
+const dialogRef= this.dialog.open
+(ConfirmacionDialogoComponent)
+
+const confirmacion= await dialogRef.afterClosed().toPromise();
+
+if(confirmacion){
+  try{
+    const response:any =await this.apiTicket.eliminarTicket(id).toPromise();
+    console.log(response.mensaje)
+    if(response.resultado ==='éxito'){
+     
+    
+      this.zone.run(() => {
+        this.listaTickets = this.listaTickets.filter(ticket => ticket.id_Ticket !== id);
+      });
+        // Emitir eventos de actualización
+        this.contadorTicket.emit({ contador: this.listaTickets.length });
+        this.contadorTicketWarning.emit({ contador: this.ticketsWarning(this.listaTickets).length });
+
+        alert(response.mensaje);
+    }else{
+      alert(response.mensaje)
+    }
+  }catch(error){
+    console.error('Error al eliminar', error);
+    alert('Ocurrió un error al eliminar el ticket');
+  
+  }
+}
+  
+}
+
+cambiarestado(id:number | undefined, estado:boolean):void{
+  if (id === undefined) {
+    console.error('El ID del ticket no está definido');
+    return;
+  }
+
+  // Si id está definido, realiza la actualización
+  this.apiTicket.actualizarEstado(id, estado).subscribe({
+    next: () =>    this.recargarTickets(),
+        error: err => console.error('Error al actualizar el estado del ticket:', err)
+  });
+
+ 
+}
 }
 
 

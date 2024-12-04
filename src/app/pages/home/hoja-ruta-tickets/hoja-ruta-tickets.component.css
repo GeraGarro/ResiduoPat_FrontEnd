@@ -1,145 +1,235 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Roboto+Slab:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@200..800&display=swap');
 
-@import url('https://fonts.googleapis.com/css2?family=Scada:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+.contenedor-hoja {
+height: 100%;
+display: flex;
+flex-direction: column;
 
-:root{
-  --mat-table-row-item-container-height: 15px;
+  padding: 10px 10px 5px 5px;
 }
 
-.titulo{
-    display: inline-block;
-/*  background-color: rgb(0, 0, 0); */
- color: #181414;
- padding: 15px 6px;
- border-radius: 0 15px 15px 5px;
- margin-bottom: 10px;
- font-stretch: expanded;
- font-family: "Scada", sans-serif;
- font-weight: 700;
- font-style: normal;
+.tabla-tickets {
+  width: 100%;
+  
+/*   border-collapse: collapse;
+  table-layout: fixed;  *//* Asegura que todas las columnas tengan la misma proporción */
 }
-.tabla-contenedor {
-    /* Estilos existentes */
-    min-height: 150px;
-    max-height: 75%; /* Ajusta según sea necesario */
-    overflow-y: scroll;
-   width: 100%;
-    
-  }
-table {
-    width: 100%; /* Ancho de la tabla */
-    background-color: rgb(238, 242, 245);
-    
-/*     border-collapse: collapse; /* Elimina espacio entre bordes */
-   }
-  
-  th, td{
-    /* Borde de las celdas */
-    height: 50px;
-  
-    text-align: center;
-   
-   /*  border: 1px solid rgba(0, 0, 0, 0.212);
-     */
-  
-  }
-  th{
-        font-size: 23px;
-  }
-td{
-    font-size: 10px;
+thead{
+  background-color: rgb(158, 155, 155);
+  position: sticky; /* Permite que el encabezado se mantenga fijo */
+  top: 0; /* Fija el encabezado en la parte superior */
+  z-index: 1;
+}
+thead th {
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  padding: 10px;
+  text-align: center;
+  border-bottom: 1px solid rgba(158, 154, 154, 0.733);
+}
+
+/* Contenedor con scroll para el cuerpo de la tabla */
+.tabla-scroll {
+
+  max-height: 80%; /* Tamaño máximo del cuerpo con scroll */
+  overflow-y: auto; /* Habilita la barra de desplazamiento */
+  overflow-x: hidden;
+}
+.contenedor-hoja>caption{
+  width:max-content;
+  background-color: rgba(138, 137, 137, 0.233);
+  padding-left: 10px;
+} 
+
+
+/* Estilo de las celdas */
+td {
+ 
+  font-size: 11px;
+
+  text-align: center;
+  padding: 5px;
+ 
+}
+.fila-flex {
+  border-bottom: 1px solid gray;
+}
+/* Alineación específica para la primera y última columna */
+thead th:first-child, tbody td:first-child {
+  text-align: start;
+}
+
+thead th:last-child, tbody td:last-child {
+  text-align: right;
+}
+
+.icons-estado {
+ 
+  margin-right: 8px;
+}
+  .icons-estado{
+  width: 20px;
+}
+.delete{
+  width: 38px;
+}
+.col-estado{
+  display: flex;
+
+  align-items: center;
+  justify-content: space-evenly;
 
 }
-  th {
-   
-   color: rgb(7, 4, 4);
-   
-    text-align: center; /* Alineación del texto del encabezado */
-  }
-  
-  .mat-table-header {
-    background-color: #be0f0f; /* Color de fondo del encabezado */
-  }
-  
-  .mat-row:hover {
-    background-color: #b6a9a9; /* Efecto al pasar el mouse sobre una fila */
-  }
-
-  .mat-row{
-    padding: 3px;
-  }
-
-  mat-cell{
-    padding: 0px;
-  }
-  .inactivos{
-  
-    background-color: rgba(222, 231, 90, 0.959);
-   
-    
-   } 
-   .activos{
-    background-color: rgba(8, 196, 33, 0.726);
-  
-   }
-
-
-img{
-    width: 25px;
-}
-.icons-estado{
-    width: 22px;
-    margin-right: 5px;
-}
-#columna-estado{
-    font-size: 55%;
+.col-estado:not(th)>span{
+  background-color: aliceblue;
+  border-radius: 15px;
+  padding: 5px;
+ 
+  text-wrap: wrap;
 }
 .condicion{
-  font-size: 13px;
-  padding: 5px;
-  border-radius: 10px;
+  text-wrap: nowrap;
 }
-.filaAcciones{
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
+.finalizado {
+  color: rgb(57, 201, 38);
 }
 
-@media screen and (max-width:700px) {
- 
-td{ text-wrap: nowrap;
-    font-size: 12px;
+.revisar {
+  color: rgb(231, 172, 11);
+}
 
-}
-table{
-    overflow-x:visible ;
-}
-.tabla-contenedor {
-    /* Estilos existentes */
-    max-height: 470px; /* Ajusta según sea necesario */
-   
-  }
-  img{
-    width: 35px;
-  }
-  .titulo{
-    display: flex;
-  flex-direction: column;
-  text-align: center;
+.cabecera-flex,.fila-flex{
+  display: flex;
   align-items: center;
-  }
- .fechaHoja{
-  margin-left: 0;
-  font-size: 13px;
+  justify-content: center;
+}
+
+.cabecera-flex th, .fila-flex td {
+  flex: 1; /* Cada columna tiene igual proporción */
+  text-align: center;
+  padding: 10px;
+
+}
+.cabecera-flex:hover{
+  background-color: initial;
+  color: initial;
+}
+.delete{
+  background-color: rgba(255, 255, 255, 0.719);
+  padding: 5px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform .5s linear ;
+}
+.delete:hover{
+  transform: scale(1.1);
+  background-color: rgb(8, 8, 8);
+}
+.icons-condicion{
+  display: none;
+}
+
+.contenedor-hoja >caption{
+  margin: 0;
+  width: 100%;
+  display: inline-block;
+  background-color: rgba(0, 0, 0, 0.418);
+  color: rgb(255, 255, 255);
+  font-family: "Oxanium", sans-serif;
+  font-optical-sizing: auto;
+  font-weight:700;
+  font-style: normal;
+  margin-bottom: 25px;
+}
+
+.span-dato{
+  background-color: rgba(255, 255, 255, 0.267);
+  padding: 5px;
+  border-radius: 2px;
+  filter: drop-shadow(1px 1px 1px rgb(44, 44, 44));
+}
+
+.btn-add{
+  display: none;
+  margin-bottom: 10px;
+  width: 100%;
   
- }
- .tabla-contenedor {
-  /* Estilos existentes */
-
-  max-height: 85%; /* Ajusta según sea necesario */
-
+  align-items: center;
+  justify-content: center;
+  height: max-content;
+  border-radius: 5px;
+  border: none;
  
-  
+  right: 0px;
+  background: linear-gradient(45deg, rgb(69, 69, 212),rgba(34, 22, 97, 0.726));
+  color: aliceblue;
+ filter: drop-shadow(1px 1px 1px Black);
+ 
+}
+.btn-add::before{
+  content: "+";
+  font-size: 30px;
+  margin-right: 5px;
+}
+
+
+.span-no-data{
+  width: 100%;
+
+  text-align: center;
+  color: black;
+}
+
+.filaDesactivada{
+ 
+  cursor: default;
+}
+@media screen and (max-width: 768px) {
+.eliminar{
+  display: none;
+}
+ .col-eliminar:not(td){
+  align-self: stretch;
+  background-color: transparent;
+  border-bottom: none;
+}
+
+
+.col-estado, .col-direccion{
+  display: none;
+}
+
+.icons-condicion {
+   display: block; 
+  position: relative;
+ 
+  top: 0;
+  left: 0;
+  margin-bottom: 5px;
+}
+.icons-condicion> .icons-estado{
+  width: 15px;
+}
+
+.span-btn{
+  display: none;
+}
+
+.btn-add{
+  display: inline-block;
+}
+
+td{
+  font-size: 13px;
+  font-weight: 600;
 }
 }
+
+/* @media screen and ( max-width: 768px) and ( min-height: 610px) {
+  .tabla-scroll{
+    max-height: 40%;
+ 
+  }
+} */

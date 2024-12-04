@@ -2922,6 +2922,9 @@ body {
   }
 }
 @media (min-width: 768px) {
+  nav{
+    display: none;
+  }
   .offcanvas-md {
     --bs-offcanvas-height: auto;
     --bs-offcanvas-border-width: 0;
@@ -7630,63 +7633,12 @@ body {
 
 
 
-/* codigo mio */
-th{ text-align: center;
-  font-size: 100%;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-
-}
-td{
-  font-size: 115%;
-  font-family: var(--texto-tabla);
-  font-weight: 700;
- 
-}
-
-
-
-
-.titulo{
-  font-size: 17px;
-}
-
-
-.mat-button {
-  color: inherit;
-}
-
-tr:hover {
-  /* cursor: pointer; */
-  background: #000;
- color: white;
- transition: color .2s ease-in ;
-}
-
-.contenedor-principal{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
 
 .colorEstado{
   color:#f1f1f1;
 }
 
-#titulo{
-  display: inline-block;
-  font-family:"Libre Franklin", sans-serif;
-  letter-spacing: .2vw;
-  color: blanchedalmond;
-  text-align: center;
- 
- 
-  padding: .5rem 2rem 1rem 1rem;
 
-  text-align: center;
-
-  line-height: 4vh;
-}
 .select-box{
   
   width: 100%;
@@ -7698,52 +7650,6 @@ tr:hover {
 .select-option{
   position: relative;
   
-}
-
-.label-formulario{
-  font-weight: 600;
-  color: rgb(253, 253, 253);
-  font-size: 25px;
-/*   border-bottom: 2px solid white; */
-background-color: black;
-  border-radius: 5px;
-  padding: 0 20px;
-} 
-.input-formulario{
-  color: rgb(153, 193, 229);
-  background: rgba(2, 1, 2, 0.884);
-  font-weight: 700;
-  font-size: 20px;
-  height: 50px;
-}
-#titulo{
-
-  font-family: "Andika", sans-serif;
-font-weight: 400;
-font-style: normal;
-  border: 0px solid transparent;
-background-color: rgba(0, 0, 0, 0.096);
- 
-  perspective: 200px;
-  perspective-origin: center center;
-  z-index: 80;
-}
-
-@media screen and (min-width:1000px) {
-  #direccion,#nombre,#cuit{
-      width: 60%;
-  }
-
-  #titulo span{
-
-      transform: rotateX(15deg )  scale3d(1.5, 1, 1.5);
-  }
-  label{
-      font-size: 17px;
-  }
-  input{
-      height: 30px;
-  }
 }
 
 
@@ -7824,7 +7730,34 @@ border: none;
 }
 
 
+.container-no-data{
+  position: relative;
+  height: 100px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: rotate(2deg);
+    opacity: .5;
+}
 
+.btn-add{
+ 
+  margin-bottom: 10px;
+  width: 100%;
+  
+  align-items: center;
+  justify-content: center;
+  height: max-content;
+  border-radius: 5px;
+  border: none;
+ 
+  right: 0px;
+  background: linear-gradient(45deg, rgb(69, 69, 212),rgba(34, 22, 97, 0.726));
+  color: aliceblue;
+ filter: drop-shadow(1px 1px 1px Black);
+ 
+}
 @keyframes linearGradient {
   0%{
     background: linear-gradient(45deg, #414040d3 80%, rgba(0, 0, 0, 0.781) 20%);

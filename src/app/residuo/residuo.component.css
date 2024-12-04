@@ -56,8 +56,9 @@ max-height: 500px;
 }
 
 
-.tabla-residuos>tbody > tr:nth-child(even):hover {
+.tabla-residuos>tbody > tr:hover {
     background-color: #020202;
+    color: white;
 }
 .tabla-residuos>tbody > tr:last-child{
     border-bottom:3px solid #020202;
@@ -95,15 +96,15 @@ max-height: 500px;
 }
 
 .btn-agregar{
-    background: rgb(12, 116, 236);
-    color: azure;
+    background: rgb(51, 86, 182);
+    color: rgb(255, 255, 255);
     border: none;
     box-shadow: 1px 1px 1px 1px gray;
     border-radius: 5px;
 }
 
 .btn-agregar:active{
-    background: rgb(24, 24, 24);
+    background: rgb(31, 6, 90);
 }
 
 .btn-finalizar{

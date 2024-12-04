@@ -4,12 +4,12 @@ import {
   Validators,
   ReactiveFormsModule,
 } from "@angular/forms";
-import { ApiGeneradorService } from "../../services/api-generador/api-generador.service";
+import { ApiGeneradorService } from "../../../services/api-generador/api-generador.service";
 import { HttpErrorResponse } from "@angular/common/http";
-import { Generador } from "../../models/generador.model";
+import { Generador } from "../../../models/generador.model";
 import { ActivatedRoute, Router } from "@angular/router";
 import { CommonModule } from "@angular/common";
-import { ModalComponent } from "../../modal/modal.component";
+import { ModalComponent } from "../../../modal/modal.component";
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 

@@ -16,6 +16,10 @@ export class ApiTicketService {
     return this._httpClient.get<ITicket[]>(getTodosTicket);
   }
  
+  public getTicketsByHoja(id: number): Observable<ITicket[]>{
+    const url= `${this.baseURL}/hoja-ruta/${id}`;
+    return this._httpClient.get<ITicket[]>(url);
+  }
   public eliminarTicket(id:number):Observable<any>{
     const urlDelete=`${this.baseURL}/eliminar/${id}`;
     return this._httpClient.delete<any>(urlDelete);
@@ -39,5 +43,10 @@ const urlAdd= `${this.baseURL}/crear`;
   public getReporteTicketById(id:number): Observable<any>{
     const urlReport=`${this.baseURL}/generadorPDF/${id}`;
     return this._httpClient.get<any>(urlReport)
+  }
+
+  actualizarEstado(id: number, estado: boolean): Observable<void> {
+    const url = `${this.baseURL}/${id}/estado`; // Construir la URL dinámica
+    return this._httpClient.patch<void>(url, { estado });
   }
 }

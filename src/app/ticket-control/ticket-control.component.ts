@@ -10,7 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ResiduoModalComponent } from '../residuo-modal/residuo-modal.component';
 import { Router, RouterModule } from '@angular/router';
 
-import { TicketControlFormularioComponent } from '../pages/ticket-control-formulario/ticket-control-formulario.component';
+import { TicketControlFormularioComponent } from '../pages/home/ticket-control-formulario/ticket-control-formulario.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PesoPipe } from 'src/assets/pipe/peso';
 import { Certificado } from '../models/certificado.model';

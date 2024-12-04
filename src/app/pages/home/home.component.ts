@@ -1,28 +1,26 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 
 import { HojaRutaTicketsComponent } from 'src/app/pages/home/hoja-ruta-tickets/hoja-ruta-tickets.component';
 
-import { GeneradorComponent } from 'src/app/pages/home/generador/generador.component';
-import { TipoResiduoComponent } from 'src/app/pages/home/tipo-residuo/tipo-residuo.component';
+import { GeneradorComponent } from 'src/app/pages/generador/generador.component';
+
 import { TicketControlComponent } from 'src/app/ticket-control/ticket-control.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { ToggleVisibilityDirective } from 'src/app/directivas/toggle-visibility.directive';
+
+import { TicketControlFormularioComponent } from './ticket-control-formulario/ticket-control-formulario.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
     RouterModule,
-    TipoResiduoComponent,
-    GeneradorComponent,
     HojaRutaTicketsComponent,
-    TicketControlComponent,
     DashboardComponent,
     CommonModule,
 RouterModule,
-ToggleVisibilityDirective
+TicketControlFormularioComponent
   ],
   
   templateUrl: './home.component.html',
@@ -59,7 +57,10 @@ export class HomeComponent {
   receptorContadorTicketWarning(valor: number){
     this._contadorTicketWarning=valor
   }
-  constructor() {}
 
-  ngOnInit(): void {}
+  @ViewChild('hojaRutaTickets') hojaRutaTickets!: HojaRutaTicketsComponent;
+
+  onTicketCreado(): void {
+    this.hojaRutaTickets.recargarTickets(); 
+  }
 }

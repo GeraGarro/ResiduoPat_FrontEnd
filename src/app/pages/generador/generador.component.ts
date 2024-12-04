@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild,ChangeDetectorRef, Input, Output, EventEmitter  } from '@angular/core';
-import { Generador } from '../../../models/generador.model';
+import { Generador } from '../../models/generador.model';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { ApiGeneradorService } from '../../../services/api-generador/api-generador.service';
+import { ApiGeneradorService } from '../../services/api-generador/api-generador.service';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -10,13 +10,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { FormsModule } from '@angular/forms';
+import { ConfirmacionDialogoComponent } from 'src/app/confirmacion-dialogo/confirmacion-dialogo.component';
+import { MatDialog } from '@angular/material/dialog';
+import { GeneradorFormularioComponent } from './generador-formulario/generador-formulario.component';
 @Component({
   selector: 'app-generador',
   templateUrl: './generador.component.html',
   standalone:true,
   imports: [
-    RouterModule,
-    RouterLink,
     MatTableModule,
     CommonModule,
     MatPaginatorModule,
@@ -24,7 +25,8 @@ import { FormsModule } from '@angular/forms';
     MatFormFieldModule,
     MatSelectModule,
 MatSlideToggleModule,
-FormsModule
+FormsModule,
+GeneradorFormularioComponent
   ],
   styleUrls: ['./generador.component.scss']
 })
@@ -32,13 +34,11 @@ export class GeneradorComponent implements OnInit {
   
 ListaGeneradores: Generador[]=[];
 
-columnas: string[] = [ 'nombre', 'estado'];
-
 dataSource: MatTableDataSource<Generador>;
 
 @Output()contadorEmitido=new EventEmitter<{contado:number}>();
 
-constructor(private _apiGeneradorService:ApiGeneradorService ,private cdr: ChangeDetectorRef, private router: Router){
+constructor(private _apiGeneradorService:ApiGeneradorService ,private cdr: ChangeDetectorRef, private router: Router, private dialog: MatDialog){
   this.dataSource = new MatTableDataSource<Generador>([]);
 
 }
@@ -81,30 +81,28 @@ editarGenerador(id: number) {}
 
 
 async eliminarGenerador(idGenerador: number) {
-  if (confirm('¿Estás seguro de que deseas eliminar este generador?')) {
+  const dialogRef = this.dialog.open(ConfirmacionDialogoComponent);
+
+  const confirmacion = await dialogRef.afterClosed().toPromise();
+  if (confirmacion) {
     try {
-      // Realiza la solicitud de eliminación
       const response: any = await this._apiGeneradorService.eliminarGenerador(idGenerador).toPromise();
 
       if (response.resultado === 'éxito') {
-        // Muestra el mensaje de éxito al usuario
-        
         alert('Mensaje del servidor: ' + response.mensaje);
 
-        // Recarga completamente la página después de la eliminación
-        window.location.reload();
+        // Filtra el registro eliminado sin recargar la página
+        this.ListaGeneradores = this.ListaGeneradores.filter(gen => gen.id !== idGenerador);
       } else {
-        // Muestra el mensaje de error al usuario
         alert('Mensaje del servidor: ' + response.mensaje);
       }
     } catch (error) {
       console.error('Error al eliminar el generador:', error);
-
-      // Muestra un mensaje de error al usuario
       alert('Error al eliminar el generador. Por favor, inténtalo nuevamente.');
     }
   }
 }
+
 cambiarEstadoGenerador(idGenerador: number, nuevoEstado: boolean): void {
   this._apiGeneradorService.cambioEstadoGenerador(idGenerador, nuevoEstado)
     .subscribe((generadorActualizado: Generador) => {
