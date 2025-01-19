@@ -1,16 +1,16 @@
-import { Component, Input, OnInit, inject } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, inject } from "@angular/core";
 import {
   FormBuilder,
   Validators,
   ReactiveFormsModule,
 } from "@angular/forms";
-import { ApiGeneradorService } from "../../../services/api-generador/api-generador.service";
+import { ApiGeneradorService } from "../../../services/api/api-generador/api-generador.service";
 import { HttpErrorResponse } from "@angular/common/http";
-import { Generador } from "../../../models/generador.model";
+import { Generador } from "../../../services/models/generador.model";
 import { ActivatedRoute, Router } from "@angular/router";
 import { CommonModule } from "@angular/common";
 import { ModalComponent } from "../../../modal/modal.component";
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
 
 
 @Component({
@@ -24,6 +24,9 @@ export class GeneradorFormularioComponent implements OnInit {
 
   estadoEdicion: boolean = false;
  private  idGenerador?: number;
+
+ @Input() nuevo: boolean = false;
+@Output() estadoFormulario = new EventEmitter<{ estadoEdicion: boolean }>();
   titulo: string = "Crear Nuevo Generador";
 
   mensajeModal:string='';
@@ -34,7 +37,7 @@ export class GeneradorFormularioComponent implements OnInit {
   toggleModal(state: boolean) {
     this.modal = state;
   }
-
+  @Input() idRecibido!: number | undefined;
 
   private readonly router=inject(Router);
   private readonly _activatedRouter = inject(ActivatedRoute);
@@ -55,55 +58,62 @@ export class GeneradorFormularioComponent implements OnInit {
     direccion:["", Validators.required],
     telefono: ["", Validators.required],
     estadoActividad: ["Activo", Validators.required],
+    legajo: [""]
   });
 
+
   ngOnInit(): void {
-    this.getIdGenerador();
+    this.formularioGenerador.disable();
   }
 
   ngDoCheck(): void {
     if (this.previousModalState !== this.modal) {
       this.previousModalState = this.modal;
       if (!this.modal && this.accionAceptada) {
-       setTimeout(()=>{
-        this.router.navigate(['/home']);
-       },2000)
-       
-       
+       location.reload();
       }
     }
   }
 
-
-  getIdGenerador() {
+   getIdGenerador(id:number|undefined):void {
  
-    this._activatedRouter.queryParamMap.subscribe((params) => {
-      const idParametro = params.get("id");
-      let generador: Generador;
-      if (idParametro !== null) {
-        this.idGenerador = +idParametro;
+    console.log(`He recibido en formulario el valor: ${id}`)
+   
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['idRecibido'] && changes['idRecibido'].currentValue !== undefined) {
+      // Si se recibe un ID, activa el modo edición
+      this.cargarDatosGenerador(changes['idRecibido'].currentValue);
+      this.estadoFormulario.emit({ estadoEdicion: true });
+    } else if (changes['nuevo'] && changes['nuevo'].currentValue === true) {
+      // Si se activa el modo "nuevo", limpia el formulario y activa la edición
+      this.estadoEdicion = false;
+      this.formularioGenerador.reset();
+      this.hablitarEdicion();
+      this.estadoFormulario.emit({ estadoEdicion: true });
+    }
+  }
 
-      
-        this.titulo = "Edición de Generador Existente";
-
-        this.apiGenerador
-          .getInfoGenerador(this.idGenerador)
-          .subscribe((data) => {
-            console.log(data)
-            this.formularioGenerador.setValue({
-              nombre: data.nombre,
-              cuit: data.cuit,
-              direccion: data.direccion,
-              telefono: data.telefono,
-              estadoActividad: data.estado ? "Activo" : "Sin actividad",
-            });
-          });
-        this.formularioGenerador.disable();
-        this.estadoEdicion = true;
+  cargarDatosGenerador(id: number): void {
+    this.apiGenerador.getInfoGenerador(id).subscribe({
+      next: (data) => {
+        this.formularioGenerador.patchValue({
+          nombre: data.nombre,
+          cuit: data.cuit,
+          direccion: data.direccion,
+         legajo: data.legajo? data.legajo : 'No tiene',
+          telefono: data.telefono,
+          /* estado: data.estado ? 'activo' : 'inactivo' */
+        });
+        this.estadoEdicion = true; // Activa el modo de edición si hay datos cargados
+      },
+      error: (err) => {
+        console.error('Error al cargar los datos del generador:', err);
+        this.mensajeModal = 'No se pudo cargar la información del generador.';
+        this.modal = true; // Mostrar modal de error
       }
     });
   }
-
   onSubmit() {
     console.log(this.formularioGenerador.value);
     
@@ -111,6 +121,7 @@ export class GeneradorFormularioComponent implements OnInit {
     const cuit= this.formularioGenerador.controls.cuit.value;
     const direccion= this.formularioGenerador.controls.direccion.value;
     const telefono=this.formularioGenerador.controls.telefono.value;
+    const legajo= this.formularioGenerador.controls.legajo.value;
     let estado=false;
     const estadoActividad=this.formularioGenerador.controls.estadoActividad.value;
 
@@ -139,6 +150,7 @@ export class GeneradorFormularioComponent implements OnInit {
         cuit:cuit,
         direccion:direccion,
         telefono:telefono,
+        legajo:legajo,
         estado:estado
       }
 
@@ -175,8 +187,8 @@ export class GeneradorFormularioComponent implements OnInit {
   hablitarEdicion() {
     this.formularioGenerador.enable();
     this.estadoEdicion = true;
+    this.estadoFormulario.emit({ estadoEdicion: true });
   }
-
   hasErrors(controlNombre: string, errorType: string) {
     return (
       this.formularioGenerador.get(controlNombre)?.hasError(errorType) &&

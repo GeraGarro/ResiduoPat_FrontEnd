@@ -1,7 +1,7 @@
 <div class="contenedor-fondo"></div>
 <div class="contenedor-principal" >
 
-      <form [formGroup]="formularioTipoResiduo" (ngSubmit)="enviar()">
+      <form (ngSubmit)="enviar()">
         <div class="contenedor-formulario">
         <h3 class="titulo-formulario">Editar Tipo</h3>
         <div class="mb-3">
@@ -26,8 +26,8 @@
               <path d="M15 19l2 2l4 -4" />
             </svg>
             Nombre Tipo Residuo</label>
-          <input class="formulario input-formulario" [ngClass]="{'is-invalid': hasErrors('nombre_tipoResiduo','required')}" type="text" class="form-control" id="nombre_tipoResiduo" formControlName="nombre_tipoResiduo" [value]="tipoSeleccionado?.nombre">
-          <div class="text-danger mensajeError" *ngIf="hasErrors('nombre_tipoResiduo','required')">
+          <input class="formulario input-formulario"  type="text" class="form-control" id="nombre_tipoResiduo" formControlName="nombre_tipoResiduo" [value]="tipoSeleccionado?.nombre">
+          <div class="text-danger mensajeError" >
             Por favor Ingresa Nombre a Registrar
           </div>
         </div>

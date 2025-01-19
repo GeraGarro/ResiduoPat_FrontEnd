@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Transportista } from 'src/app/models/transportista.model';
+import { Transportista } from 'src/app/services/models/transportista.model';
 
 @Injectable({
   providedIn: 'root'

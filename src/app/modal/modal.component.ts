@@ -35,6 +35,7 @@ get mensaje(): string {
   openModal:boolean=true;
 
   @Output() accionModal=new EventEmitter<boolean>()
+  
    accionBotonModal(){
     this.openModal = !this.openModal;
     this.accionModal.emit(this.openModal)

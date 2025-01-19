@@ -1,7 +1,7 @@
 
 import { Component, Input, OnInit, SimpleChanges, inject } from '@angular/core';
-import { ApiTicketService } from '../services/api-ticket/api-ticket.service';
-import { ITicket } from '../models/ticket.model';
+import { ApiTicketService } from '../services/api/api-ticket/api-ticket.service';
+import { ITicket } from '../services/models/ticket.model';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { ViewChild } from '@angular/core';
@@ -12,9 +12,9 @@ import { Router, RouterModule } from '@angular/router';
 
 import { TicketControlFormularioComponent } from '../pages/home/ticket-control-formulario/ticket-control-formulario.component';
 import { HttpErrorResponse } from '@angular/common/http';
-import { PesoPipe } from 'src/assets/pipe/peso';
-import { Certificado } from '../models/certificado.model';
-import { ApiCertificadoService } from '../services/api-certificado/api-certificado.service';
+
+import { Certificado } from '../services/models/certificado.model';
+import { ApiCertificadoService } from '../services/api/api-certificado/api-certificado.service';
 import { Subscription, forkJoin } from 'rxjs';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -33,7 +33,7 @@ import { DashboardComponent } from '../pages/home/dashboard/dashboard.component'
   standalone:true,
   templateUrl: './ticket-control.component.html',
   styleUrls: ['./ticket-control.component.css'],
-  imports: [   MatTableModule,  MatPaginatorModule,  MatFormFieldModule,  MatSelectModule,  CommonModule , TicketControlComponent,RouterModule ,MatCardModule,SharedModule,DashboardComponent ],
+  imports: [   MatTableModule,  MatPaginatorModule,  MatFormFieldModule,  MatSelectModule, CommonModule ,RouterModule ,MatCardModule,SharedModule,DashboardComponent ],
  
 })
 

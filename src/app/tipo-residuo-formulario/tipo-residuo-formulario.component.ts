@@ -1,10 +1,11 @@
-import { Component, Input, ViewChild,ElementRef, AfterViewInit, OnChanges,SimpleChanges, Output, EventEmitter,ChangeDetectorRef   } from '@angular/core';
-import { TipoResiduo } from '../models/tipo_Residuos';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ApiServicesTipoResiduosService } from '../services/api-tipoResiduos/api.services-tipo-residuos.service';
+import { Component, Input,SimpleChanges, Output, EventEmitter,ChangeDetectorRef,    } from '@angular/core';
+import { TipoResiduo } from '../services/models/tipo_Residuos';
+import { FormBuilder, FormGroup, Validators,FormControlDirective } from '@angular/forms';
+import { ApiServicesTipoResiduosService } from '../services/api/api-tipoResiduos/api.services-tipo-residuos.service';
 
 @Component({
   selector: 'app-tipo-residuo-formulario',
+  standalone:true,
   templateUrl: './tipo-residuo-formulario.component.html',
   styleUrls: ['./tipo-residuo-formulario.component.css']
 })
@@ -18,7 +19,7 @@ export class TipoResiduoFormularioComponent {
     this.actualizarFormulario();
   }
 
-    formularioTipoResiduo:FormGroup;
+    formularioTipoResiduo: FormGroup;
     mostrarFormulario: boolean = false;
 
 

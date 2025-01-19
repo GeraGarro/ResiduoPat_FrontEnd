@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ListaResiduo } from '../models/ticket.model';
+import { ListaResiduo } from '../services/models/ticket.model';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 

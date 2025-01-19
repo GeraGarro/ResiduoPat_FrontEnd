@@ -2,117 +2,32 @@
 @import url('https://fonts.googleapis.com/css2?family=Andika:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 
-.contenedor-principal{
-    position: relative;
-width: 100%;
-height: 100%;
-}
 
-form{position: relative;
-    background-color: rgba(102, 102, 102, 0.397);
-    display: flex;
-    flex-direction: column;
-   height: 100%;
-
-    border-radius: 3%;
-    padding: 10px;
-   
+label{
+    color: rgb(253, 253, 253);  
+    background-color: black;
   
-   
 }
 
-#titulo-generador span{
 
-    
-    color: azure;
-    padding: 10px;
-    border-radius: 50px 50px 5px 5px ;
-    font-weight: 600;
-    text-shadow: -7px 2px 5px  rgba(12, 12, 12, 0.712);
-    display: inline-block;
-    transform: rotateX(15deg) ;
-
-   font-size: 20px;
-   padding-bottom: 3px;
-   border-bottom: 2px solid rgba(240, 255, 255, 0.514);
-}
-.label{
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: center;
-    font-weight: 600;
-    color: rgb(253, 253, 253);
-    font-size: 13px;
-  
-} 
-.contenedor-input{
-    display: flex;
-    
-}
 .input-formulario{
-
-height: 25px;
-border-radius: 5px;
-border: 1px solid rgba(128, 128, 128, 0.541);
-align-items: center;
-}
-svg{
-    width: 20px;
-}
-.estado{
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     
-    color: #aff145;
-    font-size: 25px;
-    background-color: #020202c4;
-    padding: 5px;
-    border-radius: 5px;
-    margin-bottom: 15px;
-}
-
-  
-#checkEstado{
+    background-color: aliceblue;
   
 }
 
 .btn{
-   
-   width: 150px;
+    background: linear-gradient(45deg, rgb(202, 191, 31),rgb(255, 230, 6));
+    color: rgb(10, 10, 10);
+   filter: drop-shadow(1px 1px 1px Black);
+}
+.aceptar{
+    background: linear-gradient(45deg, rgb(0, 131, 238),rgb(3, 86, 241));
 }
 
-
-.container-btn{
-    display: flex;
-    justify-content: space-evenly;
+.limpiar{
+    background: linear-gradient(45deg, rgb(136, 120, 120),rgb(177, 178, 179));
 }
-.input-disabled{
-    width:  max-content;
-    padding: 10px;
-
-    display: block;
-    border-radius: 10px;
-}
-
-.input-formulario{
-    color: #49adf0;
-    
-}
-
-.contenedor-modal{
-    position: absolute;
-    top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-    background: rgba(11, 2, 20, 0.445);
-    z-index: 999;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-}
-
-.mensajeError{
-    font-size: 15px;
+.modificar{
+    background: linear-gradient(45deg, rgb(231, 76, 76),rgb(224, 76, 50));
 }

@@ -1,14 +1,14 @@
 import { CommonModule, KeyValue } from '@angular/common';
 import { Component, inject, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, } from '@angular/forms';
-import { Transportista } from '../../models/transportista.model';
-import { ApiTransportistaService } from '../../services/api-transportista/api-transportista.service';
+import { Transportista } from '../../services/models/transportista.model';
+import { ApiTransportistaService } from '../../services/api/api-transportista/api-transportista.service';
 /* import { desplegableCustom } from '../../directivas/desplegable'; */
 import { DesplegableCustomDirective } from '../../directivas/desplegable';
-import { Meses } from '../../models/certificado.model';
-import { ApiCertificadoService } from '../../services/api-certificado/api-certificado.service';
-import { ApiError } from '../../models/ApiError';
-import { ResponseData } from '../../models/ResponseData';
+import { Meses } from '../../services/models/certificado.model';
+import { ApiCertificadoService } from '../../services/api/api-certificado/api-certificado.service';
+import { ApiError } from '../../services/models/ApiError';
+import { ResponseData } from '../../services/models/ResponseData';
 import { ModalComponent } from '../../modal/modal.component';
 import { Router } from '@angular/router';
 @Component({

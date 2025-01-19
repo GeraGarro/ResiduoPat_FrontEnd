@@ -9,17 +9,13 @@ main{
 
 .success-modal {
     /* Estilos específicos para un resultado exitoso */
-/*     background-color: #d4edda; */
-  /*  border: 1px solid #155724; */
+
     background-color: #1db140;
   
   }
   
   .error-modal {
     /* Estilos específicos para un resultado de error */
-  
-   /* border: 1px solid  #ff0019; */
-   
     background-color: #ff0019;
   }
 
@@ -36,18 +32,18 @@ main{
     transform: translate(-50%, 0%);
 }
 .container-modal{
-    padding-top: 10px;
+   
     box-shadow: 1px 3px 5px 5px rgba(0, 0, 0, 0.555);
    position: absolute;
    background-color: #ffffff;
-   min-width: 25%;
+   min-width: 13%;
    width: max-content;
-   height: 200px;
-   max-height: max-content;
-    top: 30%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    border-radius: 15px;
+   height: 120px;
+ 
+    top: 60px;
+    right: 0;
+   
+    border-radius: 0 0 15px 15px;
     
     display: flex;
     flex-direction: column; 
@@ -60,7 +56,9 @@ main{
   font-style: normal;
   font-style: oblique;
     /* border: 2px solid black; */
-    
+    z-index: 9999;
+   opacity: 0;
+  animation: opacidad .7s linear .3s 1 forwards ;
 }
 
 .texto-success{
@@ -70,7 +68,7 @@ main{
     color:#ff0019
 }
 .message-Modal{
-    height: 50%;
+    height: 30%;
     align-self: stretch;
     
     text-align: center;
@@ -108,12 +106,16 @@ main{
 }
 h3{text-align: center;
     box-sizing: border-box;
-  padding: 5px 10px;    
-  font-size: 22px;
+  padding: 2px 5px;    
+  font-size: 12px;
   /* text-wrap: nowrap; */
   text-shadow: 2px 2px 3px rgba(4, 5, 4, 0.158);
  
    width: 90%;
+}
+
+.boton{
+    font-size: 12px;
 }
 
 img{/* width: 40px; */
@@ -121,6 +123,20 @@ img{/* width: 40px; */
 animation: giroEjeHorizontal 1.5s ease-in .7s 1 normal forwards;
 align-self: center;
 }
+
+
+
+
+@media screen and (min-width:600px) and (max-width:1100px) {
+   
+    
+    h3{
+        font-size: 10px;
+       
+    }
+}
+
+
 
 @keyframes giroEjeHorizontal {
     0%{
@@ -141,26 +157,11 @@ align-self: center;
     }
 }
 
-@media screen and (width < 600px) {
-    .container-modal{
-        left: 50%;
-       
-    width: 90%;
-    }
-
-    h3{
-   
-        margin-left: 10px;
-    }
-  
-
-}
-
-@media screen and (min-width:600px) and (max-width:1100px) {
-   
-    
-    h3{
-        font-size: 25px;
-        margin-left: 10px;
-    }
+@keyframes opacidad {
+    from {
+        opacity: 0; 
+      }
+      to {
+        opacity: 1;
+      }
 }

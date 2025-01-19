@@ -15,8 +15,8 @@
           <th class="col-eliminar"><span class="acciones">Acciones</span></th>
         </tr>
       </thead>
-      <tbody *ngIf="listaTickets.length>0" >
-         <tr class="fila-flex"*ngFor="let item of listaTickets; let i = index " (click)="!item.estado &&onRowClicked(item)" style="cursor: pointer;" [ngClass]="{filaDesactivada: item.estado}">
+      <tbody  >
+         <tr class="fila-flex" *ngFor="let item of listaTickets; let i = index " (click)="!item.estado &&onRowClicked(item)" style="cursor: pointer;" [ngClass]="{filaDesactivada: item.estado}">
           
           <td class="col-generador">
             <div class="icons-condicion">      

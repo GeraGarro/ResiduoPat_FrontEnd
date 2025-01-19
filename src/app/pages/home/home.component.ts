@@ -1,14 +1,8 @@
 import { Component, Input, ViewChild } from '@angular/core';
-
 import { HojaRutaTicketsComponent } from 'src/app/pages/home/hoja-ruta-tickets/hoja-ruta-tickets.component';
-
-import { GeneradorComponent } from 'src/app/pages/generador/generador.component';
-
-import { TicketControlComponent } from 'src/app/ticket-control/ticket-control.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-
 import { TicketControlFormularioComponent } from './ticket-control-formulario/ticket-control-formulario.component';
 
 @Component({

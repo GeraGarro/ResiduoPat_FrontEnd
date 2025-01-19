@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { TipoResiduo } from '../../models/tipo_Residuos';
-import { ApiServicesTipoResiduosService } from '../../services/api-tipoResiduos/api.services-tipo-residuos.service';
+import { TipoResiduo } from '../../services/models/tipo_Residuos';
+import { ApiServicesTipoResiduosService } from '../../services/api/api-tipoResiduos/api.services-tipo-residuos.service';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -9,7 +9,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatRadioModule } from '@angular/material/radio';
-import { TipoResiduoFormularioModule } from '../../tipo-residuo-formulario/tipo-residuo-formulario.module';
 import { RouterModule } from '@angular/router';
 import { RotacionCircularDirective } from 'src/app/directivas/rotacion-circular.directive';
 
@@ -28,9 +27,7 @@ import { RotacionCircularDirective } from 'src/app/directivas/rotacion-circular.
     MatSelectModule,
     ReactiveFormsModule,
    MatRadioModule,
-   TipoResiduoFormularioModule,
-   RotacionCircularDirective
-  
+   
   ],
   styleUrls: ['./tipo-residuo.component.css']
 })

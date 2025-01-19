@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Residuo } from 'src/app/models/residuo.model';
-import { ListaResiduo } from 'src/app/models/ticket.model';
+import { Residuo } from 'src/app/services/models/residuo.model';
+import { ListaResiduo } from 'src/app/services/models/ticket.model';
 
 @Injectable({
   providedIn: 'root'

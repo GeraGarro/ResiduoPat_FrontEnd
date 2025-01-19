@@ -4,13 +4,11 @@ import {
   OnInit,
   
 } from '@angular/core';
-import { Certificado } from '../../models/certificado.model';
-import { ApiCertificadoService } from '../../services/api-certificado/api-certificado.service';
+import { Certificado } from '../../services/models/certificado.model';
+import { ApiCertificadoService } from '../../services/api/api-certificado/api-certificado.service';
 import { CommonModule } from '@angular/common';
-import { TicketControlComponent } from '../../ticket-control/ticket-control.component';
-import { DesplegableCustomDirective } from '../../directivas/desplegable';
-import { ApiTransportistaService } from '../../services/api-transportista/api-transportista.service';
-import { Transportista } from '../../models/transportista.model';
+import { ApiTransportistaService } from '../../services/api/api-transportista/api-transportista.service';
+import { Transportista } from '../../services/models/transportista.model';
 import { FormsModule } from '@angular/forms';
 import { forkJoin, switchMap } from 'rxjs';
 import { MatInputModule } from '@angular/material/input';
@@ -23,9 +21,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
   templateUrl: './certificado.component.html',
   styleUrls: ['./certificado.component.css'],
   imports: [
-    TicketControlComponent,
+
     CommonModule,
-    DesplegableCustomDirective,
+    
     FormsModule,
     MatInputModule,
     MatSelectModule,

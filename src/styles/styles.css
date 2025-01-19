@@ -7,7 +7,7 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,100..900;1,100..900&display=swap');
 
-
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 
 :root {
   --texto-tabla:'Krub', sans-serif;
@@ -7631,78 +7631,6 @@ body {
   font-size: 110%;
 }
 
-
-
-
-.colorEstado{
-  color:#f1f1f1;
-}
-
-
-.select-box{
-  
-  width: 100%;
-  position: relative;
- 
-}
-
- 
-.select-option{
-  position: relative;
-  
-}
-
-
-.btn-Submit{
-  align-self: center;
-  font-size: 22px;
- width: 200px;
-}.select-option {
-  position: relative; /* Asegura que el pseudo-elemento :after se posicione correctamente */
-}
-
-
-.app-ticket-control {
-  animation: animacionDesdeAbajo 1s linear 1 normal;
-}
-.boton-agregar{
-  font-size: 12px;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-border-radius: 15px 5px 5px 15px;
-  position: absolute; 
-  width: 95px;
-  top: 2px;
-  right: 5px;
-  box-shadow: 2px 2px 1px 1px rgba(0, 0, 0, 0.521);
-  background: linear-gradient(20deg, #414040d3 80%, rgba(0, 0, 0, 0.781) 20%);
-border: none;
-  color: white;
- 
- 
-}
-.boton-agregar::after{
-  position: absolute;
-  z-index: -1;
-  content: "";
-  inset: -3px;
-  border-radius: inherit;
-  background: conic-gradient(rgba(7, 7, 7, 0.137) var(--fill), transparent var(--fill));
-  transition: --fill .5s ease-in-out;
-}
-@property --fill{
-  syntax: '<percentage>';
-  inherits: true;
-  initial-value: 0%;
-}
-
-.boton-agregar:hover{
-  animation: linearGradient 1s ease-out .5s infinite alternate-reverse forwards  ;
-  color: #dde5f1;
-
-  --fill:100%;
-}
-
-
 ::-webkit-scrollbar {
   width: 15px; /* Ancho de la barra */
   background-color: #f1f1f1; /* Color del fondo */
@@ -7741,23 +7669,64 @@ border: none;
     opacity: .5;
 }
 
-.btn-add{
- 
-  margin-bottom: 10px;
-  width: 100%;
-  
+
+
+.btn{
   align-items: center;
   justify-content: center;
   height: max-content;
   border-radius: 5px;
   border: none;
- 
-  right: 0px;
-  background: linear-gradient(45deg, rgb(69, 69, 212),rgba(34, 22, 97, 0.726));
-  color: aliceblue;
- filter: drop-shadow(1px 1px 1px Black);
- 
+  padding: 5px;
 }
+
+.toggle {
+  --bg-toggle:  hsl(0, 0%, 80%);;
+  --bg-circle:hsl(0, 0%, 94%);
+  width: 50px;
+  height: 15px;
+  background: var(--bg-toggle);
+  box-shadow: 0 .3rem 5rem 0 rgba(125,125,125,0.25);
+  border-radius: 4rem;
+  display: flex;
+  align-items: center;
+  padding: 0 .3rem;
+  transition: background-color 400ms;
+  transform: rotate(-90deg);
+}
+
+.toggle__circle{
+  width: 12px;
+  height: 12px;
+  cursor: pointer;
+  background-color: var(--bg-circle);
+  border: 1px solid gray;
+  border-radius: 50%;
+  position: relative;
+  transition: margin 400ms ease-in-out, background-color 100ms;
+}
+
+.toggle__circle::after, 
+.toggle__circle::before{
+  content: '';
+  position: absolute;
+  background-color: var(--bg-toggle);
+  bottom: 118%;
+  transform-origin: bottom left;
+}
+
+
+ 
+input[type="checkbox"]:checked + .toggle > .toggle__circle {
+  margin-left: calc(100% - 5px - (0.3rem * 2));
+}
+
+input[type="checkbox"]:checked + .toggle {
+  --bg-toggle: linear-gradient(to right, hsl(120, 80%, 40%), hsl(160, 70%, 45%)); /* Fondo verde */
+  --bg-circle: hsl(0, 8%, 79%); /* Círculo gris */
+}
+/* componentes formularios */
+
 @keyframes linearGradient {
   0%{
     background: linear-gradient(45deg, #414040d3 80%, rgba(0, 0, 0, 0.781) 20%);

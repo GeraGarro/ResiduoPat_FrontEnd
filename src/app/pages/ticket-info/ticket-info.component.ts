@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { FormsModule, NgModel } from '@angular/forms';
+import { FormsModule} from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { ITicket, ListaResiduo } from 'src/app/models/ticket.model';
+import { ITicket, ListaResiduo } from 'src/app/services/models/ticket.model';
 import { ResiduoComponent } from 'src/app/residuo/residuo.component';
-import { ApiTicketService } from 'src/app/services/api-ticket/api-ticket.service';
+import { ApiTicketService } from 'src/app/services/api/api-ticket/api-ticket.service';
 
 
 

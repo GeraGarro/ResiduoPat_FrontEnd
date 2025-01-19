@@ -1,11 +1,11 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ApiGeneradorService } from 'src/app/services/api-generador/api-generador.service';
+import { ApiGeneradorService } from 'src/app/services/api/api-generador/api-generador.service';
 
-import { ApiTicketService } from 'src/app/services/api-ticket/api-ticket.service';
+import { ApiTicketService } from 'src/app/services/api/api-ticket/api-ticket.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { Transportista, ITicket,Generador, Hoja } from 'src/app//models/ticket.model';
-import { ApiTransportistaService } from 'src/app//services/api-transportista/api-transportista.service';
+import { Transportista, ITicket,Generador, Hoja } from 'src/app/services/models/ticket.model';
+import { ApiTransportistaService } from 'src/app/services/api/api-transportista/api-transportista.service';
 
 import { CommonModule, DatePipe } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';

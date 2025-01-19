@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators,FormBuilder,ReactiveFormsModule} from '@angular/forms';
-import { ApiServicesTipoResiduosService } from '../services/api-tipoResiduos/api.services-tipo-residuos.service';
-import { TipoResiduo } from '../models/tipo_Residuos';
+import { ApiServicesTipoResiduosService } from '../services/api/api-tipoResiduos/api.services-tipo-residuos.service';
+import { TipoResiduo } from '../services/models/tipo_Residuos';
 
 
 @Component({

@@ -12,7 +12,11 @@
  height: 5vh;
  margin-right: 3vh;
  perspective: 1000px;
+ 
 }
+
+
+
 .navbar-brand>img
 {width: 5vh;
 
@@ -55,6 +59,7 @@ min-width: 50vw;
 overflow-y: hidden;
   margin: 0 ;
 max-width: 100vw;
+overflow: hidden;
 
 /*   background: linear-gradient(#a8b2ca,#7f9bdd); */
   background: #f1f1f1;

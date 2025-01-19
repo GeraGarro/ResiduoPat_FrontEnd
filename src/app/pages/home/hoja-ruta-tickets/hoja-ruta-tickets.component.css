@@ -34,8 +34,8 @@ thead th {
 .tabla-scroll {
 
   max-height: 80%; /* Tamaño máximo del cuerpo con scroll */
-  overflow-y: auto; /* Habilita la barra de desplazamiento */
-  overflow-x: hidden;
+  /* Habilita la barra de desplazamiento */
+  overflow: auto;
 }
 .contenedor-hoja>caption{
   width:max-content;

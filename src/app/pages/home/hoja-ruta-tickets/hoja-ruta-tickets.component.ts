@@ -8,15 +8,14 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import {  MatTableModule } from '@angular/material/table';
-import { ITicket } from '../../../models/ticket.model';
-import { ApiTicketService } from '../../../services/api-ticket/api-ticket.service';
-import { ApiHojaService } from 'src/app/services/api-hoja_ruta/api-hoja.service';
+import { ITicket } from '../../../services/models/ticket.model';
+import { ApiTicketService } from '../../../services/api/api-ticket/api-ticket.service';
+import { ApiHojaService } from 'src/app/services/api/api-hoja_ruta/api-hoja.service';
 import { ServicioCompartidoService } from 'src/app/services/servicio-compartido/servicio-compartido.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmacionDialogoComponent } from 'src/app/confirmacion-dialogo/confirmacion-dialogo.component';
 import { format, parseISO } from 'date-fns';
 import { es } from 'date-fns/locale';
-import { FixedSizeVirtualScrollStrategy } from '@angular/cdk/scrolling';
 
 @Component({
   selector: 'app-hoja-ruta-tickets',

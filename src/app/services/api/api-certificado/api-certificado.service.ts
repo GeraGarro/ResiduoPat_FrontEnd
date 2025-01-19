@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Certificado } from 'src/app/models/certificado.model';
+import { Certificado } from 'src/app/services/models/certificado.model';
 
 @Injectable({
   providedIn: 'root'

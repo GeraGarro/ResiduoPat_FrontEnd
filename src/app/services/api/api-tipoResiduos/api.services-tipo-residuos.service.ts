@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { TipoResiduo } from 'src/app/models/tipo_Residuos';
+import { TipoResiduo } from 'src/app/services/models/tipo_Residuos';
 
 @Injectable({
   providedIn: 'root'

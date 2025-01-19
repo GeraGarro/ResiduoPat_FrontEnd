@@ -1,16 +1,16 @@
-import { Component, OnInit, ViewChild,ChangeDetectorRef, Input, Output, EventEmitter  } from '@angular/core';
-import { Generador } from '../../models/generador.model';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { ApiGeneradorService } from '../../services/api-generador/api-generador.service';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { Router, RouterLink, RouterModule } from '@angular/router';
+import { Component, OnInit,ChangeDetectorRef, Output, EventEmitter} from '@angular/core';
+import { Generador } from '../../services/models/generador.model';
+import { MatTableModule } from '@angular/material/table';
+import { ApiGeneradorService } from '../../services/api/api-generador/api-generador.service';
+import {  MatPaginatorModule } from '@angular/material/paginator';
+import { Router, } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { FormsModule } from '@angular/forms';
-import { ConfirmacionDialogoComponent } from 'src/app/confirmacion-dialogo/confirmacion-dialogo.component';
+
 import { MatDialog } from '@angular/material/dialog';
 import { GeneradorFormularioComponent } from './generador-formulario/generador-formulario.component';
 @Component({
@@ -34,23 +34,33 @@ export class GeneradorComponent implements OnInit {
   
 ListaGeneradores: Generador[]=[];
 
-dataSource: MatTableDataSource<Generador>;
+@Output()contadorEmitido=new EventEmitter<{contador:number}>();
 
-@Output()contadorEmitido=new EventEmitter<{contado:number}>();
+idSeleccionado: number | undefined;
 
+isActivo:boolean=false;
+
+mostrarFormulario: boolean = false; // Controla la visibilidad del formulario
+nuevo: boolean = false; // Indica si el formulario está en modo "nuevo"
+
+private currentOffset = 0; // Mantiene la posición actual del desplazamiento
+private itemHeight = 100; // Altura de cada item (en píxeles, ajusta según tu diseño)
+private visibleItemsCount = 10; // Número de ítems visibles a la vez (ajusta según el contenedor)
+
+selectedIndex: number | null = null;
 constructor(private _apiGeneradorService:ApiGeneradorService ,private cdr: ChangeDetectorRef, private router: Router, private dialog: MatDialog){
-  this.dataSource = new MatTableDataSource<Generador>([]);
-
 }
+
+items: string[] = Array.from({ length: 30 }, (_, i) => `Elemento ${i + 1}`);
 ngOnInit(): void {
+
   this._apiGeneradorService.getGeneradores().subscribe(
     data=>{
       console.log(data);
     this.ListaGeneradores=data;
-  
-    
-    this.dataSource=new MatTableDataSource(this.ListaGeneradores);
-     this.contadorEmitido.emit({ contado: this.ListaGeneradores.length }); 
+
+   
+     this.contadorEmitido.emit({ contador: this.ListaGeneradores.length }); 
 
     this.cdr.detectChanges();
     },
@@ -61,26 +71,73 @@ ngOnInit(): void {
   );
 }
 
+scrollUp() {
+  // Límite superior
+  const maxOffset = 0;
+  this.currentOffset = Math.min(this.currentOffset + this.itemHeight, maxOffset);
+  this.updateTransform();
+}
 
-@ViewChild(MatPaginator) paginator!: MatPaginator;
+scrollDown() {
+  // Límite inferior
+  const maxOffset = -this.itemHeight * (this.ListaGeneradores.length - this.visibleItemsCount);
+  this.currentOffset = Math.max(this.currentOffset - this.itemHeight, maxOffset);
+  this.updateTransform();
+}
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
+private updateTransform() {
+  const listaElement = document.querySelector('.contenedor-lista') as HTMLElement;
+  if (listaElement) {
+    listaElement.style.transform = `translateY(${this.currentOffset}px)`;
+  }
+}
+
+seleccionarElemento(index: number, id:number|undefined) {
+ 
+  this.selectedIndex = index; 
+
+  this.mostrarFormulario = true; // Mostrar el formulario al seleccionar un elemento
+  this.nuevo = false; // Desactivar el modo "nuevo"
+
+  this.idSeleccionado=id;
+
+ this.isActivo=true;
+ 
+
+}
+
+cambiarEstado(id: number | undefined, estado: boolean): void {
+  if (!id) {
+    console.warn('ID no disponible.');
+    return;
   }
 
-changePageSize(event: any) {
-  this.paginator.pageSize = event.value;
-  // Puedes realizar otras acciones relacionadas con el cambio del tamaño de la página si es necesario.
+  // Realiza el cambio de estado
+  this._apiGeneradorService.cambioEstadoGenerador(id, estado).subscribe({
+    next: (respuesta) => {
+      console.log('Estado actualizado:', respuesta);
+      const generadorActualizado = this.ListaGeneradores.find((gen) => gen.id === id);
+      if (generadorActualizado) {
+        generadorActualizado.estado = estado; // Actualiza el estado en la lista local
+      }
+    },
+    error: (error) => {
+      console.error('Error al cambiar el estado:', error);
+    }
+  });
 }
 
-onRowClicked(row: any): void {
-  this.router.navigate(['/generador-Formulario'], { queryParams: { id: row.id } });
+activarNuevo(): void {
+  this.idSeleccionado = undefined; // No hay un ID seleccionado
+  this.nuevo = true; // Activa el modo "nuevo"
+  this.mostrarFormulario = true; // Muestra el formulario
 }
 
-editarGenerador(id: number) {}
-
-
-async eliminarGenerador(idGenerador: number) {
+controlarVisibilidadFormulario(event: { estadoEdicion: boolean }): void {
+  // Recibe el estado del componente hijo y controla la visibilidad del formulario
+  this.mostrarFormulario = event.estadoEdicion;
+}
+/* async eliminarGenerador(idGenerador: number) {
   const dialogRef = this.dialog.open(ConfirmacionDialogoComponent);
 
   const confirmacion = await dialogRef.afterClosed().toPromise();
@@ -101,20 +158,5 @@ async eliminarGenerador(idGenerador: number) {
       alert('Error al eliminar el generador. Por favor, inténtalo nuevamente.');
     }
   }
-}
-
-cambiarEstadoGenerador(idGenerador: number, nuevoEstado: boolean): void {
-  this._apiGeneradorService.cambioEstadoGenerador(idGenerador, nuevoEstado)
-    .subscribe((generadorActualizado: Generador) => {
-      // Puedes realizar acciones adicionales después de la actualización, si es necesario
-      console.log('Estado del generador actualizado:', generadorActualizado);
-    }, error => {
-      console.error('Error al actualizar el estado del generador:', error);
-      // Manejar errores según sea necesario
-    });
-}
-
-funcionAConfigurar(elment: Generador){
-
-}
+} */
 }

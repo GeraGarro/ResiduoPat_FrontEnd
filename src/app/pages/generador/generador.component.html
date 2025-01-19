@@ -1,45 +1,61 @@
-<div class="contenedor-principal">
+<div class="contenedor-padre">
 
-<div class="contenedor-formulario" ><app-generador-formulario></app-generador-formulario></div> 
+  <h3 class="titulo">Gestión de Generadores</h3>
 
-  
-  <div class="tabla-scroll">
-  
+  <div class="contenedor-contenido">
+    <div class="contenedor-formulario" *ngIf="mostrarFormulario">
+      <app-generador-formulario
+        [idRecibido]="idSeleccionado"
+      ></app-generador-formulario>
+    </div>
 
-    <table class="tabla-tickets">
-      
-      <tbody *ngIf="ListaGeneradores.length>0" >
-         <tr class="fila-flex"*ngFor="let item of ListaGeneradores; let i = index " (click)="!item.estado &&onRowClicked(item)" style="cursor: pointer;" [ngClass]="{filaDesactivada: item.estado}">
-          
-          <td class="col-generador">
-            <div class="icons-condicion">      
-            
-              <img class="icons-estado" src="../../assets/icons/success.png" alt="success" *ngIf="item.estado">
-              <img class="icons-estado" src="../../assets/icons/warning.png" alt="warning" *ngIf="!item.estado">
-              
+    <div class="contenedor-datos" *ngIf="!nuevo">
+      <div class="contenedor-lista-wrapper">
+        <ul class="contenedor-lista" #lista>
+          <li
+            class="item-lista"
+            *ngFor="let item of ListaGeneradores; let i = index"
+            [class.activo]="selectedIndex === i"
+            (click)="seleccionarElemento(i, item.id)"
+          >
+            <span class="span-nombre">{{ item.nombre }}</span>
+
+            <div class="toogle-estado">
+              <input type="checkbox" hidden   name="check-toggle"  [id]="'checkbox-' + i" 
+              [(ngModel)]="item.estado" 
+              (change)="cambiarEstado(item.id, item.estado)">
+              <label  [for]="'checkbox-' + i" class="toggle" [class.toggle--activo]="item.estado">
+                <div class="toggle__circle" [class.toggle__circle--activo]="item.estado"></div>
+              </label>
             </div>
-            <span>{{ item.nombre }}</span>
-         
-      
           
-          </td>
-          <td class="col-direccion"><span>{{ item.direccion }}</span></td>
-          <td class="col-direccion"><span>{{ item.cuit }}</span></td>
-        
-          
-          <td class="col-eliminar">
-            <img class="delete" src="../../../../assets/icons/delete.png" alt="delete" (click)="eliminarGenerador(1); $event.stopPropagation()" *ngIf="!item.estado">
-
-        <!--     <img class="delete" src="../../../../assets/icons/edit.png" alt="edit" (click)="cambiarestado(item.id_Ticket,false)" *ngIf="item.estado"> -->
-          </td>
-        </tr> 
-
+          </li>
+        </ul>
+      </div>
     
-      </tbody>
-
-      <caption class="container-no-data" *ngIf="ListaGeneradores.length==0"><span class="span-no-data">Aún no Hay carga de datos En La Hoja</span></caption>
-    </table>
-
+      <div class="contenedor-botones">
+        <!-- Botón "Arriba" -->
+        <div class="control arriba">
+          <button class="botones-slide" (click)="scrollUp()">
+            <img
+              class="flecha"
+              src="../../../assets/icons/flecha_icon.png"
+              alt="flecha-arriba"
+            />
+          </button>
+        </div>
+        <!-- Botón "Abajo" -->
+        <div class="control abajo">
+          <button class="botones-slide" (click)="scrollDown()">
+            <img
+              class="flecha"
+              src="../../../assets/icons/flecha_icon.png"
+              alt="flecha-abajo"
+            />
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
-
-
+  <button class="btn agregar" (click)="activarNuevo()">Agregar</button>
+</div>

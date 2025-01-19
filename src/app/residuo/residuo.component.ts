@@ -1,15 +1,13 @@
 
 import { Component, inject, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { ListaResiduo, TipoResiduo } from '../models/ticket.model';
-import { ResiduoFormularioComponent } from "../residuo-formulario/residuo-formulario.component";
+import { ListaResiduo, TipoResiduo } from '../services/models/ticket.model';
 import { CommonModule } from '@angular/common';
-import { el } from 'date-fns/locale';
-import { ApiServicesTipoResiduosService } from '../services/api-tipoResiduos/api.services-tipo-residuos.service';
+import { ApiServicesTipoResiduosService } from '../services/api/api-tipoResiduos/api.services-tipo-residuos.service';
 import { FormsModule } from '@angular/forms';
-import { ApiResiduoService } from '../services/api-residuo/api-residuo.service';
+import { ApiResiduoService } from '../services/api/api-residuo/api-residuo.service';
 import { ModalInfoComponent } from '../modal-info/modal-info.component';
 import { ValidadorPesoDirective } from '../directivas/validador-peso.directive';
-import { ApiTicketService } from '../services/api-ticket/api-ticket.service';
+import { ApiTicketService } from '../services/api/api-ticket/api-ticket.service';
 
 @Component({
   selector: 'app-residuo',
