@@ -147,9 +147,11 @@ this.servicioCompartido.idHoja$.subscribe((idHoja) => {
 
 
   cargarGeneradores(): void {
-    this.apiGeneradorService.getGeneradores().subscribe(
+    this.apiGeneradorService.getGeneradoresActivos().subscribe(
       (data) => {
-        this.listaGeneradores = data;
+        this.listaGeneradores = data.sort((a, b) => {
+          return a.nombre.localeCompare(b.nombre); // Compara los nombres de forma alfabética
+        });
       },
       (error) => {
         console.error('Error al obtener generadores', error);

@@ -194,7 +194,7 @@ obtenerTicketsCertificado(id: number): void {
     this.router.navigate(['/formulario-ticket']);  // Reemplaza con la ruta real de tu formulario
   }
 
-  imprimirPDF(id: number): void {
+  /* imprimirPDF(id: number): void {
     this._apiService.getReporteTicketById(id)
       .subscribe(
         response => {
@@ -218,7 +218,7 @@ obtenerTicketsCertificado(id: number): void {
           console.error('Error al generar PDF:', error);
         }
       );
-
+ */
            /* this._apiService.getReporteTicketById(id)
     .subscribe(
         response => {
@@ -235,7 +235,7 @@ obtenerTicketsCertificado(id: number): void {
         }
 */
         
-}
+
 
 }
 

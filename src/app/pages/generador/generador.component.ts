@@ -1,4 +1,4 @@
-import { Component, OnInit,ChangeDetectorRef, Output, EventEmitter} from '@angular/core';
+import { Component, OnInit,ChangeDetectorRef, Output, EventEmitter, inject} from '@angular/core';
 import { Generador } from '../../services/models/generador.model';
 import { MatTableModule } from '@angular/material/table';
 import { ApiGeneradorService } from '../../services/api/api-generador/api-generador.service';
@@ -46,44 +46,30 @@ nuevo: boolean = false; // Indica si el formulario está en modo "nuevo"
 private currentOffset = 0; // Mantiene la posición actual del desplazamiento
 private itemHeight = 100; // Altura de cada item (en píxeles, ajusta según tu diseño)
 private visibleItemsCount = 10; // Número de ítems visibles a la vez (ajusta según el contenedor)
-
+private cdr= inject(ChangeDetectorRef)
 selectedIndex: number | null = null;
-constructor(private _apiGeneradorService:ApiGeneradorService ,private cdr: ChangeDetectorRef, private router: Router, private dialog: MatDialog){
+constructor(private _apiGeneradorService:ApiGeneradorService , private router: Router, private dialog: MatDialog){
 }
 
 items: string[] = Array.from({ length: 30 }, (_, i) => `Elemento ${i + 1}`);
-ngOnInit(): void {
 
+ngOnInit(): void {
   this._apiGeneradorService.getGeneradores().subscribe(
     data=>{
       console.log(data);
-    this.ListaGeneradores=data;
-
-   
+    this.ListaGeneradores=data.sort((a, b) => {
+      return a.nombre.localeCompare(b.nombre); // Compara los nombres de forma alfabética
+    });;
      this.contadorEmitido.emit({ contador: this.ListaGeneradores.length }); 
-
     this.cdr.detectChanges();
     },
     error=>{
       console.error('Error fetching Generadores:', error);
-
     }
   );
 }
 
-scrollUp() {
-  // Límite superior
-  const maxOffset = 0;
-  this.currentOffset = Math.min(this.currentOffset + this.itemHeight, maxOffset);
-  this.updateTransform();
-}
 
-scrollDown() {
-  // Límite inferior
-  const maxOffset = -this.itemHeight * (this.ListaGeneradores.length - this.visibleItemsCount);
-  this.currentOffset = Math.max(this.currentOffset - this.itemHeight, maxOffset);
-  this.updateTransform();
-}
 
 private updateTransform() {
   const listaElement = document.querySelector('.contenedor-lista') as HTMLElement;
@@ -92,20 +78,24 @@ private updateTransform() {
   }
 }
 
+
+/* Seleccionar un elemento para mandar la información a Formulario */
 seleccionarElemento(index: number, id:number|undefined) {
  
   this.selectedIndex = index; 
 
-  this.mostrarFormulario = true; // Mostrar el formulario al seleccionar un elemento
+  this.activarFormulario() // Mostrar el formulario al seleccionar un elemento
   this.nuevo = false; // Desactivar el modo "nuevo"
 
   this.idSeleccionado=id;
 
  this.isActivo=true;
+
+ this.nuevo = false; // Para indicar que no es un formulario nuevo, sino de edición
+
  
-
 }
-
+/* Actualizar estado de Actividad Generadores mediante solicitud Update a estado */
 cambiarEstado(id: number | undefined, estado: boolean): void {
   if (!id) {
     console.warn('ID no disponible.');
@@ -127,10 +117,15 @@ cambiarEstado(id: number | undefined, estado: boolean): void {
   });
 }
 
+activarFormulario() {
+  this.mostrarFormulario = true;
+  // Forzar la actualización del tamaño del DOM
+  this.cdr.detectChanges();
+}
 activarNuevo(): void {
   this.idSeleccionado = undefined; // No hay un ID seleccionado
   this.nuevo = true; // Activa el modo "nuevo"
-  this.mostrarFormulario = true; // Muestra el formulario
+  this.activarFormulario() // Muestra el formulario
 }
 
 controlarVisibilidadFormulario(event: { estadoEdicion: boolean }): void {
@@ -159,4 +154,18 @@ controlarVisibilidadFormulario(event: { estadoEdicion: boolean }): void {
     }
   }
 } */
+
+  scrollUp() {
+    // Límite superior
+    const maxOffset = 0;
+    this.currentOffset = Math.min(this.currentOffset + this.itemHeight, maxOffset);
+    this.updateTransform();
+  }
+  
+  scrollDown() {
+    // Límite inferior
+    const maxOffset = -this.itemHeight * (this.ListaGeneradores.length - this.visibleItemsCount);
+    this.currentOffset = Math.max(this.currentOffset - this.itemHeight, maxOffset);
+    this.updateTransform();
+  }
 }

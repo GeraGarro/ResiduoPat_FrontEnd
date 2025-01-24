@@ -1,124 +1,50 @@
 
-.contenedor-lista{
-  
+.contenedor-padre{
     position: relative;
-    padding: 10px 10px 5px 5px;
-    width:  100%;
-   height: 100%;
-    
-    display: flex;
-   flex-direction: column; 
-  align-items: center;
-    justify-content: space-around;
+    background-image: URL(../../../assets/background/clasificacionResiduos.jpeg);
+  display: flex;
+  flex-direction: column;
 
-   
+height: 100%;
 }
-
-.contenedor-ul{
+.titulo{
+    width: max-content;
+    height: 8%;
+    font-size: large;
+}
+.contenedor-lista-wrapper{
     position: relative;
-    width: 100%;
-   
-  max-height: 60%;
-   border: 1px solid rgba(0, 0, 0, 0.137);
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: center;
-    justify-content: space-evenly;
-    perspective: 1000px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding:10px;
-    direction: rtl;
-}
-
-.list-group-item{
-  
-   width: 100%;
-    text-align: center;
-    font-weight: 500;
-    font-style: oblique;
-    border:  1px solid gainsboro;
-    box-shadow: 8px -2px 4px 5px rgba(0, 0, 0, 0.4);
-    margin: 0;
-   
-}
-
-.ul-activos{
-   flex: 1;
-}
-
-
-.list-group-item>label{
-    cursor: pointer;
-   
-}
-.contenedor-estado{
-    height: 30px;
-    width: 50px;
-    border-radius: 50%;
-}
-.inactivos{
-  
-    background-color: rgba(245, 7, 7, 0.801);
-   color: rgba(2, 7, 19, 0.911);
-    
-   } 
-   .activos{
-    background-color: rgba(8, 196, 33, 0.726);
-  
-   }
-
-
-img{
-    width: 20px;
-    border-radius: 40%;
-    margin:5px ;
-    padding: 20px;
-}
-
-#span-tipo{
-    background-color: aliceblue;
-    padding: 3px;
-    border-radius: 20%;
-}
-
-.item{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 15px;
-   width: 70%;
-    height: 60px;
-    text-align: center;
-    font-weight: 500;
-    font-style: oblique;
-    border:  1px solid gainsboro;
-    box-shadow: 4px -1px 2px 2px rgba(0, 0, 0, 0.473);
-    padding: 3px 5px;
-    list-style: none;
-  
-    margin-bottom: 1vh;
-   transition: transform .4s ease-in;
-}
-.btn-desp{
-    display: none;
-}
-.item>span{
-    margin-right: 5px;
-}
-.item:hover{
-    border: 2px solid rgba(0, 0, 0, 0.74);
-    transform: scale(1.1);
-    
-}
-.item> span{
-    cursor: pointer;
-}
-/* .contenedor-scroll-lista{
+    flex-direction: column;
+    flex: 1;
     height: 100%;
-  overflow-x: hidden;
-} */
+}
+ .contenedor-lista{
+ /*    position: relative;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: nowrap; */
+    overflow: hidden;
+    
+  
+} 
 
+.contenedor-contenido{
+    height: 100%;
+    flex-direction: row;
+}
+
+.item-lista{
+    height: 20%;
+    width: 70%;
+    background-color: rgba(24, 24, 24, 0.89);
+    box-shadow: 5px 2px 1px 1px rgba(0, 0, 0, 0.747);
+ 
+}
+
+.toggle{
+    transform: none;
+    transform: scale(1.5);
+}
 .btn-add{
  
   margin-top: 10px;
@@ -146,79 +72,44 @@ img{
     font-size: 20px;
     text-align: start;
 }
-@media screen and (max-width:768px) {
 
-    .titulo{
-        display: none;
-    }
-    .contenedor-lista{
-        width: 100%;
-        height: 90%;
-    }
-    .contenedor-ul{
-        padding-right: 20px ;
-        width: 100%;
-        height: 90%;
-      flex-direction: row;
-     justify-content: flex-start;
-   overflow-x: auto;
-   overflow-y: hidden;
-     flex-wrap: nowrap;
-    border: none;
-/* 
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch; */
-    }
-    .item{
-        width: 150px;
-        height: 250px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 13px;
-        flex: 0 0 auto;
-        margin-bottom: 10px;
-       scroll-snap-align: start;
-        flex-wrap: nowrap;
-        justify-content: space-between;
-    }
+.contenedor-formulario{
+    max-width:  250px;
+    height: 80%;
+  border-left: 1px solid rgba(128, 128, 128, 0.493);
+}
+.contenedor-formulario, .contenedor-lista{
+    padding: 20px 0;
+}
 
-    .span-btn{
-        display: none;
-    }
-    
-    .btn-desp{
-        display: block;
-        background-color: transparent;
-        border: 1px solid rgb(27, 27, 27);
-        border-radius: 15px;
-        width: 30px;
-        height: 45px;
-        margin: 0 15px;
-        cursor: pointer;
-    }
+.contenedor-formulario{
+    padding: 20px 30px;
 }
 
 
-@media screen and (max-width:1000px) {
-    .list-group-item{
-       
-        height: max-content;
-        margin-bottom: 10px;
-        box-shadow: none;
-      
+.contenedor-botones{
+    position: absolute;
+    top: 50%;
+    left: 18%;
+    transform: translate(-18%, -50%);
+    display: flex;
+    flex-direction: column;
+    height: 10vh;
+}
+.contenedor-botones{
+    z-index: 9999;
+}
+@media screen and (max-width:1200px) {
+    .contenedor-botones{
+        left: 0%;
     }
-    .item{
-        font-size: 13px;
-        height: max-content;
-        margin-bottom: 10px;
-       
-        margin-left: 2.5vw;
-    }
-    
+
+   
 }
 
-
-  
-  
-
+@media screen and (min-width:1000px) {
+    .btn-add{
+        width: max-content;
+        align-self: center;
+    }
+}

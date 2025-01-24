@@ -1,6 +1,7 @@
 
-<div class="contenedor-principal">
+<div class="contenedor-principal-formulario">
   
+ 
   <form [formGroup]="formularioGenerador" (ngSubmit)="onSubmit()" >
  
      <div class="contenedor-grupo">
@@ -14,8 +15,9 @@
             <path d="M15 19l2 2l4 -4" />
           </svg>
           Nombre Titular</label>
-        <input class="input-formulario"  [ngClass]="{'is-invalid': hasErrors('nombre','required'),'input-disabled':estadoEdicion}" type="text"  id="nombre" formControlName="nombre">
-        <img class="candado" src="../../../../assets/icons/candado_bloqueado.png" alt="">
+        <input class="input-formulario"  [ngClass]="{'is-invalid': hasErrors('nombre','required'),'input-disabled':estadoActivado}" type="text"  id="nombre" formControlName="nombre">
+        <img class="candado" src="../../../../assets/icons/candado_bloqueado.png" alt="candado-bloq" *ngIf="estadoActivado && !nuevo">
+  <img class="candado" src="../../../../assets/icons/candado_desbloqueado.png" alt="candado-desbloq" *ngIf="!estadoActivado && !nuevo">
         <div class="text-error mensajeError" *ngIf="hasErrors('nombre','required')">
           <img class="imagen-error" src="../../../../assets/icons/error-modal.png" alt="error">  Por favor Ingresa Nombre a Registrar
         </div>
@@ -32,9 +34,9 @@
             <path d="M15 19l2 2l4 -4" />
           </svg>
           CUIL/CUIT</label>
-        <input  class="input-formulario" [ngClass]="{'is-invalid': hasErrors('cuit','required'),'input-disabled':estadoEdicion}" type="number" id="cuit" formControlName="cuit">
-        <img class="candado" src="../../../../assets/icons/candado_bloqueado.png" alt="">
-
+        <input class="input-formulario "  [ngClass]="{'is-invalid': hasErrors('cuit','required'),'input-disabled':estadoActivado}" type="number" id="cuit" formControlName="cuit">
+        <img class="candado" src="../../../../assets/icons/candado_bloqueado.png" alt="candado-bloq" *ngIf="estadoActivado && !nuevo">
+  <img class="candado" src="../../../../assets/icons/candado_desbloqueado.png" alt="candado-desbloq" *ngIf="!estadoActivado && !nuevo">
         <!-- div error -->
       <div class="text-error mensajeError" *ngIf="hasErrors('cuit','required')">
         <img class="imagen-error" src="../../../../assets/icons/error-modal.png" alt="error"> Ingrese Numero CUIT o CUIL
@@ -62,9 +64,9 @@
       <path d="M15 19l2 2l4 -4" />
     </svg>
     Direccion</label>
-  <input  class="input-formulario" [ngClass]="{'is-invalid': hasErrors('direccion','required'),'input-disabled':estadoEdicion}" type="text" class="input-formulario" id="direccion" formControlName="direccion">
-  <img class="candado" src="../../../../assets/icons/candado_bloqueado.png" alt="">
-
+  <input  class="input-formulario direccion" [ngClass]="{'is-invalid': hasErrors('direccion','required'),'input-disabled':estadoActivado}" type="text" class="input-formulario" id="direccion" formControlName="direccion">
+  <img class="candado" src="../../../../assets/icons/candado_bloqueado.png" alt="candado-bloq" *ngIf="estadoActivado && !nuevo">
+  <img class="candado" src="../../../../assets/icons/candado_desbloqueado.png" alt="candado-desbloq" *ngIf="!estadoActivado && !nuevo">
   <div class="text-error mensajeError" *ngIf="hasErrors('direccion','required')">
     <img  class="imagen-error" src="../../../../assets/icons/error-modal.png" alt="error">   Ingresar Direccion del Generador
   </div>
@@ -83,7 +85,8 @@
     </svg>
     Legajo</label>
   <input class="input-formulario"  type="text"  id="legajo" formControlName="legajo">
-  <img class="candado" src="../../../../assets/icons/candado_bloqueado.png" alt="">
+  <img class="candado" src="../../../../assets/icons/candado_bloqueado.png" alt="candado-bloq" *ngIf="estadoActivado && !nuevo">
+  <img class="candado" src="../../../../assets/icons/candado_desbloqueado.png" alt="candado-desbloq" *ngIf="!estadoActivado && !nuevo">
 </div>
 
 <!-- Contenedor Input Telefono -->
@@ -95,8 +98,9 @@
     <path d="M11.102 17.957c-3.204 -.307 -5.904 -2.294 -8.102 -5.957c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6a19.5 19.5 0 0 1 -.663 1.032" />
     <path d="M15 19l2 2l4 -4" />
   </svg>Telefono</label>
-  <input  class="input-formulario"  [ngClass]="{'is-invalid': hasErrors('cuit','required'),'input-disabled':estadoEdicion}" type="number" class="input-formulario" id="telefono" formControlName="telefono">
-  <img class="candado" src="../../../../assets/icons/candado_bloqueado.png" alt="">
+  <input  class="input-formulario"  [ngClass]="{'is-invalid': hasErrors('cuit','required'),'input-disabled':estadoActivado}" type="number" class="input-formulario" id="telefono" formControlName="telefono">
+  <img class="candado" src="../../../../assets/icons/candado_bloqueado.png" alt="candado-bloq" *ngIf="estadoActivado && !nuevo">
+  <img class="candado" src="../../../../assets/icons/candado_desbloqueado.png" alt="candado-desbloq" *ngIf="!estadoActivado && !nuevo">
 
   <div class="text-error mensajeError" *ngIf="hasErrors('telefono','required')">
     <img  class="imagen-error" src="../../../../assets/icons/error-modal.png" alt="error">   Ingrese Un Telefono Valido
@@ -106,18 +110,20 @@
    
 <!-- boton-->
 <div class= "container-btn">
-  <button type="submit" class="btn aceptar" >Aceptar</button>
-  <button type="submit" class="btn modificar" >Modificar</button>
-  <button type="submit" class="btn limpiar">Limpiar Campos</button>
+  <button type="button" class="btn aceptar" (click)="onSubmit()" *ngIf="!estadoActivado">{{textoBotonSubmit}}</button>
+
+  <button type="button" class="btn modificar" (click)="hablitarEdicion()" *ngIf="estadoActivado">Realizar modificación </button>
+
+  <button type="button" class="btn limpiar" *ngIf="!estadoActivado || nuevo">Limpiar Campos</button>
 
   
 </div>
     
   </form>
-
-<div class="contenedor-modal" *ngIf="modal"  >
+ 
+  <div class="contenedor-modal" *ngIf="modal"  >
  
 
- <app-modal  (accionModal)="toggleModal($event)"  [_mensaje]="mensajeModal" [isSuccessful]="accionAceptada"/>  
-</div>
+    <app-modal  (accionModal)="toggleModal($event)"  [_mensaje]="mensajeModal" [isSuccessful]="accionAceptada"/>  
+   </div>
 </div>

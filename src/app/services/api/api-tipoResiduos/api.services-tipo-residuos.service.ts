@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TipoResiduo } from 'src/app/services/models/tipo_Residuos';
@@ -16,8 +16,8 @@ const urlPeticion=`${this.baseURL}/verTodos`;
 return this._httpCliente.get<TipoResiduo[]>(urlPeticion);
   }
 
-  getInfoTipoResiduo(idTipoResiduo: number): Observable<TipoResiduo> {
-    const url = `${this.baseURL}/info_unTipoRes/${idTipoResiduo}`;
+  getInfoTipoResiduo(idTipoResiduo: number): Observable<TipoResiduo> 
+  { const url = `${this.baseURL}/unTipoResiduo/${idTipoResiduo}`;
     return this._httpCliente.get<TipoResiduo>(url);
   }
   
@@ -25,4 +25,11 @@ return this._httpCliente.get<TipoResiduo[]>(urlPeticion);
   const urlPeticion=`${this.baseURL}/crear`;
     return this._httpCliente.post<any>(urlPeticion,TipoRes);
   }
+
+    public cambioEstadoTipo(id_Tipo:number,nuevoEstado:boolean):Observable<TipoResiduo>{
+        const generadorCambio=new HttpParams().set('nuevoEstado',nuevoEstado);
+        
+        return this._httpCliente.patch<TipoResiduo>(`${this.baseURL}/cambioEstado/${id_Tipo}`, null, { params: generadorCambio });
+  
+      }
 }

@@ -7725,7 +7725,20 @@ input[type="checkbox"]:checked + .toggle {
   --bg-toggle: linear-gradient(to right, hsl(120, 80%, 40%), hsl(160, 70%, 45%)); /* Fondo verde */
   --bg-circle: hsl(0, 8%, 79%); /* Círculo gris */
 }
-/* componentes formularios */
+
+.titulo{
+ 
+  background-color: aliceblue;
+  color: rgba(0, 0, 0, 0.753);
+  display: inline-block;
+padding-bottom: 5px ;
+padding-left: 5px;
+padding-right: 10px;
+border-bottom: 2px solid rgba(0, 0, 0, 0.76);
+ border-left: 2px solid rgba(0, 0, 0, 0.753);
+border-bottom-left-radius: 10px;
+}
+
 
 @keyframes linearGradient {
   0%{

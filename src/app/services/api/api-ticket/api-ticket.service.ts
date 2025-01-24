@@ -40,9 +40,25 @@ const urlAdd= `${this.baseURL}/crear`;
     return this._httpClient.get<ITicket>(url);
   }
 
-  public getReporteTicketById(id:number): Observable<any>{
-    const urlReport=`${this.baseURL}/generadorPDF/${id}`;
-    return this._httpClient.get<any>(urlReport)
+  public getReporteTicketById(id:number){
+    const urlReport=`${this.baseURL}/generadorPDFNav/${id}`;
+    return this._httpClient.get(urlReport,{
+      responseType: 'blob',
+      observe: 'response'
+    })
+  }
+
+  guardarArchivo(response: any, nombreArchivo:string){
+    const blob= new Blob ([response.body],{type: 'application/pdf'});
+    const url= window.URL.createObjectURL(blob);
+
+    const link= document.createElement('a');
+    link.href=url;
+    link.download=nombreArchivo;
+    link.click();
+
+    //Limpieza
+    window.URL.revokeObjectURL(url);
   }
 
   actualizarEstado(id: number, estado: boolean): Observable<void> {

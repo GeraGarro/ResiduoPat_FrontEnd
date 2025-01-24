@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, inject } from "@angular/core";
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, SimpleChanges, inject } from "@angular/core";
 import {
   FormBuilder,
   Validators,
@@ -21,30 +21,28 @@ import { ModalComponent } from "../../../modal/modal.component";
   imports: [CommonModule, ReactiveFormsModule, ModalComponent],
 })
 export class GeneradorFormularioComponent implements OnInit {
-
-  estadoEdicion: boolean = false;
- private  idGenerador?: number;
-
- @Input() nuevo: boolean = false;
-@Output() estadoFormulario = new EventEmitter<{ estadoEdicion: boolean }>();
-  titulo: string = "Crear Nuevo Generador";
-
+  /* Comportamiento del Modal */
   mensajeModal:string='';
-
   modal:boolean=false;
-
   accionAceptada:boolean=false;
   toggleModal(state: boolean) {
     this.modal = state;
   }
+
+  estadoActivado: boolean = true;
+
+ @Input() nuevo: boolean = true;
+@Output() estadoFormulario = new EventEmitter<{ estadoEdicion: boolean }>();
+textoBotonSubmit: string= '';
+
   @Input() idRecibido!: number | undefined;
 
   private readonly router=inject(Router);
   private readonly _activatedRouter = inject(ActivatedRoute);
   private previousModalState: boolean = this.modal;
   private readonly _formBuilder = inject(FormBuilder);
-  private apiGenerador=inject(ApiGeneradorService)
-
+  private apiGenerador=inject(ApiGeneradorService);
+private cdr= inject(ChangeDetectorRef);
 
   formularioGenerador = this._formBuilder.nonNullable.group({
     nombre: ["", Validators.required],
@@ -63,7 +61,14 @@ export class GeneradorFormularioComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.formularioGenerador.disable();
+
+    console.log(`el id recibido del componente padre es ${this.idRecibido}`)
+    if (this.nuevo) {
+      this.formularioGenerador.enable();
+      this.estadoActivado=false // Si es nuevo, habilita el formulario
+    } else {
+      this.formularioGenerador.disable(); // Deshabilita el formulario si no es nuevo
+    }
   }
 
   ngDoCheck(): void {
@@ -73,25 +78,27 @@ export class GeneradorFormularioComponent implements OnInit {
        location.reload();
       }
     }
+
   }
 
-   getIdGenerador(id:number|undefined):void {
- 
-    console.log(`He recibido en formulario el valor: ${id}`)
-   
-  }
   ngOnChanges(changes: SimpleChanges): void {
+
+ 
     if (changes['idRecibido'] && changes['idRecibido'].currentValue !== undefined) {
       // Si se recibe un ID, activa el modo edición
       this.cargarDatosGenerador(changes['idRecibido'].currentValue);
       this.estadoFormulario.emit({ estadoEdicion: true });
+      this.textoBotonSubmit=' Aceptar Cambios';
     } else if (changes['nuevo'] && changes['nuevo'].currentValue === true) {
       // Si se activa el modo "nuevo", limpia el formulario y activa la edición
-      this.estadoEdicion = false;
+
       this.formularioGenerador.reset();
-      this.hablitarEdicion();
+      this.formularioGenerador.enable();
+      this.textoBotonSubmit='Crear Nuevo';
       this.estadoFormulario.emit({ estadoEdicion: true });
     }
+
+    
   }
 
   cargarDatosGenerador(id: number): void {
@@ -102,10 +109,10 @@ export class GeneradorFormularioComponent implements OnInit {
           cuit: data.cuit,
           direccion: data.direccion,
          legajo: data.legajo? data.legajo : 'No tiene',
-          telefono: data.telefono,
-          /* estado: data.estado ? 'activo' : 'inactivo' */
+        telefono: data.telefono? data.telefono : 'No registra telefono',
+        
         });
-        this.estadoEdicion = true; // Activa el modo de edición si hay datos cargados
+        this.estadoActivado = true; // Activa el modo de edición si hay datos cargados
       },
       error: (err) => {
         console.error('Error al cargar los datos del generador:', err);
@@ -114,52 +121,62 @@ export class GeneradorFormularioComponent implements OnInit {
       }
     });
   }
-  onSubmit() {
-    console.log(this.formularioGenerador.value);
-    
+  
+
+  /* Metodo para enviar solicitud get e ingresar nuevo Generador a  BD */
+  onSubmit() { 
     const nombre= this.formularioGenerador.controls.nombre.value;
     const cuit= this.formularioGenerador.controls.cuit.value;
     const direccion= this.formularioGenerador.controls.direccion.value;
     const telefono=this.formularioGenerador.controls.telefono.value;
     const legajo= this.formularioGenerador.controls.legajo.value;
-    let estado=false;
-    const estadoActividad=this.formularioGenerador.controls.estadoActividad.value;
-
-    if(estadoActividad=="Activo"){estado=true;};
-
-    if(this.estadoEdicion)
+    let estado=true;
+  
+    let generadorSubmit :Generador=
     {
-      console.log("ID Generador ",this.idGenerador);
-      const id= this.idGenerador;
-      this.apiGenerador.updateGenerador(id, nombre, cuit, telefono, direccion, estado).subscribe(
+      nombre:nombre,
+      cuit:cuit,
+      direccion:direccion,
+      telefono: telefono==='No registra telefono'? undefined:telefono,
+    
+      legajo: legajo==='No tiene'? undefined:legajo,
+      estado:estado
+    }
+
+    if(this.idRecibido!=null){
+  
+      this.apiGenerador.updateGenerador(generadorSubmit,this.idRecibido).subscribe(
         response => {
-            console.log('Generador actualizado', response);
-            // Maneja la respuesta exitosamente
+
+          this.modal=true; 
+          this.mensajeModal = response['message'];
+          this.accionAceptada=true;
+          setTimeout(()=>{
+            location.reload();
+          },2500)
         },
         error => {
-            console.error('Error al actualizar el generador', error);
-            // Maneja el error
+          console.error('Error al crear el generador', error);
+          this.mostrarError(error);
+          this.modal=true;
         }
     );
+     
     }
     else
     {
-      let nuevoGenerador:Generador=
-      {
-        nombre:nombre,
-        cuit:cuit,
-        direccion:direccion,
-        telefono:telefono,
-        legajo:legajo,
-        estado:estado
-      }
+     
 
-      this.apiGenerador.crearGenerador(nuevoGenerador).subscribe(
+      this.apiGenerador.crearGenerador(generadorSubmit).subscribe(
         response => {
           console.log(response);
           this.modal=true; 
           this.mensajeModal = response['message'];
-          this.accionAceptada=true
+          this.accionAceptada=true;
+          setTimeout(()=>{
+            location.reload();
+          },2500)
+         
       },
         error => {
           console.error('Error al crear el generador', error);
@@ -168,8 +185,25 @@ export class GeneradorFormularioComponent implements OnInit {
       }
       )  
     }
+   
   }
 
+
+  hablitarEdicion() {
+    this.formularioGenerador.enable();
+    this.estadoActivado=false;
+    this.cdr.markForCheck();
+    console.log(this.estadoActivado)
+  }
+
+  hasErrors(controlNombre: string, errorType: string) {
+    return (
+      this.formularioGenerador.get(controlNombre)?.hasError(errorType) &&
+      this.formularioGenerador.get(controlNombre)?.touched
+    );
+  }
+
+/* Comportamiento  de modal*/
   mostrarModal() {
     this.modal = true;
     setTimeout(() => {
@@ -184,16 +218,4 @@ export class GeneradorFormularioComponent implements OnInit {
       this.mensajeModal = 'Ocurrió un error inesperado';
     }
   }
-  hablitarEdicion() {
-    this.formularioGenerador.enable();
-    this.estadoEdicion = true;
-    this.estadoFormulario.emit({ estadoEdicion: true });
-  }
-  hasErrors(controlNombre: string, errorType: string) {
-    return (
-      this.formularioGenerador.get(controlNombre)?.hasError(errorType) &&
-      this.formularioGenerador.get(controlNombre)?.touched
-    );
-  }
-
 }

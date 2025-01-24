@@ -1,21 +1,18 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Andika:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
-
-
 label{
     color: rgb(253, 253, 253);  
     background-color: black;
   
-}
-
-
-.input-formulario{
+  }
+  
+  
+  .input-formulario{
     
     background-color: aliceblue;
   
-}
-
+  }
 .btn{
     background: linear-gradient(45deg, rgb(202, 191, 31),rgb(255, 230, 6));
     color: rgb(10, 10, 10);

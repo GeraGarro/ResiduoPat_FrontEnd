@@ -43,6 +43,7 @@
             <img class="delete" src="../../../../assets/icons/delete.png" alt="delete" (click)="deleteTicket(item.id_Ticket); $event.stopPropagation()" *ngIf="!item.estado">
 
             <img class="delete" src="../../../../assets/icons/edit.png" alt="edit" (click)="cambiarestado(item.id_Ticket,false)" *ngIf="item.estado">
+            <img class="delete" src="../../../../assets/icons/print.png" alt="print" (click)="descargarReporte(item.id_Ticket)" *ngIf="item.estado">
           </td>
         </tr> 
 

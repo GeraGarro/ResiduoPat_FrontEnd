@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit, ViewChild } from '@angular/core';
 import { TipoResiduo } from '../../services/models/tipo_Residuos';
 import { ApiServicesTipoResiduosService } from '../../services/api/api-tipoResiduos/api.services-tipo-residuos.service';
 import { CommonModule } from '@angular/common';
@@ -11,7 +11,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatRadioModule } from '@angular/material/radio';
 import { RouterModule } from '@angular/router';
 import { RotacionCircularDirective } from 'src/app/directivas/rotacion-circular.directive';
-
+import { TipoResiduoFormularioComponent } from './tipo-residuo-formulario/tipo-residuo-formulario.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-tipo-residuo',
@@ -27,7 +28,8 @@ import { RotacionCircularDirective } from 'src/app/directivas/rotacion-circular.
     MatSelectModule,
     ReactiveFormsModule,
    MatRadioModule,
-   
+   FormsModule,
+   TipoResiduoFormularioComponent
   ],
   styleUrls: ['./tipo-residuo.component.css']
 })
@@ -35,20 +37,29 @@ export class TipoResiduoComponent implements OnInit{
 ListaTipoResiduos: TipoResiduo[]=[];
 ListaTiposActivos: TipoResiduo[]=[];
 ListaTiposInactivos: TipoResiduo[]=[];
-tipoSeleccionado: TipoResiduo | null = null;
+
+
+idSeleccionado: number | undefined;
 mostrarFormulario: boolean = false;
+
+isActivo:boolean=false;
+
 @ViewChild(RotacionCircularDirective, { static: false }) rotacionCircular!: RotacionCircularDirective;
 
-constructor(private _apiService:ApiServicesTipoResiduosService ){
+selectedIndex: number | null = null;
+nuevo: boolean = false;
+
+private currentOffset = 0; // Mantiene la posición actual del desplazamiento
+private itemHeight = 100; // Altura de cada item (en píxeles, ajusta según tu diseño)
+private visibleItemsCount = 10; // Número de ítems visibles a la vez (ajusta según el contenedor)
+private cdr= inject(ChangeDetectorRef)
+constructor(private _apiTipoResiduo:ApiServicesTipoResiduosService ){
  
   }
 
-  asignarTipoSeleccionado(tipo: TipoResiduo) {
-    this.tipoSeleccionado = tipo;
-  }
 
 ngOnInit(): void {
-  this._apiService.getTipoResiduos().subscribe(
+  this._apiTipoResiduo.getTipoResiduos().subscribe(
     data=>{
       this.ListaTipoResiduos=data;
       this.ListaTipoResiduos.forEach(
@@ -68,30 +79,69 @@ ngOnInit(): void {
   )
 }
 
-seleccionarTipoResiduo(tipo: TipoResiduo){
-  this.ListaTipoResiduos.forEach(tipo_Residuos => tipo_Residuos.seleccionado = false);
-  
-  // Marcar el tipo de residuo seleccionado
-  this.tipoSeleccionado = tipo; 
-  
-  this.mostrarFormulario = true; 
-  console.log(tipo)
+
+seleccionarElemento(index: number, id:number|undefined) {
+ 
+  this.selectedIndex = index; 
+
+  this.activarFormulario() // Mostrar el formulario al seleccionar un elemento
+  this.nuevo = false; // Desactivar el modo "nuevo"
+
+  this.idSeleccionado=id;
+console.log("id seleccionado: "+this.idSeleccionado)
+ this.isActivo=true;
+
+ this.nuevo = false; // Para indicar que no es un formulario nuevo, sino de edición
+
+ 
 }
 
-
-asignarTipo(tipo: TipoResiduo) {
-  this.tipoSeleccionado = tipo;
+activarFormulario() {
+  this.mostrarFormulario = true;
+  // Forzar la actualización del tamaño del DOM
+  this.cdr.detectChanges();
 }
 
-scrollLeft(): void {
-  if (this.rotacionCircular) {
-    this.rotacionCircular.scrollLeft();
+/* Actualizar estado de Actividad Generadores mediante solicitud Update a estado */
+cambiarEstado(id: number | undefined, estado: boolean): void {
+  if (!id) {
+    console.warn('ID no disponible.');
+    return;
   }
+
+  // Realiza el cambio de estado
+  this._apiTipoResiduo.cambioEstadoTipo(id, estado).subscribe({
+    next: (respuesta) => {
+      console.log('Estado actualizado:', respuesta);
+      const generadorActualizado = this.ListaTipoResiduos.find((gen) => gen.id === id);
+      if (generadorActualizado) {
+        generadorActualizado.estado = estado; // Actualiza el estado en la lista local
+      }
+    },
+    error: (error) => {
+      console.error('Error al cambiar el estado:', error);
+    }
+  });
 }
 
-scrollRight(): void {
-  if (this.rotacionCircular) {
-    this.rotacionCircular.scrollRight();
+
+scrollUp() {
+  // Límite superior
+  const maxOffset = 0;
+  this.currentOffset = Math.min(this.currentOffset + this.itemHeight, maxOffset);
+  this.updateTransform();
+}
+
+scrollDown() {
+  // Límite inferior
+  const maxOffset = -this.itemHeight * (this.ListaTipoResiduos.length - this.visibleItemsCount);
+  this.currentOffset = Math.max(this.currentOffset - this.itemHeight, maxOffset);
+  this.updateTransform();
+}
+private updateTransform() {
+  const listaElement = document.querySelector('.contenedor-lista') as HTMLElement;
+  if (listaElement) {
+    listaElement.style.transform = `translateY(${this.currentOffset}px)`;
   }
 }
 }

@@ -3,10 +3,15 @@
   <h3 class="titulo">Gestión de Generadores</h3>
 
   <div class="contenedor-contenido">
-    <div class="contenedor-formulario" *ngIf="mostrarFormulario">
+    <div class="contenedor-formulario"  *ngIf="mostrarFormulario"
+    [class.animacion-aparecer]="mostrarFormulario">
+ 
+
       <app-generador-formulario
         [idRecibido]="idSeleccionado"
+        [nuevo]="nuevo"
       ></app-generador-formulario>
+      
     </div>
 
     <div class="contenedor-datos" *ngIf="!nuevo">
@@ -57,5 +62,5 @@
       </div>
     </div>
   </div>
-  <button class="btn agregar" (click)="activarNuevo()">Agregar</button>
+  <button class="btn agregar" (click)="activarNuevo()" *ngIf="!nuevo">Agregar</button>
 </div>

@@ -175,9 +175,23 @@ cambiarestado(id:number | undefined, estado:boolean):void{
     next: () =>    this.recargarTickets(),
         error: err => console.error('Error al actualizar el estado del ticket:', err)
   });
-
- 
 }
+
+descargarReporte(id:number | undefined){
+  if(id!=undefined){
+    this.apiTicket.getReporteTicketById(id).subscribe(
+      (response) =>{
+        const nombreArchivo=`Ticket_${id}.pdf`;
+        this.apiTicket.guardarArchivo(response,nombreArchivo);
+      },
+      (error)=>{
+        console.error('Error al descargar el reporte:',error)
+      }
+    )
+  }
+
+}
+
 }
 
 

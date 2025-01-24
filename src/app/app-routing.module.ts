@@ -7,7 +7,7 @@ import { GeneradorComponent } from './pages/generador/generador.component';
 import { TransportistaComponent } from './transportista/transportista.component';
 import { TicketControlFormularioComponent } from './pages/home/ticket-control-formulario/ticket-control-formulario.component';
 import { ResiduoFormularioComponent } from './residuo-formulario/residuo-formulario.component';
-import { TipoResiduoFormularioComponent } from './tipo-residuo-formulario/tipo-residuo-formulario.component';
+import { TipoResiduoFormularioComponent } from '../app/pages/tipo-residuo/tipo-residuo-formulario/tipo-residuo-formulario.component';
 import { CertificadoComponent } from './pages/certificado/certificado.component';
 import { TransportistaFormularioComponent } from './transportista-formulario/transportista-formulario.component';
 import { GeneradorFormularioComponent } from './pages/generador/generador-formulario/generador-formulario.component';
@@ -23,7 +23,7 @@ const routes: Routes = [
 {path: 'formulario-ticket/:id', component: TicketControlFormularioComponent },
 {path:'residuo',component: ResiduoComponent},
 {path:'residuo_Formulario',component: ResiduoFormularioComponent},
-{path:'tipo-residuo',component: TipoResiduoComponent},
+{path:'tipos-residuos',component: TipoResiduoComponent},
 {path:'generador',component: GeneradorComponent},
 {path:'certificado',component: CertificadoComponent},
 {path: 'certificado_formulario',component:CertificadoFormularioComponent},

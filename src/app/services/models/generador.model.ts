@@ -4,7 +4,7 @@ export interface Generador {
     cuit:             string;
     direccion:        string;
     legajo?:           string;
-    telefono:         string;
+    telefono?:         string;
     estado: boolean;
 }
 
