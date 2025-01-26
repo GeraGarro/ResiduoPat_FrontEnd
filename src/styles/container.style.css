@@ -53,11 +53,7 @@ height: 100%;
   
     opacity: 0.85;
   } 
-  .item-lista.activo,.item-lista.activo::before,.item-lista.activo:nth-child(even)::before {
-    background-color: rgb(253, 253, 253);
-    color: rgb(75, 74, 74);
-    transition: all .1s linear;
-  }
+
   .contenedor-lista-wrapper {
     width: 100%; /* Tamaño del contenedor */
     height: 100%; /* Altura visible */
@@ -93,7 +89,7 @@ height: 100%;
   
   .item-lista.activo,.item-lista.activo::before,.item-lista.activo:nth-child(even)::before {
     background-color: rgb(253, 253, 253);
-    color: rgb(75, 74, 74);
+    color: rgb(24, 16, 16);
     transition: all .1s linear;
   }
   .item-lista::before{

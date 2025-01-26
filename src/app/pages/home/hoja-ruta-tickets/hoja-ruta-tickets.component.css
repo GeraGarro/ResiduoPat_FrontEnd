@@ -72,7 +72,7 @@ thead th:last-child, tbody td:last-child {
   .icons-estado{
   width: 20px;
 }
-.delete{
+.accion{
   width: 38px;
 }
 .col-estado{
@@ -116,7 +116,7 @@ thead th:last-child, tbody td:last-child {
   background-color: initial;
   color: initial;
 }
-.delete{
+.accion{
   background-color: rgba(255, 255, 255, 0.719);
   padding: 5px;
   border-radius: 50%;
@@ -187,10 +187,10 @@ thead th:last-child, tbody td:last-child {
   cursor: default;
 }
 @media screen and (max-width: 768px) {
-.eliminar{
+.accion{
   display: none;
 }
- .col-eliminar:not(td){
+ .col-accion:not(td){
   align-self: stretch;
   background-color: transparent;
   border-bottom: none;

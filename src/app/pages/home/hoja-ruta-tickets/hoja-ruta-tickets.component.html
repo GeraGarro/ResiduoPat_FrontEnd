@@ -12,7 +12,7 @@
           <th class="col-direccion"><span>Dirección</span></th>
           <th class="col-fecha">Fecha</th>
           <th class="col-estado"><span class="col-estado-content">Estado</span></th>
-          <th class="col-eliminar"><span class="acciones">Acciones</span></th>
+          <th class="col-acciones"><span class="acciones">Acciones</span></th>
         </tr>
       </thead>
       <tbody  >
@@ -39,11 +39,11 @@
               {{ item.estado ? 'Finalizado' : 'Sin Procesar' }}
             </span>
           </td>
-          <td class="col-eliminar">
-            <img class="delete" src="../../../../assets/icons/delete.png" alt="delete" (click)="deleteTicket(item.id_Ticket); $event.stopPropagation()" *ngIf="!item.estado">
+          <td class="col-acciones">
+            <img class="accion" src="../../../../assets/icons/delete.png" alt="delete" (click)="deleteTicket(item.id_Ticket); $event.stopPropagation()" *ngIf="!item.estado">
 
-            <img class="delete" src="../../../../assets/icons/edit.png" alt="edit" (click)="cambiarestado(item.id_Ticket,false)" *ngIf="item.estado">
-            <img class="delete" src="../../../../assets/icons/print.png" alt="print" (click)="descargarReporte(item.id_Ticket)" *ngIf="item.estado">
+            <img class="accion" src="../../../../assets/icons/edit.png" alt="edit" (click)="cambiarestado(item.id_Ticket,false)" *ngIf="item.estado">
+            <img class="accion" src="../../../../assets/icons/print.png" alt="print" (click)="descargarReporte(item.id_Ticket)" *ngIf="item.estado">
           </td>
         </tr> 
 

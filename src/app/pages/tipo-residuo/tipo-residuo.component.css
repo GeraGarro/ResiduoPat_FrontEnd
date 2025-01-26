@@ -15,16 +15,15 @@ height: 100%;
 .contenedor-lista-wrapper{
     position: relative;
     flex-direction: column;
-    flex: 1;
+   
+
     height: 100%;
+   
 }
  .contenedor-lista{
- /*    position: relative;
-    flex-direction: column;
-    align-items: center;
-    flex-wrap: nowrap; */
-    overflow: hidden;
-    
+
+    overflow-y: auto;
+    padding: 20px 0;
   
 } 
 
@@ -74,20 +73,16 @@ height: 100%;
 }
 
 .contenedor-formulario{
-    max-width:  250px;
+    flex: 1; 
+  
     height: 80%;
   border-left: 1px solid rgba(128, 128, 128, 0.493);
-}
-.contenedor-formulario, .contenedor-lista{
-    padding: 20px 0;
-}
-
-.contenedor-formulario{
-    padding: 20px 30px;
+  padding: 20px 30px;
 }
 
 
 .contenedor-botones{
+  
     position: absolute;
     top: 50%;
     left: 18%;
@@ -95,10 +90,26 @@ height: 100%;
     display: flex;
     flex-direction: column;
     height: 10vh;
+    opacity: 0;
 }
 .contenedor-botones{
-    z-index: 9999;
+    z-index: 999;
 }
+
+.agregar{
+    margin-top: 20px;
+    background: linear-gradient(45deg, rgb(243, 2, 2),rgb(214, 67, 9));
+    font-size: 20px;
+    color: aliceblue;
+    width: 100%;
+   }
+
+   .item-lista.activo,.item-lista.activo::before,.item-lista.activo:nth-child(even)::before {
+    background-color: rgb(253, 253, 253);
+    color: rgb(24, 16, 16);
+    transition: all .1s linear;
+  }
+  
 @media screen and (max-width:1200px) {
     .contenedor-botones{
         left: 0%;

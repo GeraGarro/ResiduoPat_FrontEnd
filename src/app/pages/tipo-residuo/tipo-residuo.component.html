@@ -5,10 +5,8 @@
     
     <h3 class="titulo">Tipos de Residuos Registrados</h3>
 
-   <!--  <button class="btn-desp" (click)="scrollLeft()">←</button> -->
-
-   <div class="contenedor-contenido">
-    <div class="contenedor-lista-wrapper">
+   <div class="contenedor-contenido" >
+    <div class="contenedor-lista-wrapper"*ngIf="!nuevo">
       <div class="contenedor-botones">
         <!-- Botón "Arriba" -->
         <div class="control arriba">
@@ -34,10 +32,11 @@
     <ul class="contenedor-lista" #lista>
 
 
-      <li class="item-lista"
-       *ngFor="let item of ListaTipoResiduos; let i=index"
-       [class.activo]="selectedIndex===i"
-       (click)="seleccionarElemento(i, item.id)">
+      <li
+      class="item-lista"
+      *ngFor="let item of ListaTipoResiduos; let i = index"
+      [class.activo]="selectedIndex === i"
+      (click)="seleccionarElemento(i, item.id)">
 
         <span class="span-nombre">{{ item.nombre }}</span>
 
@@ -54,20 +53,24 @@
 
 
     </ul>
-    <button class="btn-add"><span class="span-btn">Agregar Tipo de Residuo</span></button>
     </div>
   
       
    
-<div class="contenedor-formulario">
-  <app-tipo-residuo-formulario 
+<div class="contenedor-formulario" *ngIf="mostrarFormulario"
+[class.animacion-aparecer]="mostrarFormulario">
+  <app-tipo-residuo-formulario (enviarMensaje)="recepcionDatos($event)"
   [idRecibido]="idSeleccionado"
   [nuevo]="nuevo"/>
 </div>
        
    </div>
 
-   </div>
- 
+   <button class="btn agregar" (click)="activarNuevo()" *ngIf="!nuevo">Agregar</button>
 
+  </div>
 
+<div class="contenedor-modal" *ngIf="activarModal" >
+  <app-modal   
+  [_mensaje]="mensajeDeFormulario" [estadoAprobado]= "estadoModal"/>
+</div>

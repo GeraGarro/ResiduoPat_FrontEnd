@@ -26,10 +26,15 @@ return this._httpCliente.get<TipoResiduo[]>(urlPeticion);
     return this._httpCliente.post<any>(urlPeticion,TipoRes);
   }
 
-    public cambioEstadoTipo(id_Tipo:number,nuevoEstado:boolean):Observable<TipoResiduo>{
+  public cambioEstadoTipo(id_Tipo:number,nuevoEstado:boolean):Observable<TipoResiduo>{
         const generadorCambio=new HttpParams().set('nuevoEstado',nuevoEstado);
         
         return this._httpCliente.patch<TipoResiduo>(`${this.baseURL}/cambioEstado/${id_Tipo}`, null, { params: generadorCambio });
   
-      }
+  }
+
+  
+  public updateTipoResiduo(tipo_modificado: TipoResiduo, id_Tipo?: number):Observable<any>{
+    return this._httpCliente.put<TipoResiduo>(`${this.baseURL}/update/${id_Tipo}`,tipo_modificado)
+  }
 }

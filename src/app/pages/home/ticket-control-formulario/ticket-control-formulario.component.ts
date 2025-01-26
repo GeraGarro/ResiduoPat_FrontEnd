@@ -75,6 +75,8 @@ export class TicketControlFormularioComponent implements OnInit {
     this.modal = state;
   }
 
+
+  
   @Output() ticketCreado = new EventEmitter<void>();
   
   private readonly router=inject(Router);
@@ -130,21 +132,30 @@ this.servicioCompartido.idHoja$.subscribe((idHoja) => {
   this.idHoja = idHoja;
   console.log('idHoja recibido:', this.idHoja);
 });
+
+this.limitarCalendario()
   }
 
- /*  ngDoCheck(): void {
-    if (this.previousModalState !== this.modal) {
-      this.previousModalState = this.modal;
-      if (!this.modal && this.accionAceptada) {
-       setTimeout(()=>{
-        this.router.navigate(['/home']);
-       },2000)
-       
-       
-      }
-    }
-  } */
+  minDate!: Date; // Fecha mínima (lunes de la semana actual)
+  maxDate!: Date; // Fecha máxima (domingo de la semana actual)
 
+
+limitarCalendario(){
+  const today = new Date(); // Fecha actual
+  const dayOfWeek = today.getDay(); // Día de la semana (0 = domingo, 1 = lunes, ...)
+
+  // Calcular lunes (restar días desde el lunes)
+  const diffToMonday = (dayOfWeek === 0 ? -6 : 1) - dayOfWeek;
+  this.minDate = new Date(today);
+  this.minDate.setDate(today.getDate() + diffToMonday);
+
+  // Calcular domingo (sumar días hasta el domingo)
+  const diffToSunday = 7 - (dayOfWeek === 0 ? 7 : dayOfWeek);
+  this.maxDate = new Date(today);
+  this.maxDate.setDate(today.getDate() + diffToSunday);
+
+  console.log('Rango de fechas:', this.minDate, this.maxDate);
+}
 
   cargarGeneradores(): void {
     this.apiGeneradorService.getGeneradoresActivos().subscribe(
@@ -206,12 +217,12 @@ this.servicioCompartido.idHoja$.subscribe((idHoja) => {
      
      const fechaRetiro = this.datePipe.transform(this.formularioTicket.value.fechaRetiro, 'yyyy-MM-dd');
       let estadoRevision=false;
-     console.log('Transportista:', id_transp);
+   /*   console.log('Transportista:', id_transp);
      console.log('Generador:', id_generador);
-     console.log('Fecha de Retiro:', fechaRetiro);
+     console.log('Fecha de Retiro:', fechaRetiro); */
     
      if(this.estadoEdicion){
-      console.log()
+  /*     console.log() */
      }
      else
      { 
@@ -230,7 +241,11 @@ this.servicioCompartido.idHoja$.subscribe((idHoja) => {
       if (id_transp == null || id_generador == null) {
         this.modal = true;
         this.mensajeModal = 'Debe seleccionar un transportista y un generador';
-        this.accionAceptada = false; // Acción rechazada
+        this.accionAceptada = false;
+        setTimeout(()=>{
+          this.modal=false
+        },3000)
+         // Acción rechazada
         return;
       }
 
@@ -252,11 +267,19 @@ this.servicioCompartido.idHoja$.subscribe((idHoja) => {
           this.mensajeModal=response['message'];
           this.accionAceptada=true;
           this.ticketCreado.emit();
+          setTimeout(()=>{
+            this.modal=false
+          },3000)
         },
         error =>{
           console.error("Error al generar Ticket", error);
           this.mostrarError(error);
           this.modal=true;
+          console.log("modal antes: "+this.modal)
+          setTimeout(()=>{
+            this.modal=false
+          },3000)
+          console.log("modal despues: "+this.modal)
         }
       ) 
      }

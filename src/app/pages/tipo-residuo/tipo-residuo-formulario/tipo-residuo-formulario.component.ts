@@ -3,45 +3,46 @@ import { TipoResiduo } from '../../../services/models/tipo_Residuos';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ApiServicesTipoResiduosService } from '../../../services/api/api-tipoResiduos/api.services-tipo-residuos.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { ModalComponent } from 'src/app/modal/modal.component';
+
 
 @Component({
   selector: 'app-tipo-residuo-formulario',
   standalone:true,
-    imports: [CommonModule, ReactiveFormsModule, ModalComponent],
+    imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './tipo-residuo-formulario.component.html',
   styleUrls: ['./tipo-residuo-formulario.component.css']
 })
 export class TipoResiduoFormularioComponent implements OnInit{
 
-  /* Comportamiento del Modal */
-  mensajeModal:string='';
-  modal:boolean=false;
-  accionAceptada:boolean=false;
-  toggleModal(state: boolean) {
-    this.modal = state;
-  }
 
-  estadoActivado: boolean = true;
+
+  estadoModificacion: boolean = true;
 
   @Input() nuevo: boolean = true;
   @Output() estadoFormulario = new EventEmitter<{ estadoEdicion: boolean }>();
   textoBotonSubmit: string= '';
-
+  nombreTituloForm: string='';
 
   @Input() idRecibido!: number | undefined;
 
- private readonly router=inject(Router);
-  private readonly _activatedRouter = inject(ActivatedRoute);
-  private previousModalState: boolean = this.modal;
+  @Output() enviarMensaje=new EventEmitter<{mensajeEnviar:string, activarModal: boolean,estadoAprobado:boolean}>();
+
+  enviarDatos(mensaje: string, estadoAprobado:boolean): void {
+    const datos = {
+      mensajeEnviar: mensaje,
+      activarModal: true,
+      estadoAprobado: estadoAprobado
+    };
+    this.enviarMensaje.emit(datos);
+  }
+
   private readonly _formBuilder = inject(FormBuilder);
   private apiTipoResiduo=inject(ApiServicesTipoResiduosService);
 private cdr= inject(ChangeDetectorRef);
-  private _tipoSeleccionado: TipoResiduo | null = null; 
+  
 
-    mostrarFormulario: boolean = false;
+ 
 
     formularioTipoResiduo=this._formBuilder.nonNullable.group(
       {
@@ -50,19 +51,17 @@ private cdr= inject(ChangeDetectorRef);
       });
    
 ngOnInit(): void {
- 
+  console.log(`el id recibido de componente padre es ${this.idRecibido}`)
   if (this.nuevo) {
     this.formularioTipoResiduo.enable();
-    this.estadoActivado=false // Si es nuevo, habilita el formulario
+    this.estadoModificacion=false // Si es nuevo, habilita el formulario
   } else {
+    this.estadoModificacion=true
     this.formularioTipoResiduo.disable(); // Deshabilita el formulario si no es nuevo
   }
   
 }
     
-
-
-
 ngOnChanges(changes:SimpleChanges):void{
   if (changes['idRecibido'] && changes['idRecibido'].currentValue !== undefined) {
     // Si se recibe un ID, activa el modo edición
@@ -70,14 +69,16 @@ ngOnChanges(changes:SimpleChanges):void{
     this.cargaDatosUnTipo(changes['idRecibido'].currentValue);
     this.estadoFormulario.emit({ estadoEdicion: true });
     this.textoBotonSubmit=' Aceptar Cambios';
-    
+    this.nombreTituloForm= 'Editar Tipo Residuo'
   } else if (changes['nuevo'] && changes['nuevo'].currentValue === true) {
     // Si se activa el modo "nuevo", limpia el formulario y activa la edición
 
     this.formularioTipoResiduo.reset();
     this.formularioTipoResiduo.enable();
+    this.nombreTituloForm='Ingresar Nueva Clasificación Residuo';
+    this.estadoModificacion=false;
     this.textoBotonSubmit='Crear Nuevo';
-    this.estadoFormulario.emit({ estadoEdicion: true });
+    this.estadoFormulario.emit({ estadoEdicion: false });
   }
 }
 //carga de datos de un residuo TipoResiduo
@@ -91,31 +92,78 @@ cargaDatosUnTipo(id: number):void{
       
       });
       
-      this.estadoActivado=true;
+      this.estadoModificacion=true;
       this.cdr.markForCheck();
     },
     error:(err)=>{
-      this.mensajeModal="Error al intentar cargar la información";
-      this.modal=true;
+    console.error('Error al cargar los datos de Clasificación de Residuos '+ err);
     }
   });
 }
-  hasErrors(controlNombre: string, errorType: string) {
-    return (
-      this.formularioTipoResiduo.get(controlNombre)?.hasError(errorType) &&
-      this.formularioTipoResiduo.get(controlNombre)?.touched
-    );
-  }
 
-  mostrarError(error: HttpErrorResponse) {
-    if (error.error && error.error.message) {
-      this.mensajeModal = error.error.message;
-    } else {
-      this.mensajeModal = 'Ocurrió un error inesperado';
-    }
-  }
+onSubmit(){
+  const codigo_tipo= this.formularioTipoResiduo.controls.codigo_tipo.value;
+  const nombre_tipo= this.formularioTipoResiduo.controls.nombre_tipo.value;
+  let estado=true;
 
-enviar(){
-  
+  let tipo_ResiduoSubmit: TipoResiduo=
+  {
+   nombre:nombre_tipo,
+   codigo:codigo_tipo,
+   estado:estado
+
+  }
+   if(this.idRecibido!=null){
+    this.apiTipoResiduo.updateTipoResiduo(tipo_ResiduoSubmit,this.idRecibido).subscribe(
+      response =>{
+     
+        this.enviarDatos(response['message'],true);
+      
+      setTimeout(()=>{
+        location.reload();
+      },4000)
+      },
+      error=>{
+        const errorMessage = error?.error?.message || 'Error desconocido';
+
+        this.enviarDatos('Error al crear Nueva Clasificación '+ errorMessage,false)
+
+        console.log(error)
+      }
+    )
+   }else{
+    this.apiTipoResiduo.agregarTipoResiduo(tipo_ResiduoSubmit).subscribe(
+      response =>{
+        this.enviarDatos(response['message'],true) ;
+        
+        setTimeout(()=>{
+          location.reload();
+        },4000)
+      
+      },
+      error=>{
+        const errorMessage = error?.error?.message || 'Error desconocido';
+
+        this.enviarDatos('Error al crear el Clasificacion Residuo : '+ errorMessage,false)
+
+        console.log(error)
+      }
+    )
+   }
 }
+
+hablitarEdicion() {
+  this.formularioTipoResiduo.enable();
+  this.estadoModificacion=true;
+  this.cdr.markForCheck();
+
+}
+
+hasErrors(controlNombre: string, errorType: string) {
+  return (
+    this.formularioTipoResiduo.get(controlNombre)?.hasError(errorType) &&
+    this.formularioTipoResiduo.get(controlNombre)?.touched
+  );
+}
+
 }

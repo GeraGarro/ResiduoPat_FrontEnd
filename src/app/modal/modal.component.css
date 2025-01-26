@@ -38,7 +38,7 @@ main{
    background-color: #ffffff;
    min-width: 13%;
    width: max-content;
-   height: 120px;
+   height: 100px;
  
     top: 60px;
     right: 0;
@@ -107,7 +107,7 @@ main{
 h3{text-align: center;
     box-sizing: border-box;
   padding: 2px 5px;    
-  font-size: 12px;
+  font-size: 14px;
   /* text-wrap: nowrap; */
   text-shadow: 2px 2px 3px rgba(4, 5, 4, 0.158);
  

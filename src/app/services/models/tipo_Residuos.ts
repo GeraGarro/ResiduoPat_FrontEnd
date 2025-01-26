@@ -1,7 +1,6 @@
 export interface TipoResiduo {
-    id:     number;
+    id?:     number;
     nombre: string;
     estado:  boolean;
     codigo: string;
-    seleccionado:       boolean;
 }

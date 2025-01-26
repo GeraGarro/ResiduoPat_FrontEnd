@@ -63,6 +63,11 @@ getIdTicket(){
        
          }
     
+         if (data.fechaEmisionTk) {
+          const fecha = new Date(data.fechaEmisionTk);
+          this.fecha = fecha.toISOString().split("T")[0]; // Extraemos solo la parte de la fecha
+        }
+
         },error=>{
           console.error("Ha ocurrido un error")
         }

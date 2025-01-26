@@ -5,11 +5,9 @@ import {
   ReactiveFormsModule,
 } from "@angular/forms";
 import { ApiGeneradorService } from "../../../services/api/api-generador/api-generador.service";
-import { HttpErrorResponse } from "@angular/common/http";
 import { Generador } from "../../../services/models/generador.model";
-import { ActivatedRoute, Router } from "@angular/router";
 import { CommonModule } from "@angular/common";
-import { ModalComponent } from "../../../modal/modal.component";
+
 
 
 
@@ -18,28 +16,30 @@ import { ModalComponent } from "../../../modal/modal.component";
   standalone: true,
   templateUrl: "./generador-formulario.component.html",
   styleUrls: ["./generador-formulario.component.css"],
-  imports: [CommonModule, ReactiveFormsModule, ModalComponent],
+  imports: [CommonModule, ReactiveFormsModule],
 })
 export class GeneradorFormularioComponent implements OnInit {
-  /* Comportamiento del Modal */
-  mensajeModal:string='';
-  modal:boolean=false;
-  accionAceptada:boolean=false;
-  toggleModal(state: boolean) {
-    this.modal = state;
-  }
 
-  estadoActivado: boolean = true;
+
+  estadoModificacion: boolean = true;
 
  @Input() nuevo: boolean = true;
 @Output() estadoFormulario = new EventEmitter<{ estadoEdicion: boolean }>();
+
 textoBotonSubmit: string= '';
 
   @Input() idRecibido!: number | undefined;
+  @Output() enviarMensaje=new EventEmitter<{mensajeEnviar:string, activarModal: boolean,estadoAprobado:boolean}>();
 
-  private readonly router=inject(Router);
-  private readonly _activatedRouter = inject(ActivatedRoute);
-  private previousModalState: boolean = this.modal;
+  enviarDatos(mensaje: string, estadoAprobado:boolean): void {
+    const datos = {
+      mensajeEnviar: mensaje,
+      activarModal: true,
+      estadoAprobado: estadoAprobado
+    };
+    this.enviarMensaje.emit(datos);
+  }
+ 
   private readonly _formBuilder = inject(FormBuilder);
   private apiGenerador=inject(ApiGeneradorService);
 private cdr= inject(ChangeDetectorRef);
@@ -65,21 +65,13 @@ private cdr= inject(ChangeDetectorRef);
     console.log(`el id recibido del componente padre es ${this.idRecibido}`)
     if (this.nuevo) {
       this.formularioGenerador.enable();
-      this.estadoActivado=false // Si es nuevo, habilita el formulario
+      this.estadoModificacion=false // Si es nuevo, habilita el formulario
     } else {
       this.formularioGenerador.disable(); // Deshabilita el formulario si no es nuevo
     }
   }
 
-  ngDoCheck(): void {
-    if (this.previousModalState !== this.modal) {
-      this.previousModalState = this.modal;
-      if (!this.modal && this.accionAceptada) {
-       location.reload();
-      }
-    }
 
-  }
 
   ngOnChanges(changes: SimpleChanges): void {
 
@@ -94,6 +86,7 @@ private cdr= inject(ChangeDetectorRef);
 
       this.formularioGenerador.reset();
       this.formularioGenerador.enable();
+      this.estadoModificacion=false;
       this.textoBotonSubmit='Crear Nuevo';
       this.estadoFormulario.emit({ estadoEdicion: true });
     }
@@ -112,12 +105,11 @@ private cdr= inject(ChangeDetectorRef);
         telefono: data.telefono? data.telefono : 'No registra telefono',
         
         });
-        this.estadoActivado = true; // Activa el modo de edición si hay datos cargados
+        this.estadoModificacion = true; // Activa el modo de edición si hay datos cargados
       },
       error: (err) => {
         console.error('Error al cargar los datos del generador:', err);
-        this.mensajeModal = 'No se pudo cargar la información del generador.';
-        this.modal = true; // Mostrar modal de error
+ 
       }
     });
   }
@@ -148,17 +140,19 @@ private cdr= inject(ChangeDetectorRef);
       this.apiGenerador.updateGenerador(generadorSubmit,this.idRecibido).subscribe(
         response => {
 
-          this.modal=true; 
-          this.mensajeModal = response['message'];
-          this.accionAceptada=true;
+          this.enviarDatos(response['message'],true);
+          
+         
           setTimeout(()=>{
             location.reload();
-          },2500)
+          },4000)
         },
         error => {
-          console.error('Error al crear el generador', error);
-          this.mostrarError(error);
-          this.modal=true;
+          const errorMessage = error?.error?.message || 'Error desconocido';
+
+          this.enviarDatos('Error al crear el generador '+ errorMessage,false)
+
+          console.log(error)
         }
     );
      
@@ -170,19 +164,23 @@ private cdr= inject(ChangeDetectorRef);
       this.apiGenerador.crearGenerador(generadorSubmit).subscribe(
         response => {
           console.log(response);
-          this.modal=true; 
-          this.mensajeModal = response['message'];
-          this.accionAceptada=true;
+         
+          this.enviarDatos(response['message'],true) ;
+        
           setTimeout(()=>{
             location.reload();
-          },2500)
+          },4000)
          
       },
         error => {
-          console.error('Error al crear el generador', error);
-          this.mostrarError(error);
-          this.modal=true;
+       
+          const errorMessage = error?.error?.message || 'Error desconocido';
+
+          this.enviarDatos('Error al crear el generador : '+ errorMessage,false)
+
+          console.log(error)
       }
+
       )  
     }
    
@@ -191,9 +189,9 @@ private cdr= inject(ChangeDetectorRef);
 
   hablitarEdicion() {
     this.formularioGenerador.enable();
-    this.estadoActivado=false;
+    this.estadoModificacion=false;
     this.cdr.markForCheck();
-    console.log(this.estadoActivado)
+
   }
 
   hasErrors(controlNombre: string, errorType: string) {
@@ -203,19 +201,4 @@ private cdr= inject(ChangeDetectorRef);
     );
   }
 
-/* Comportamiento  de modal*/
-  mostrarModal() {
-    this.modal = true;
-    setTimeout(() => {
-      this.modal = false;
-    }, 3000);
-  }
-
-  mostrarError(error: HttpErrorResponse) {
-    if (error.error && error.error.message) {
-      this.mensajeModal = error.error.message;
-    } else {
-      this.mensajeModal = 'Ocurrió un error inesperado';
-    }
-  }
 }

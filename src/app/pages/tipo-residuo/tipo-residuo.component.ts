@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, inject, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, Input, OnInit, ViewChild } from '@angular/core';
 import { TipoResiduo } from '../../services/models/tipo_Residuos';
 import { ApiServicesTipoResiduosService } from '../../services/api/api-tipoResiduos/api.services-tipo-residuos.service';
 import { CommonModule } from '@angular/common';
@@ -13,6 +13,7 @@ import { RouterModule } from '@angular/router';
 import { RotacionCircularDirective } from 'src/app/directivas/rotacion-circular.directive';
 import { TipoResiduoFormularioComponent } from './tipo-residuo-formulario/tipo-residuo-formulario.component';
 import { FormsModule } from '@angular/forms';
+import { ModalComponent } from 'src/app/modal/modal.component';
 
 @Component({
   selector: 'app-tipo-residuo',
@@ -27,10 +28,11 @@ import { FormsModule } from '@angular/forms';
     MatFormFieldModule,
     MatSelectModule,
     ReactiveFormsModule,
-   MatRadioModule,
-   FormsModule,
-   TipoResiduoFormularioComponent
-  ],
+    MatRadioModule,
+    FormsModule,
+    TipoResiduoFormularioComponent,
+    ModalComponent
+],
   styleUrls: ['./tipo-residuo.component.css']
 })
 export class TipoResiduoComponent implements OnInit{
@@ -38,21 +40,45 @@ ListaTipoResiduos: TipoResiduo[]=[];
 ListaTiposActivos: TipoResiduo[]=[];
 ListaTiposInactivos: TipoResiduo[]=[];
 
+mensajeDeFormulario:string="Mensaje recibido de formulario";
+activarModal:boolean=false;
+estadoModal:boolean=false;
+
+recepcionDatos(event: any): void {
+  const modal = event as { mensajeEnviar: string; activarModal: boolean ,estadoAprobado:boolean};
+  this.mensajeDeFormulario = modal.mensajeEnviar;
+  this.activarModal = modal.activarModal;
+this.estadoModal=modal.estadoAprobado;
+console.log("estadoModal: "+this.estadoModal )
+  if (this.activarModal) {
+    this.cerrarModalConDelay(); // Llama al método para desactivar el modal automáticamente
+  }
+}
+
+cerrarModalConDelay(): void {
+  const delay = 3000; // Tiempo en milisegundos (3 segundos)
+
+  setTimeout(() => {
+    this.activarModal = false; // Cambia el estado del modal a false
+    console.log('Modal desactivado automáticamente.');
+  }, delay);
+}
 
 idSeleccionado: number | undefined;
 mostrarFormulario: boolean = false;
 
 isActivo:boolean=false;
 
-@ViewChild(RotacionCircularDirective, { static: false }) rotacionCircular!: RotacionCircularDirective;
-
 selectedIndex: number | null = null;
-nuevo: boolean = false;
+@Input()nuevo: boolean = false;
+
 
 private currentOffset = 0; // Mantiene la posición actual del desplazamiento
-private itemHeight = 100; // Altura de cada item (en píxeles, ajusta según tu diseño)
-private visibleItemsCount = 10; // Número de ítems visibles a la vez (ajusta según el contenedor)
+private itemHeight = 200; // Altura de cada item (en píxeles, ajusta según tu diseño)
+private visibleItemsCount = 4; // Número de ítems visibles a la vez (ajusta según el contenedor)
 private cdr= inject(ChangeDetectorRef)
+items: string[] = Array.from({ length: 30 }, (_, i) => `Elemento ${i + 1}`);
+
 constructor(private _apiTipoResiduo:ApiServicesTipoResiduosService ){
  
   }
@@ -62,22 +88,18 @@ ngOnInit(): void {
   this._apiTipoResiduo.getTipoResiduos().subscribe(
     data=>{
       this.ListaTipoResiduos=data;
-      this.ListaTipoResiduos.forEach(
-        tipoResiduo=>{
-          if(tipoResiduo.estado){
-            this.ListaTiposActivos.push(tipoResiduo)
-          }else{
-            this.ListaTiposInactivos.push(tipoResiduo)
-          }
-        });
-      console.log(data);
-      console.log(`Activos:${this.ListaTiposActivos.length}`)
-      console.log(`Inactivos:${this.ListaTiposInactivos.length}`)
-
-    
+      this.ListaTipoResiduos=data.sort((a,b)=>{
+        return a.nombre.localeCompare(b.nombre)
+      });
+   this.cdr.detectChanges();
+    },
+    error=>{
+      console.error('error Listar Tipos', error)
     }
-  )
+  );
 }
+
+
 
 
 seleccionarElemento(index: number, id:number|undefined) {
@@ -88,19 +110,13 @@ seleccionarElemento(index: number, id:number|undefined) {
   this.nuevo = false; // Desactivar el modo "nuevo"
 
   this.idSeleccionado=id;
-console.log("id seleccionado: "+this.idSeleccionado)
+  console.log("id seleccionado: "+this.idSeleccionado)
+
  this.isActivo=true;
 
- this.nuevo = false; // Para indicar que no es un formulario nuevo, sino de edición
-
- 
 }
 
-activarFormulario() {
-  this.mostrarFormulario = true;
-  // Forzar la actualización del tamaño del DOM
-  this.cdr.detectChanges();
-}
+
 
 /* Actualizar estado de Actividad Generadores mediante solicitud Update a estado */
 cambiarEstado(id: number | undefined, estado: boolean): void {
@@ -109,6 +125,8 @@ cambiarEstado(id: number | undefined, estado: boolean): void {
     return;
   }
 
+
+  
   // Realiza el cambio de estado
   this._apiTipoResiduo.cambioEstadoTipo(id, estado).subscribe({
     next: (respuesta) => {
@@ -122,6 +140,27 @@ cambiarEstado(id: number | undefined, estado: boolean): void {
       console.error('Error al cambiar el estado:', error);
     }
   });
+}
+
+activarFormulario() {
+  this.mostrarFormulario = true;
+  console.log(`estado mostrar formulario: ${this.mostrarFormulario}`)
+  // Forzar la actualización del tamaño del DOM
+  this.cdr.detectChanges();
+}
+
+activarNuevo(): void {
+  this.idSeleccionado = undefined; // No hay un ID seleccionado
+
+  this.nuevo = true; // Activa el modo "nuevo"
+
+  this.activarFormulario() // Muestra el formulario
+
+}
+
+controlarVisibilidadFormulario(event: { estadoEdicion: boolean }): void {
+  // Recibe el estado del componente hijo y controla la visibilidad del formulario
+  this.mostrarFormulario = event.estadoEdicion;
 }
 
 

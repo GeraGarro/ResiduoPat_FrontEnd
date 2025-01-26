@@ -92,7 +92,12 @@ cargaTickets(){
   this.apiTicket.getTicketsByHoja(this.idHoja).subscribe(
     (data)=>{
       console.log(data)
-   this.listaTickets=data
+      this.listaTickets = data.sort((a: ITicket, b: ITicket) => {
+        const fechaA = a.fechaEmisionTk ? new Date(a.fechaEmisionTk).getTime() : 0;
+        const fechaB = b.fechaEmisionTk ? new Date(b.fechaEmisionTk).getTime() : 0;
+        return fechaA - fechaB; // Orden ascendente (más antiguo primero)
+      });
+
   
     this.contadorTicket.emit({contador: this.listaTickets.length})
     

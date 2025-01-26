@@ -11,14 +11,14 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class ModalComponent {
 
 @Input() _mensaje: string='';
-@Input()  isSuccessful: boolean = true;
+@Input()  estadoAprobado: boolean = true;
 
 set resultadoAModal(isSuccessful:boolean){
-  this.isSuccessful=isSuccessful;
+  this.estadoAprobado=isSuccessful;
 }
 
 get resultadoAModal():boolean{
-  return this.isSuccessful
+  return this.estadoAprobado
 }
 
 set mensaje(value: string | undefined) {
@@ -40,8 +40,5 @@ get mensaje(): string {
     this.openModal = !this.openModal;
     this.accionModal.emit(this.openModal)
   }
-  ngDoCheck(): void {
- console.log("estadoOpen: ",this.openModal )
- console.log("estado Aceptado Transacion:", this.isSuccessful)
-  }
+ 
 }

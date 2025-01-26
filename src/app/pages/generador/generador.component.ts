@@ -13,6 +13,7 @@ import { FormsModule } from '@angular/forms';
 
 import { MatDialog } from '@angular/material/dialog';
 import { GeneradorFormularioComponent } from './generador-formulario/generador-formulario.component';
+import { ModalComponent } from "../../modal/modal.component";
 @Component({
   selector: 'app-generador',
   templateUrl: './generador.component.html',
@@ -24,14 +25,39 @@ import { GeneradorFormularioComponent } from './generador-formulario/generador-f
     MatCardModule,
     MatFormFieldModule,
     MatSelectModule,
-MatSlideToggleModule,
-FormsModule,
-GeneradorFormularioComponent
-  ],
+    MatSlideToggleModule,
+    FormsModule,
+    GeneradorFormularioComponent,
+    ModalComponent
+],
   styleUrls: ['./generador.component.scss']
 })
 export class GeneradorComponent implements OnInit {
   
+ mensajeDeFormulario:string="Mensaje recibido de formulario";
+activarModal:boolean=false;
+estadoModal:boolean=false;
+
+recepcionDatos(event: any): void {
+  const modal = event as { mensajeEnviar: string; activarModal: boolean ,estadoAprobado:boolean};
+  this.mensajeDeFormulario = modal.mensajeEnviar;
+  this.activarModal = modal.activarModal;
+this.estadoModal=modal.estadoAprobado;
+console.log("estadoModal: "+this.estadoModal )
+  if (this.activarModal) {
+    this.cerrarModalConDelay(); // Llama al método para desactivar el modal automáticamente
+  }
+}
+
+cerrarModalConDelay(): void {
+  const delay = 3000; // Tiempo en milisegundos (3 segundos)
+
+  setTimeout(() => {
+    this.activarModal = false; // Cambia el estado del modal a false
+    console.log('Modal desactivado automáticamente.');
+  }, delay);
+}
+
 ListaGeneradores: Generador[]=[];
 
 @Output()contadorEmitido=new EventEmitter<{contador:number}>();
@@ -67,17 +93,8 @@ ngOnInit(): void {
       console.error('Error fetching Generadores:', error);
     }
   );
+
 }
-
-
-
-private updateTransform() {
-  const listaElement = document.querySelector('.contenedor-lista') as HTMLElement;
-  if (listaElement) {
-    listaElement.style.transform = `translateY(${this.currentOffset}px)`;
-  }
-}
-
 
 /* Seleccionar un elemento para mandar la información a Formulario */
 seleccionarElemento(index: number, id:number|undefined) {
@@ -88,12 +105,10 @@ seleccionarElemento(index: number, id:number|undefined) {
   this.nuevo = false; // Desactivar el modo "nuevo"
 
   this.idSeleccionado=id;
+  console.log("id seleccionado: "+this.idSeleccionado)
 
  this.isActivo=true;
 
- this.nuevo = false; // Para indicar que no es un formulario nuevo, sino de edición
-
- 
 }
 /* Actualizar estado de Actividad Generadores mediante solicitud Update a estado */
 cambiarEstado(id: number | undefined, estado: boolean): void {
@@ -124,7 +139,8 @@ activarFormulario() {
 }
 activarNuevo(): void {
   this.idSeleccionado = undefined; // No hay un ID seleccionado
-  this.nuevo = true; // Activa el modo "nuevo"
+ 
+ this.nuevo = true; // Activa el modo "nuevo"
   this.activarFormulario() // Muestra el formulario
 }
 
@@ -132,28 +148,6 @@ controlarVisibilidadFormulario(event: { estadoEdicion: boolean }): void {
   // Recibe el estado del componente hijo y controla la visibilidad del formulario
   this.mostrarFormulario = event.estadoEdicion;
 }
-/* async eliminarGenerador(idGenerador: number) {
-  const dialogRef = this.dialog.open(ConfirmacionDialogoComponent);
-
-  const confirmacion = await dialogRef.afterClosed().toPromise();
-  if (confirmacion) {
-    try {
-      const response: any = await this._apiGeneradorService.eliminarGenerador(idGenerador).toPromise();
-
-      if (response.resultado === 'éxito') {
-        alert('Mensaje del servidor: ' + response.mensaje);
-
-        // Filtra el registro eliminado sin recargar la página
-        this.ListaGeneradores = this.ListaGeneradores.filter(gen => gen.id !== idGenerador);
-      } else {
-        alert('Mensaje del servidor: ' + response.mensaje);
-      }
-    } catch (error) {
-      console.error('Error al eliminar el generador:', error);
-      alert('Error al eliminar el generador. Por favor, inténtalo nuevamente.');
-    }
-  }
-} */
 
   scrollUp() {
     // Límite superior
@@ -168,4 +162,13 @@ controlarVisibilidadFormulario(event: { estadoEdicion: boolean }): void {
     this.currentOffset = Math.max(this.currentOffset - this.itemHeight, maxOffset);
     this.updateTransform();
   }
+
+  private updateTransform() {
+    const listaElement = document.querySelector('.contenedor-lista') as HTMLElement;
+    if (listaElement) {
+      listaElement.style.transform = `translateY(${this.currentOffset}px)`;
+    }
+  }
+  
+
 }

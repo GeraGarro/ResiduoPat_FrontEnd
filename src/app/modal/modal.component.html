@@ -1,13 +1,12 @@
 <main>
   <div class="container-modal" >
     <div class="icon-modal" >
-    <img src="../../assets/icons/check_modal.png" alt="check_modal" *ngIf="isSuccessful">
-    <img src="../../assets/icons/error-modal.png" alt="error-modal" *ngIf="!isSuccessful">
+    <img src="../../assets/icons/check_modal.png" alt="check_modal" *ngIf="estadoAprobado">
+    <img src="../../assets/icons/error-modal.png" alt="error-modal" *ngIf="!estadoAprobado">
   </div>
     <div class="message-Modal">
-      <h3 [ngClass]="{'texto-success': isSuccessful, 'texto-error': !isSuccessful}">{{_mensaje}}</h3>
+      <h3 [ngClass]="{'texto-success': estadoAprobado, 'texto-error': !estadoAprobado}">{{_mensaje}}</h3>
     </div>
-    <button type="button"  class="boton" id="boton-modal" [ngClass]="{'success-modal': isSuccessful, 'error-modal': !isSuccessful}" (click)="accionBotonModal()" >Aceptar</button>
   </div>
  
 <!--   <div class="container-loader">

@@ -31,3 +31,13 @@ label{
     background-color: aliceblue;
   
   }
+  .btn{
+    font-size: 14px;
+  }
+
+  .modificar{
+    background: linear-gradient(45deg, rgb(231, 76, 76),rgb(224, 76, 50));
+}
+.aceptar{
+  background: linear-gradient(45deg, rgb(0, 131, 238),rgb(3, 86, 241));
+}
