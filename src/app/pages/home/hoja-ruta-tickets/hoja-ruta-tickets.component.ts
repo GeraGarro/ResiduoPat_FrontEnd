@@ -126,9 +126,7 @@ onRowClicked(row: any): void {
   this.router.navigate(['/ticket-info'], { queryParams: { id: row.id_Ticket } });
 }
 
-irFormularioNuevoTicket():void{
-  this.router.navigate
-}
+
 
 async deleteTicket(id:number | undefined){
 

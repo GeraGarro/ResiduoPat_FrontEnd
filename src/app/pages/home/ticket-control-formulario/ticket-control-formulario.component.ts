@@ -70,6 +70,7 @@ export class TicketControlFormularioComponent implements OnInit {
 
   private servicioCompartido= inject(ServicioCompartidoService)
 
+
   accionAceptada:boolean=false;
   toggleModal(state: boolean) {
     this.modal = state;
@@ -277,7 +278,8 @@ limitarCalendario(){
           this.modal=true;
           console.log("modal antes: "+this.modal)
           setTimeout(()=>{
-            this.modal=false
+            this.modal=false;
+   
           },3000)
           console.log("modal despues: "+this.modal)
         }

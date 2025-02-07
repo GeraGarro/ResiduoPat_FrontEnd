@@ -11,7 +11,7 @@
           
           <mat-form-field >
             <mat-label>Seleccionar Transportista</mat-label>
-            <mat-select  [(value)]="selectTransportistaId"
+            <mat-select  [(value)]="selectTransportistaId" 
             (selectionChange)="onSelectTransportista($event.value)"
             [disabled]="!listaTransportistas.length">
               <mat-option *ngFor="let transportista of listaTransportistas" [value]="transportista.id_transportista">{{transportista.apellido}} {{transportista.nombre}}</mat-option>

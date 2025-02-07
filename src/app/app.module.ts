@@ -29,7 +29,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { ConfirmacionDialogoComponent } from './confirmacion-dialogo/confirmacion-dialogo.component';
 import { MatButtonModule } from '@angular/material/button';
 
-
 registerLocaleData(localeEs, 'es');
 
 export const Date_Formats: MatDateFormats={
@@ -50,7 +49,8 @@ registerLocaleData(localeEs,'es');
     TransportistaComponent,
     TransportistaFormularioComponent,
     ConfirmacionDialogoComponent,
- 
+   
+
   ],
   imports: [
     BrowserModule,

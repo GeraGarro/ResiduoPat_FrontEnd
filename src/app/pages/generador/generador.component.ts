@@ -32,7 +32,7 @@ import { ModalComponent } from "../../modal/modal.component";
 ],
   styleUrls: ['./generador.component.scss']
 })
-export class GeneradorComponent implements OnInit {
+export class GeneradorComponent  {
   
  mensajeDeFormulario:string="Mensaje recibido de formulario";
 activarModal:boolean=false;

@@ -78,7 +78,7 @@ ngOnChanges(changes:SimpleChanges):void{
     this.nombreTituloForm='Ingresar Nueva Clasificación Residuo';
     this.estadoModificacion=false;
     this.textoBotonSubmit='Crear Nuevo';
-    this.estadoFormulario.emit({ estadoEdicion: false });
+    this.estadoFormulario.emit({ estadoEdicion: true });
   }
 }
 //carga de datos de un residuo TipoResiduo
@@ -154,7 +154,7 @@ onSubmit(){
 
 hablitarEdicion() {
   this.formularioTipoResiduo.enable();
-  this.estadoModificacion=true;
+  this.estadoModificacion=false;
   this.cdr.markForCheck();
 
 }

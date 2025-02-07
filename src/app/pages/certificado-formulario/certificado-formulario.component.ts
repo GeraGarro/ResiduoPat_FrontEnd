@@ -119,45 +119,4 @@ export class CertificadoFormularioComponent {
   }
 
 
-  crearCertificado() {
-      const formValues=this.formularioCertificado.value;
-     const nombreMes = Meses[formValues.mes as unknown as keyof typeof Meses];
-console.log(nombreMes)
-
-    const nuevoCertificado={
-    transportista:formValues.transportista,
-    
-    mes: nombreMes,
-     
-      anio:formValues.anio
-    };
-
-    console.log(nuevoCertificado)
-    this.apiCertificado.saveNewCertificado(nuevoCertificado).subscribe(
-    (response: ResponseData)=>{
-        console.log('certificado creado',response)
-        this.modal=true;
-        this.mensajeModal = response['message'];
-        setTimeout(()=>{
-          this.router.navigate(['/home']);
-        },3500)  
-    
-      },
-    (error:ApiError )=>{
-        console.error("error al crear el certificado", error)
-      }
-    )   
-
-
-
-/* this.mensajeModal="Certificado Creado"
-      this.modal=true;
-    setTimeout(()=>{
-      this.modal=false;
-     
-    },10000)
-   
-     */
-  }
-
 }

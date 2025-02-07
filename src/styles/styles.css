@@ -7659,14 +7659,16 @@ body {
 
 
 .container-no-data{
-  position: relative;
+  position: absolute;
   height: 100px;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transform: rotate(2deg);
-    opacity: .5;
+    width: 80%;
+  
+   
+   
+    top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+ 
 }
 
 

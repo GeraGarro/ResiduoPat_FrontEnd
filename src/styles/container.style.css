@@ -31,13 +31,13 @@ height: 100%;
   .contenedor-datos{
     display: flex;
     align-items: stretch;
- 
+    max-height: 70vh;
   }
   
   .contenedor-lista{
     padding-top: 1vh;
     position: relative;
-    gap: 10px;
+    gap: 30px;
     align-self: center;
     display: flex;
     flex-wrap: wrap;
@@ -46,6 +46,7 @@ height: 100%;
     justify-content: center;
     max-height: 100%;
     transition: transform 0.3s ease-in-out;
+    overflow: auto;
    flex: 1;
   }
   
@@ -56,8 +57,8 @@ height: 100%;
 
   .contenedor-lista-wrapper {
     width: 100%; /* Tamaño del contenedor */
-    height: 100%; /* Altura visible */
-    overflow: hidden; /* Oculta elementos fuera del área visible */
+    max-height: 100%; /* Altura visible */
+
     position: relative;
     display: flex;
 
@@ -131,8 +132,8 @@ height: 100%;
   .contenedor-botones{
     position: relative;
     flex: 1;
-   
-  
+    
+    
     display: flex;
     flex-direction: column;
     

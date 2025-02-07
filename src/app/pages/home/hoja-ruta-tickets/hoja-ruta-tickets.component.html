@@ -1,6 +1,5 @@
 <div class="contenedor-hoja">
  
-  <button class="btn-add tickets">Nuevo Ticket</button>
 
   <caption><h3>Hoja De Ruta N°<span class="span-dato">{{idHoja}}</span></h3> <span >Fecha Periodo <span class="span-dato">{{primerDiaSemana}}</span> a <span class="span-dato">{{ultimoDiaSemana}}</span></span></caption>
   <div class="tabla-scroll">
@@ -50,8 +49,8 @@
     
       </tbody>
 
-      <caption class="container-no-data" *ngIf="listaTickets.length==0"><span class="span-no-data">Aún no Hay carga de datos En La Hoja</span></caption>
     </table>
   </div>
+      <caption class="contenedor-no-dato" *ngIf="listaTickets.length==0">Aún no Hay carga de datos En La Hoja</caption>
 
 </div>

@@ -7,12 +7,17 @@
   
 </div>
 <div class="contenedor-principal">
+  <button type="button" class="btn-close" (click)="toggleFormulario()" *ngIf="formularioVisible"></button>
 
-  <div class="hoja-ruta contenedor">
+  <button type="button" class="btn-add" (click)="toggleFormulario()" *ngIf="!formularioVisible"></button>
+
+  <div class="hoja-ruta contenedor" *ngIf="!formularioVisible">
   
    <app-hoja-ruta-tickets (contadorTicket)="receptorContadorTicket($event.contador)" (contadorTicketWarning)="receptorContadorTicketWarning($event.contador)" #hojaRutaTickets/> 
 
   </div>
 
-  <div class="ticket-formulario contenedor"><app-ticket-control-formulario (ticketCreado)="onTicketCreado()"> </app-ticket-control-formulario></div>
+  <div class="ticket-formulario contenedor"      [ngClass]="{ hidden: !formularioVisible && isSmallScreen(), visible: formularioVisible }"
+  ><app-ticket-control-formulario (ticketCreado)="onTicketCreado()"> </app-ticket-control-formulario>
+  </div>
 </div>

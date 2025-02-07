@@ -1,43 +1,42 @@
 <div class="contenedor-fondo"></div>
-<!-- Componente en el cual se selecciona Transportista y Periodo para luego desplegar el Componente Tabla de los Ticket Correspondiente a los items Seleccionados -->
-
-  <div class="contenedor-principal">
-   
-   <!--  <h2 id="titulo">Certificados</h2> -->
-    <div class="contenedor-menu">
-     <!--  Menu Desplegable para seleccionar Transportistas-->
-    <div  class="select-box select-transportista" >
-      <span>Transportista</span>
-      <mat-form-field>
-        <mat-label>Seleccionar Transportista</mat-label>
-        <mat-select  [(value)]="selectTransportistaId"
-        (selectionChange)="onSelectTransportista($event.value)"
-        [disabled]="!listaTransportistas.length">
-          <mat-option *ngFor="let transportista of listaTransportistas" [value]="transportista.id_transportista">{{transportista.apellido}} {{transportista.nombre}}</mat-option>
-        
-        </mat-select>
-        
-      </mat-form-field>
-    </div>
-<!-- Una vez seleccionado el Transporista, Vamos a Seleccionar Los certificados Generados de todos los periodos existente relacionado al transportista -->
-    <div #selectBox class="select-box select-certificado"  *ngIf="isSelectTransportista">
-
+<div class="contenedor-principal">
+  <div class="contenedor-menu">
+    <div #selectBox class="select-box select-certificado">
       <span>Periodo Certificado</span>
       <mat-form-field>
         <mat-label>Seleccionar Periodo</mat-label>
-        <mat-select  [(value)]="selectedCertificadoId"
-        (selectionChange)="onSelectCertificado($event.value)">
-          <mat-option *ngFor="let certificado of listaCertificados" [value]="certificado.id">{{certificado.anio}} {{certificado.mes}}</mat-option>
-        
+        <mat-select [(value)]="selectedCertificadoId" (selectionChange)="onSelectCertificado($event.value)">
+          <mat-option *ngFor="let certificado of listaCertificados" [value]="certificado.id">
+            {{certificado.anio}} {{certificado.mes}}
+          </mat-option>
         </mat-select>
-        
       </mat-form-field>
+    </div>
   </div>
-</div>
-  <div class="tabla-tickets"  *ngIf="selectedCertificadoId !== undefined">
-  <div>
-    <span class="container-mensaje-noReg" *ngIf="listaCertificados.length==0">Sin registros</span>
+
+  <div class="tabla-tickets" *ngIf="selectedCertificadoId != null ">
+    <img class="print" src="../../../assets/icons/print.png" alt="imprimir" (click)="descargarReporte(selectedCertificadoId)">
+    <div *ngFor="let hoja of listaHojas" class="lista-hojas">
+     
+   
+
+       <mat-expansion-panel hideToggle (opened)="onPanelOpened(hoja)">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Hoja de Ruta N° <span class="data-hoja">{{ hoja?.id }}</span>
+          </mat-panel-title>
+          <mat-panel-description>
+        Fecha Inicio:  <span class="data-hoja"> {{ hoja?.fechaInicio | date }}</span>
+         Fecha Inicio: <span class="data-hoja"> {{ hoja?.fechaFin | date }}</span>  
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div class="Tabla">
+          
+          <app-tabla-tickets-for-certificate [listaTickets]="hoja.listaTickets" />
+        </div>
+      </mat-expansion-panel> 
+  
+
+    </div>
   </div>
- 
-</div>
 </div>

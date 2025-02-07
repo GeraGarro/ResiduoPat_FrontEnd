@@ -11,7 +11,7 @@
 }
 
 .titulo{
-    align-self: flex-end;
+    align-self: center;
     background-color: rgb(0, 0, 0);
     color: white;
     border-radius: 50px 0 0 50px;
@@ -87,7 +87,7 @@ flex: 1;
 
    mat-form-field{
  
-    height: 60px;
+    height: 62px;
     display: flex;
    }
    mat-label{
@@ -109,7 +109,9 @@ flex: 1;
 #input-fecha{
     width: 60%;
     height: 100px;
-
+    
+        font-size: 13px;
+       
 }
 .mat-calendar-body-selected:hover {
     background-color: #1565c0; /* Color diferente para fechas seleccionadas al hacer hover */
@@ -136,7 +138,7 @@ flex: 1;
        }
 }
 
-@media screen and (max-width:478px) {
+@media screen and (max-width:768px) {
    
    
 
@@ -183,6 +185,6 @@ flex: 1;
     
        justify-content: space-evenly;
      }
-   
+ 
 }
 

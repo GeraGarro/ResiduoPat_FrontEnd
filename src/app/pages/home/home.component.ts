@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, HostListener, Input, ViewChild } from '@angular/core';
 import { HojaRutaTicketsComponent } from 'src/app/pages/home/hoja-ruta-tickets/hoja-ruta-tickets.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { CommonModule } from '@angular/common';
@@ -56,5 +56,25 @@ export class HomeComponent {
 
   onTicketCreado(): void {
     this.hojaRutaTickets.recargarTickets(); 
+  }
+
+  formularioVisible = false; // Controla la visibilidad del formulario
+
+  // Método para alternar la visibilidad del formulario
+  toggleFormulario(): void {
+    this.formularioVisible = !this.formularioVisible;
+  }
+
+  // Detecta si la pantalla es pequeña (por ejemplo, móvil o tablet)
+  isSmallScreen(): boolean {
+    return window.innerWidth <= 768;
+  }
+
+  // Detecta el cambio de tamaño de la pantalla
+  @HostListener('window:resize', ['$event'])
+  onResize(): void {
+    if (!this.isSmallScreen() && this.formularioVisible) {
+      this.formularioVisible = false; // Oculta el formulario en pantallas grandes
+    }
   }
 }

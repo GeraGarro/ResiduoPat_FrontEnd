@@ -1,7 +1,7 @@
 export interface Certificado {
     id?:              number;
     transportista:   Transportista;
-    mes:             Meses;
+    mes:             string;
     anio:            number;
     peso?:            number;
     listaTicketsDTO?: number[];

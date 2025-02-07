@@ -93,6 +93,45 @@ height: 70vh;
     align-self: center;
     margin-right: 20px;
 }
+
+.btn-add, .btn-close{
+    display: none;
+    position: absolute;
+      right: 30px;
+      top: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: linear-gradient(45deg, rgb(69, 69, 212),rgba(34, 22, 97, 0.726));
+    color: aliceblue;
+  box-shadow: none;
+   z-index: 999;
+   opacity: 1;
+  }
+  .btn-add::before{
+    content: "+";
+    font-size: 30px;
+   
+  }
+  .btn-close{
+   
+    background: linear-gradient(45deg, rgb(255, 5, 5),rgb(238, 117, 3));
+  }
+  .btn-close::before{
+    content: "X";
+    font-size: 30px;
+   
+  }
+
+  .ticket-formulario.hidden {
+    display: none;
+  }
+  
+  .ticket-formulario.visible {
+    display: block;
+  }
+  
 @media screen and (max-width:768px) {
     .dashboard{
         height: 28vh;
@@ -102,26 +141,38 @@ height: 70vh;
         margin-top: 5vh;
        position: relative;
        height: 68vh; 
+       display: flex;
     }
     .contenedor{
-        width: 95%;
+        width: 98%;
  
    inset: 0 0 0 0;
     position: absolute;
   
     height: 100%;
+    z-index: 99;
+   }
+
+   .hoja-ruta, .btn-add,.btn-close{
+   display: inline-block;
+    
    
    }
 
-   .hoja-ruta{
+    .ticket-formulario {
+      display: none;
+    
    
-
-   
-   }
-   .ticket-formulario{
-    display: none;
-   }
-   
+    }
+  
+    
+      .ticket-formulario.hidden {
+        display: none;
+       
+      }
+ 
+    
+      
 }
 
 

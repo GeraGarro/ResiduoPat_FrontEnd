@@ -3,13 +3,15 @@
  
  <div class="contenedor-padre">
     
-    <h3 class="titulo">Tipos de Residuos Registrados</h3>
+    <h3 class="titulo-tipo">Tipos de <span>Residuos Registrados</span></h3>
+    <button class="btn agregar" (click)="activarNuevo()" *ngIf="!nuevo">Agregar</button>
+   <div class="contenedor-contenido" [ngClass]="{'contenedor-contenido-formulario':mostrarFormulario }">
 
-   <div class="contenedor-contenido" >
+   
     <div class="contenedor-lista-wrapper"*ngIf="!nuevo">
-      <div class="contenedor-botones">
+<!--       <div class="contenedor-botones"> -->
         <!-- Botón "Arriba" -->
-        <div class="control arriba">
+       <!--  <div class="control arriba">
           <button class="botones-slide" (click)="scrollUp()">
             <img
               class="flecha"
@@ -17,9 +19,9 @@
               alt="flecha-arriba"
             />
           </button>
-        </div>
+        </div> -->
         <!-- Botón "Abajo" -->
-        <div class="control abajo">
+    <!--     <div class="control abajo">
           <button class="botones-slide" (click)="scrollDown()">
             <img
               class="flecha"
@@ -27,9 +29,9 @@
               alt="flecha-abajo"
             />
           </button>
-        </div>
-      </div>
-    <ul class="contenedor-lista" #lista>
+        </div> -->
+      <!-- </div> -->
+    <ul class="contenedor-lista" *ngIf="ListaTipoResiduos.length!=0">
 
 
       <li
@@ -53,9 +55,15 @@
 
 
     </ul>
+
+    <div class="contenedor-empty" *ngIf="ListaTipoResiduos.length==0">
+     <span class="titulo-empty"><img src="../../../assets/icons/ticketWarning.png" alt="">Aviso</span> 
+     <span class="texto-empty"> No hay registro de Residuos</span>
+     <span class="texto-empty"> Por Favor Registre Clasificación de Tipo De Residuo</span>
+    </div>
     </div>
   
-      
+    
    
 <div class="contenedor-formulario" *ngIf="mostrarFormulario"
 [class.animacion-aparecer]="mostrarFormulario">
@@ -66,7 +74,7 @@
        
    </div>
 
-   <button class="btn agregar" (click)="activarNuevo()" *ngIf="!nuevo">Agregar</button>
+
 
   </div>
 

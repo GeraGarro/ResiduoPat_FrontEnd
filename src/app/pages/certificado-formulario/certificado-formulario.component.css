@@ -90,6 +90,8 @@ width: 25%;
     align-items: center;
     position: fixed;
 }
+
+
 @media screen and (min-width:420px) {
     .select-box {
         width: 90%;

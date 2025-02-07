@@ -2,35 +2,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@200..800&display=swap');
 
 .contenedor-hoja {
-  position: relative;
 height: 100%;
 display: flex;
 flex-direction: column;
 
-  padding: 10px ;
+  padding: 10px 10px 5px 5px;
 }
 
 .tabla-tickets {
-
   width: 100%;
+  
 
-/*   border-collapse: collapse;
-  table-layout: fixed;  *//* Asegura que todas las columnas tengan la misma proporción */
 }
-thead{
-  background-color: rgb(158, 155, 155);
-  position: sticky; /* Permite que el encabezado se mantenga fijo */
-  top: 0; /* Fija el encabezado en la parte superior */
-  z-index: 1;
-}
-thead th {
-  font-family: "Roboto", sans-serif;
-  font-weight: 700;
-  font-style: normal;
-  padding: 10px;
-  text-align: center;
-  border-bottom: 1px solid rgba(158, 154, 154, 0.733);
-}
+
 
 /* Contenedor con scroll para el cuerpo de la tabla */
 .tabla-scroll {
@@ -41,7 +25,7 @@ thead th {
 }
 .contenedor-hoja>caption{
   width:max-content;
- 
+  background-color: rgba(138, 137, 137, 0.233);
   padding-left: 10px;
 } 
 
@@ -49,14 +33,15 @@ thead th {
 /* Estilo de las celdas */
 td {
  
-  font-size: 11px;
+  font-size: 14px;
 
   text-align: center;
   padding: 5px;
  
 }
 .fila-flex {
-  border-bottom: 1px solid gray;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.384);
+    color: white;
 }
 /* Alineación específica para la primera y última columna */
 thead th:first-child, tbody td:first-child {
@@ -114,17 +99,11 @@ thead th:last-child, tbody td:last-child {
   padding: 10px;
 
 }
-.cabecera-flex:hover{
+/* .cabecera-flex:hover{
   background-color: initial;
   color: initial;
-}
-.accion{
-  background-color: rgba(255, 255, 255, 0.719);
-  padding: 5px;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: transform .5s linear ;
-}
+} */
+
 .delete:hover{
   transform: scale(1.1);
   background-color: rgb(8, 8, 8);
@@ -146,28 +125,50 @@ thead th:last-child, tbody td:last-child {
   margin-bottom: 25px;
 }
 
+.span-dato{
+  background-color: rgba(250, 244, 244, 0.267);
+  padding: 5px;
+  border-radius: 2px;
+  filter: drop-shadow(1px 1px 1px rgb(44, 44, 44));
+}
 
-
-
+.btn-add{
+  display: none;
+  margin-bottom: 10px;
+  width: 100%;
+  
+  align-items: center;
+  justify-content: center;
+  height: max-content;
+  border-radius: 5px;
+  border: none;
+ 
+  right: 0px;
+  background: linear-gradient(45deg, rgb(69, 69, 212),rgba(34, 22, 97, 0.726));
+  color: aliceblue;
+ filter: drop-shadow(1px 1px 1px Black);
+ 
+}
+.btn-add::before{
+  content: "+";
+  font-size: 30px;
+  margin-right: 5px;
+}
 
 
 .span-no-data{
   width: 100%;
 
   text-align: center;
-
+  color: black;
 }
 
 .filaDesactivada{
  
   cursor: default;
 }
-
-.contenedor-no-dato{
-  text-align: center;
-}
 @media screen and (max-width: 768px) {
-.col-acciones, .accion{
+.accion{
   display: none;
 }
  .col-accion:not(td){
@@ -197,6 +198,9 @@ thead th:last-child, tbody td:last-child {
   display: none;
 }
 
+.btn-add{
+  display: inline-block;
+}
 
 td{
   font-size: 13px;
@@ -204,9 +208,3 @@ td{
 }
 }
 
-/* @media screen and ( max-width: 768px) and ( min-height: 610px) {
-  .tabla-scroll{
-    max-height: 40%;
- 
-  }
-} */
