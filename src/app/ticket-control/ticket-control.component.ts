@@ -1,4 +1,3 @@
-
 import { Component, Input, OnInit, SimpleChanges, inject } from '@angular/core';
 import { ApiTicketService } from '../services/api/api-ticket/api-ticket.service';
 import { ITicket } from '../services/models/ticket.model';
@@ -6,25 +5,17 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-
-import { ResiduoModalComponent } from '../residuo-modal/residuo-modal.component';
 import { Router, RouterModule } from '@angular/router';
-
 import { TicketControlFormularioComponent } from '../pages/home/ticket-control-formulario/ticket-control-formulario.component';
 import { HttpErrorResponse } from '@angular/common/http';
-
 import { Certificado } from '../services/models/certificado.model';
 import { ApiCertificadoService } from '../services/api/api-certificado/api-certificado.service';
-import { Subscription, forkJoin } from 'rxjs';
-
+import { forkJoin } from 'rxjs';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
-
-import { DATE_FORMATS } from '../../assets/DATE_FORMATS'; // Assuming your file is named date-formats.ts
 import { MatCardModule } from '@angular/material/card';
 import { SharedModule } from '../module/sharedModule';
-import * as FileSaver from 'file-saver';
 import { DashboardComponent } from '../pages/home/dashboard/dashboard.component';
 
 /* import { Color, ScaleType } from '@swimlane/ngx-charts';
